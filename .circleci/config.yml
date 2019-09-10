@@ -27,6 +27,6 @@ jobs:
           command: npm run start
           background: true
 
-      - run: jest
+      - run: npx jest
 
 
