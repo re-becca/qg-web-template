@@ -6,4 +6,4 @@ module.exports = {
   BT_LG: 992,
   BT_XL: 1200,
   TIMEOUT: 10000,
-}
+};
