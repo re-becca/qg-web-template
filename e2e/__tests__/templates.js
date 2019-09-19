@@ -19,7 +19,7 @@ describe('SWE templates testing', () => {
     await page.waitForSelector('.listbox li');
     const list = (await page.$$('.listbox li')).length;
     expect(list).toBeGreaterThan(0);
-  });
+  }, 30000);
 
   test('Feedback form is working as expected', async () => {
     const pfd = '#page-feedback-useful';
