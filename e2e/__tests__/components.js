@@ -12,7 +12,7 @@ beforeAll(async () => {
 });
 
 describe('SWE Components testing', () => {
-  test('twitter and facebook feed is working as expected', async () => {
+  test('Twitter and Facebook feed is working as expected', async () => {
     await page.setViewport({ width: ct.BT_XL, height: 800 });
     await page.goto(`${ct.APP_URL}/docs/components.html`, { waitUntil: 'networkidle0' });
     // twitter widget exist
@@ -25,7 +25,7 @@ describe('SWE Components testing', () => {
     expect(getFbAttr).toMatch(/https:\/\/www.facebook.com/);
   });
 
-  test('Casousel is working as expected', async () => {
+  test('Carousel is working as expected', async () => {
     await page.setViewport({ width: ct.BT_XL, height: 800 });
     await page.goto(`${ct.APP_URL}/docs/components.html`, { waitUntil: 'networkidle0' });
     const carItem1 = await page.evaluate(
@@ -37,7 +37,7 @@ describe('SWE Components testing', () => {
     expect(
       await page.evaluate("document.querySelectorAll('.carousel-item')[1].getAttribute('class')")
     ).toMatch(/active/);
-  }, 3000);
+  }, 30000);
 
   afterAll(async () => {
     await browser.close();
