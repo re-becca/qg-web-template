@@ -20,7 +20,6 @@ describe('SWE templates testing', () => {
     await page.setViewport({ width: ct.BT_XL, height: 1800 });
     await page.goto(`${ct.APP_URL}/template-pages/index-page.html`, { waitUntil: 'networkidle0' });
     const image = await page.screenshot({ fullPage: true });
-
     expect(image).toMatchImageSnapshot({
       customSnapshotIdentifier: 'Index Page Template',
     });
