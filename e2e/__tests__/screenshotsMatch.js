@@ -22,8 +22,6 @@ describe('SWE templates testing', () => {
     const image = await page.screenshot({ fullPage: true });
     expect(image).toMatchImageSnapshot({
       customSnapshotIdentifier: 'Index Page Template',
-      failureThreshold: 4,
-      failureThresholdType: 'percent',
     });
   });
   afterAll(async () => {
