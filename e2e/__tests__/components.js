@@ -1,4 +1,4 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core');
 const ct = require('../config/constants');
 
 let browser;
@@ -12,7 +12,7 @@ beforeAll(async () => {
 });
 
 describe('SWE Components testing', () => {
-  test('twitter and facebook feed is working as expected', async () => {
+  test('Twitter and Facebook feed is working as expected', async () => {
     await page.setViewport({ width: ct.BT_XL, height: 800 });
     await page.goto(`${ct.APP_URL}/docs/components.html`, { waitUntil: 'networkidle0' });
     // twitter widget exist
@@ -25,18 +25,19 @@ describe('SWE Components testing', () => {
     expect(getFbAttr).toMatch(/https:\/\/www.facebook.com/);
   });
 
-  test('Casousel is working as expected', async () => {
+  test('Carousel is working as expected', async () => {
     await page.setViewport({ width: ct.BT_XL, height: 800 });
     await page.goto(`${ct.APP_URL}/docs/components.html`, { waitUntil: 'networkidle0' });
-    // twitter widget exist
-    const searchInput = await page.$('#twitter-widget-0');
-    expect(searchInput).toBeTruthy();
-    //facebook widget exist
-    const getFbAttr = await page.evaluate(
-      'document.querySelector(".fb_iframe_widget").getElementsByTagName("iframe")[0].getAttribute("src")'
+    const carItem1 = await page.evaluate(
+      "document.querySelectorAll('.carousel-item')[0].getAttribute('class')"
     );
-    expect(getFbAttr).toMatch(/https:\/\/www.facebook.com/);
-  });
+    expect(carItem1).toMatch(/active/);
+    await page.click('.right.carousel-control');
+    await page.waitFor(3000);
+    expect(
+      await page.evaluate("document.querySelectorAll('.carousel-item')[1].getAttribute('class')")
+    ).toMatch(/active/);
+  }, 31000);
 
   afterAll(async () => {
     await browser.close();

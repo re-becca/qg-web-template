@@ -1,4 +1,4 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core');
 const ct = require('../config/constants');
 
 let browser;
@@ -13,16 +13,16 @@ beforeAll(async () => {
 });
 
 describe('SWE templates testing', () => {
-  test('has search input', async () => {
+  test('Autocomplete is working as expected', async () => {
     await page.setViewport({ width: ct.BT_XL, height: 800 });
     await page.goto(`${ct.APP_URL}/docs/components.html`, { waitUntil: 'networkidle0' });
     await page.type('input[id=qg-search-query]', 'jobs', { delay: 20 });
     await page.waitForSelector('.listbox li');
     const list = (await page.$$('.listbox li')).length;
     expect(list).toBeGreaterThan(0);
-  });
+  }, 30000);
 
-  test('shows search results after search input', async () => {
+  test('Feedback form is working as expected', async () => {
     const pfd = '#page-feedback-useful';
     await page.waitForSelector(pfd);
     expect(
