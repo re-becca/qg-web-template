@@ -5,5 +5,7 @@ module.exports = {
   BT_MD: 768,
   BT_LG: 992,
   BT_XL: 1200,
-  TIMEOUT:10000
-}
+  WH: 800,
+  WT: 3000,
+  TO: 30000
+};

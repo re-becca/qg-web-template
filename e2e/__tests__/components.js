@@ -8,7 +8,7 @@ beforeAll(async () => {
     executablePath: ct.CHROME_PATH
   });
   page = await browser.newPage();
-  await page.setViewport({ width: ct.BT_XL, height: 800 });
+  await page.setViewport({ width: ct.BT_XL, height: ct.WH });
   await page.goto(`${ct.APP_URL}/docs/components.html`, { waitUntil: 'networkidle0' });
 });
 
@@ -26,9 +26,9 @@ describe('SWE Components testing', () => {
     const carItem1 = await page.evaluate("document.querySelectorAll('.carousel-item')[0].getAttribute('class')");
     expect(carItem1).toMatch(/active/);
     await page.click('.right.carousel-control');
-    await page.waitFor(3000);
+    await page.waitFor(ct.WT);
     expect(await page.evaluate("document.querySelectorAll('.carousel-item')[1].getAttribute('class')")).toMatch(/active/);
-  }, 30000);
+  }, ct.TO);
 
   afterAll(async () => {
     await browser.close();
