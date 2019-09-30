@@ -10,12 +10,12 @@ beforeAll(async () => {
     executablePath: ct.CHROME_PATH
   });
   page = await browser.newPage();
+  await page.setViewport({ width: ct.BT_XL, height: 800 });
+  await page.goto(`${ct.APP_URL}/docs/components.html`, { waitUntil: 'networkidle0' });
 });
 
 describe('SWE templates testing', () => {
   test('Autocomplete is working as expected', async () => {
-    await page.setViewport({ width: ct.BT_XL, height: 800 });
-    await page.goto(`${ct.APP_URL}/docs/components.html`, { waitUntil: 'networkidle0' });
     await page.type('input[id=qg-search-query]', 'jobs', { delay: 20 });
     await page.waitForSelector('.listbox li');
     const list = (await page.$$('.listbox li')).length;
@@ -25,10 +25,10 @@ describe('SWE templates testing', () => {
   test('Feedback form is working as expected', async () => {
     const pf = '#page-feedback-useful';
     await page.waitForSelector(pf);
-    expect(await page.evaluate("document.querySelector('#qg-page-feedback').getAttribute('display')")).toBe('none');
+    expect(await page.evaluate('window.getComputedStyle(document.getElementById(\'qg-page-feedback\')).getPropertyValue("display")')).toBe('none');
     (await page.$(pf)).click();
     await page.waitFor(3000);
-    expect(await page.evaluate("document.querySelector('#qg-page-feedback').getAttribute('display')")).not.toBe('none');
+    expect(await page.evaluate('window.getComputedStyle(document.getElementById(\'qg-page-feedback\')).getPropertyValue("display")')).not.toBe('none');
   });
   afterAll(async () => {
     await browser.close();
