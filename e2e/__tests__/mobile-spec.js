@@ -14,13 +14,13 @@ describe('SWE Mobile Interactions', () => {
   test('Should display the menu clicking menu icon', async () => {
     await page.setViewport({ width: ct.BT_SM, height: 800 });
     await page.goto(`${ct.APP_URL}/docs/components.html`, { waitUntil: 'networkidle0' });
-    const carItem1 = await page.evaluate(
-      "document.querySelector('#qg-site-nav').getAttribute('class')"
-    );
-    expect(carItem1).not.toMatch(/collapse show/);
+    expect(await page.evaluate("document.querySelector('#qg-site-nav').getAttribute('class')")).not.toMatch(/collapse show/);
     (await page.$('#qg-show-menu')).click();
     await page.waitFor(3000);
-    expect(carItem1).toMatch(/collapse show/);
+    const carItem2 = await page.evaluate(
+      "document.querySelector('#qg-site-nav').getAttribute('class')"
+    );
+    expect(carItem2).toMatch(/collapse show/);
   }, 30000);
 
   afterAll(async () => {
