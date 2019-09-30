@@ -8,6 +8,7 @@ let page;
 beforeAll(async () => {
   browser = await puppeteer.launch({
     executablePath: ct.CHROME_PATH,
+    headless: false,
   });
   page = await browser.newPage();
 });
