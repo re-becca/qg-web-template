@@ -20,10 +20,7 @@ describe('SWE Mobile Interactions', () => {
     expect(carItem1).not.toMatch(/collapse show/);
     (await page.$('#qg-show-menu')).click();
     await page.waitFor(3000);
-    const carItem2 = await page.evaluate(
-      "document.querySelector('#qg-site-nav').getAttribute('class')"
-    );
-    expect(carItem2).toMatch(/collapse show/);
+    expect(carItem1).toMatch(/collapse show/);
   }, 30000);
 
   afterAll(async () => {
