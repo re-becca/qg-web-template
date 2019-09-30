@@ -10,7 +10,6 @@ const DIR = path.join(os.tmpdir(), 'jest_puppeteer_global_setup');
 module.exports = async function() {
   console.log(chalk.green('Setup Puppeteer'));
   const browser = await puppeteer.launch({
-    headless: false,
     executablePath: './node_modules/chromium/lib/chromium/chrome-linux/chrome',
   });
   // This global is not available inside tests but only in global teardown
