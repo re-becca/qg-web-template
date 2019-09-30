@@ -20,23 +20,15 @@ describe('SWE templates testing', () => {
     await page.waitForSelector('.listbox li');
     const list = (await page.$$('.listbox li')).length;
     expect(list).toBeGreaterThan(0);
-  }, 5000);
+  }, 30000);
 
   test('Feedback form is working as expected', async () => {
-    const pfd = '#page-feedback-useful';
+    const pf = '#page-feedback-useful';
     await page.waitForSelector(pfd);
-    expect(
-      await page.evaluate(
-        'window.getComputedStyle(document.getElementById(\'qg-page-feedback\')).getPropertyValue("display")'
-      )
-    ).toBe('none');
-    (await page.$(pfd)).click();
+    expect(await page.evaluate("document.querySelector('#qg-page-feedback').getAttribute('display')")).toBe('none');
+    (await page.$(pf)).click();
     await page.waitFor(3000);
-    expect(
-      await page.evaluate(
-        'window.getComputedStyle(document.getElementById(\'qg-page-feedback\')).getPropertyValue("display")'
-      )
-    ).not.toBe('none');
+    expect(await page.evaluate("document.querySelector('#qg-page-feedback').getAttribute('display')")).not.toBe('none');
   });
   afterAll(async () => {
     await browser.close();

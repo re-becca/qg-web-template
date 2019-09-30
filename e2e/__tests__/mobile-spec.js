@@ -18,21 +18,21 @@ describe('SWE Mobile Interactions', () => {
     (await page.$('#qg-show-menu')).click();
     await page.waitFor(3000);
     expect(await page.evaluate("document.querySelector('#qg-site-nav').getAttribute('class')")).toMatch(/collapse show/);
-  }, 5000);
+  }, 30000);
 
   test('Should display the search on clicking search icon', async () => {
     expect(await page.evaluate("document.querySelector('#qg-search-form').getAttribute('class')")).not.toMatch(/col-xs-12 col-md-3 collapse show/);
     (await page.$('#qg-show-search')).click();
     await page.waitFor(3000);
     expect(await page.evaluate("document.querySelector('#qg-search-form').getAttribute('class')")).toMatch(/col-xs-12 col-md-3 collapse show/);
-  }, 5000);
+  }, 30000);
 
   test('Should display the site map', async () => {
     expect(await page.evaluate("document.querySelector('#footer-info-qg').getAttribute('class')")).not.toMatch(/collapse show/);
     (await page.$('.qg-toggle-icon-right')).click();
     await page.waitFor(3000);
     expect(await page.evaluate("document.querySelector('#footer-info-qg').getAttribute('class')")).toMatch(/collapse show/);
-  }, 5000);
+  }, 30000);
 
   afterAll(async () => {
     await browser.close();
