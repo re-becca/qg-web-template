@@ -13,14 +13,11 @@ beforeAll(async () => {
 
 describe('SWE Mobile Interactions', () => {
   test('Should display the menu clicking menu icon', async () => {
-    const siteNav = '#qg-site-nav';
-    expect(
-      await page.evaluate("document.querySelectorAll('#qg-site-nav').getAttribute('class')")
-    ).not.toMatch(/collapse show/);
-    (await page.$(siteNav)).click();
-    expect(
-      await page.evaluate("document.querySelectorAll('#qg-site-nav').getAttribute('class')")
-    ).toMatch(/collapse show/);
+    await page.setViewport({ width: ct.BT_SM, height: 800 });
+    await page.goto(`${ct.APP_URL}/docs/components.html`, { waitUntil: 'networkidle0' });
+    const el = await page.$('#qg-site-nav');
+    const className = await el.getProperty('className');
+    expect(className).not.toMatch(/collapse show/);
   });
 
   afterAll(async () => {
