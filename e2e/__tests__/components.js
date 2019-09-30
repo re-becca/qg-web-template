@@ -3,7 +3,6 @@ const ct = require('../config/constants');
 
 let browser;
 let page;
-
 beforeAll(async () => {
   browser = await puppeteer.launch({
     executablePath: ct.CHROME_PATH,
