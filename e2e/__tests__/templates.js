@@ -24,7 +24,7 @@ describe('SWE templates testing', () => {
 
   test('Feedback form is working as expected', async () => {
     const pf = '#page-feedback-useful';
-    await page.waitForSelector(pfd);
+    await page.waitForSelector(pf);
     expect(await page.evaluate("document.querySelector('#qg-page-feedback').getAttribute('display')")).toBe('none');
     (await page.$(pf)).click();
     await page.waitFor(3000);
