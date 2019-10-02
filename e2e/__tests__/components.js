@@ -30,6 +30,7 @@ describe('SWE Components testing', () => {
     expect(await page.evaluate("document.querySelectorAll('.carousel-item')[1].getAttribute('class')")).toMatch(/active/);
   }, ct.TO);
 
+
   afterAll(async () => {
     await browser.close();
   });
