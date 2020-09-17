@@ -5862,7 +5862,7 @@ button.bg-dark:focus {
 .py-3 {
   padding-top: 1rem !important; }
 
-.pr-3, .qg-card,
+.pr-3,
 .px-3 {
   padding-right: 1rem !important; }
 
@@ -5870,7 +5870,7 @@ button.bg-dark:focus {
 .py-3 {
   padding-bottom: 1rem !important; }
 
-.pl-3, .qg-card,
+.pl-3,
 .px-3 {
   padding-left: 1rem !important; }
 
@@ -10829,6 +10829,11 @@ a[data-toggle=collapse].qg-icon:after {
 .qg-cards:before, .qg-cards:after {
   content: normal; }
 
+@media (min-width: 992px) {
+  .qg-cards .qg-card {
+    padding-left: 1em !important;
+    padding-right: 1em !important; } }
+
 .qg-card {
   color: #FFFFFF;
   margin-bottom: 2rem;
@@ -10956,8 +10961,19 @@ a[data-toggle=collapse].qg-icon:after {
   height: auto;
   display: block; }
 
+.qg-card.card__full-width {
+  padding: 0 !important; }
+
+@media (min-width: 992px) {
+  .qg-card.card__full-width {
+    padding: inherit; } }
+
 .qg-card.card__full-width .qg-card__footer .qg-btn {
-  width: 15%; }
+  width: 100%; }
+
+@media (min-width: 768px) {
+  .qg-card.card__full-width .qg-card__footer .qg-btn {
+    width: 200px; } }
 
 .qg-card.card__full-width .details > h2 {
   margin-top: 0; }
