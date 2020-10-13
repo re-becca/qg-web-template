@@ -11117,9 +11117,10 @@ a[data-toggle=collapse].qg-icon:after {
   font-size: 1.2em; }
 
 .alert.alert-danger {
-  color: #fff !important;
+  color: #000000;
+  border: none;
   border-left: 5px solid #B90824;
-  background-color: #b90824; }
+  background-color: #FCF4F6; }
 
 .alert.alert-danger a {
   color: #FF0; }
