@@ -12632,6 +12632,7 @@ a .meta {
   display: flex !important; }
 
 .qg-global-alert .container-fluid header, .qg-global-alert .container-sm header, .qg-global-alert .container-md header, .qg-global-alert .container-lg header, .qg-global-alert .container-xl header, .qg-global-alert .container-fluid section, .qg-global-alert .container-sm section, .qg-global-alert .container-md section, .qg-global-alert .container-lg section, .qg-global-alert .container-xl section {
+  color: #ffffff;
   display: flex;
   align-items: center; }
 
