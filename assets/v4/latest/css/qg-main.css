@@ -10094,6 +10094,29 @@ body:not([data-accessibility=false]):not([data-access-new-window=false]) #qg-con
   color: #fff !important;
   text-decoration: none !important; }
 
+.qg-btn.btn-outline-dark {
+  color: #00698f;
+  background-color: transparent !important;
+  border: 3px solid #00698f; }
+
+.qg-btn.btn-outline-dark:hover, .qg-btn.btn-outline-dark:active, .qg-btn.btn-outline-dark:focus {
+  border: 3px solid #313131;
+  color: #313131 !important;
+  text-decoration: underline;
+  box-shadow: none; }
+
+.qg-btn.btn-outline-light {
+  color: #ffffff;
+  background-color: transparent !important;
+  border: 3px solid #ffffff; }
+
+.qg-btn.btn-outline-light:hover, .qg-btn.btn-outline-light:active, .qg-btn.btn-outline-light:focus {
+  text-decoration: underline;
+  box-shadow: none; }
+
+.qg-btn.btn-link.light {
+  color: #ffffff; }
+
 .qg-featured.qg-aside .carousel {
   margin-bottom: 0; }
 
