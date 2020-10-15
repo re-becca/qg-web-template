@@ -10545,6 +10545,10 @@ body:not([data-accessibility=false]):not([data-access-new-window=false]) #qg-con
   opacity: 1;
   transform: scale(1); }
 
+.hint {
+  color: #6f777b;
+  font-size: 0.875rem; }
+
 .pagination .prev, .pagination .next, .qg-pagination .prev, .qg-pagination .next {
   white-space: nowrap; }
 
@@ -11142,9 +11146,6 @@ a[data-toggle=collapse].qg-icon:after {
   border: none;
   border-left: 5px solid #B90824;
   background-color: #FCF4F6; }
-
-.alert.alert-danger a {
-  color: #FF0; }
 
 .alert.alert-success {
   border: none;
