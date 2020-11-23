@@ -11148,7 +11148,7 @@ a[data-toggle=collapse].qg-icon:after {
 .qg-cards .qg-card .qg-card__thumbnail {
   width: 75px;
   height: 75px;
-  margin: 1em; }
+  margin: 1em 1em 0 1em; }
 
 @media (min-width: 992px) {
   .qg-cards .qg-card {
