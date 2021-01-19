@@ -13712,12 +13712,22 @@ a .meta {
   max-width: 1327px;
   width: 100%; }
 
-#qg-banner-blurb.theme_no_bgimg .blurb {
+#qg-banner-blurb.theme_nobg .qg-banner-blurb_wrapper {
+  margin: 1em auto; }
+
+#qg-banner-blurb.theme_nobg .blurb {
+  padding: 0;
   background: transparent;
   color: #000; }
 
-#qg-banner-blurb.theme_no_bgimg .blurb h1 {
+#qg-banner-blurb.theme_nobg .blurb h1 {
   color: #000; }
+
+@media (max-width: 767px) {
+  #qg-banner-blurb.theme_nobg {
+    min-height: auto;
+    height: auto;
+    padding: 0 25px 0 25px; } }
 
 #qg-banner-blurb .bottom-right {
   right: 0;
@@ -13771,7 +13781,19 @@ a .meta {
 
 @media (max-width: 767px) {
   #qg-banner-blurb .blurb {
-    width: 76%; } }
+    width: 76%;
+    width: auto;
+    max-width: 100%;
+    margin: 0;
+    color: #000000;
+    background-color: #ffffff;
+    padding: 25px 25px 0 25px; }
+  #qg-banner-blurb .blurb h1 {
+    color: #000000; } }
+
+@media (min-width: 768px) {
+  #qg-banner-blurb.theme_nobg {
+    padding: 1em 0 1em 0; } }
 
 @media (max-width: 767px) {
   #qg-banner-blurb {
@@ -13780,19 +13802,12 @@ a .meta {
     background-size: contain !important;
     padding: 0;
     padding-top: 28%; }
+  #qg-banner-blurb .qg-banner-blurb_wrapper {
+    margin: 0; }
   #qg-banner-blurb.hide-xs-hero-img {
     background-image: none !important;
     min-height: inherit !important;
-    padding-top: 0 !important; }
-  #qg-banner-blurb .blurb {
-    width: auto;
-    max-width: 100%;
-    margin: 0;
-    color: #000000;
-    background-color: #ffffff;
-    padding-bottom: 0; }
-  #qg-banner-blurb .blurb h1 {
-    color: #000000; } }
+    padding-top: 0 !important; } }
 
 .qg-breadcrumb {
   background-color: #fff; }
@@ -14736,6 +14751,16 @@ a:active, a:hover, a:focus {
 .qg-feature img {
   width: 100%;
   height: auto; }
+
+@media (max-width: 767px) {
+  .qg-card {
+    padding-right: 0;
+    padding-left: 0; } }
+
+@media (min-width: 768px) {
+  .qg-card {
+    padding-left: 1em;
+    padding-right: 1em; } }
 
 .qg-feature article {
   color: #fff; }
