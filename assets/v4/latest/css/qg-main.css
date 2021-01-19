@@ -13699,6 +13699,7 @@ a .meta {
   padding-left: 25px;
   flex: 0 0 100%;
   max-width: 100%;
+  background: #F1F1F1;
   min-height: 361px;
   height: auto;
   box-sizing: border-box;
@@ -13706,16 +13707,12 @@ a .meta {
   clear: both;
   position: relative; }
 
-#qg-banner-blurb.theme_no_bgimg {
-  background: #F1F1F1;
-  margin-right: auto;
-  margin-left: auto; }
+#qg-banner-blurb .qg-banner-blurb_wrapper {
+  margin: 2em auto;
+  max-width: 1327px;
+  width: 100%; }
 
 #qg-banner-blurb.theme_no_bgimg .blurb {
-  max-width: 1327px;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
   background: transparent;
   color: #000; }
 
@@ -13746,8 +13743,8 @@ a .meta {
   position: inherit;
   background: rgba(0, 0, 0, 0.5);
   color: #fff;
-  padding: 1.2em;
-  margin: 1.2em;
+  margin: 0 15px;
+  padding: 1em;
   width: 27.5em; }
 
 #qg-banner-blurb .blurb.light {
