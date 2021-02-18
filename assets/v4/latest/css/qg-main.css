@@ -10406,7 +10406,7 @@ body:not([data-accessibility=false]):not([data-access-new-window=false]) #qg-con
   transition: visibility 0s linear 0s, opacity 900ms;
   display: block; }
 
-.qg-accordion input[name=tabs][type=checkbox]:checked + .acc-heading label i, .qg-accordion input[name=control][type=checkbox]:checked + .acc-heading label i {
+.qg-accordion input[name=tabs][type=checkbox]:checked + a .acc-heading label i, .qg-accordion input[name=control][type=checkbox]:checked + a .acc-heading label i {
   transform: rotate(-135deg);
   -webkit-transform: rotate(-135deg); }
 
