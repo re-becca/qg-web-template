@@ -10304,11 +10304,6 @@ body:not([data-accessibility=false]):not([data-access-new-window=false]) #qg-con
   display: none;
   visibility: hidden; }
 
-.qg-accordion.qg-accordion-v2 button:focus {
-  outline: 2px solid #0096d6 !important;
-  outline-offset: 2px;
-  z-index: 100; }
-
 .qg-accordion.qg-accordion-v2 article {
   border: 1px solid gray; }
 
@@ -10374,6 +10369,11 @@ body:not([data-accessibility=false]):not([data-access-new-window=false]) #qg-con
   visibility: inherit;
   opacity: inherit;
   max-height: inherit; }
+
+.qg-accordion button:focus {
+  outline: 2px solid #0096d6 !important;
+  outline-offset: 2px;
+  z-index: 100; }
 
 .qg-accordion.qg-dark-accordion article {
   background-color: #f5f5f5; }
