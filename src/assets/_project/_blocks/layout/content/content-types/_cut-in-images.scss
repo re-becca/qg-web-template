@@ -32,7 +32,7 @@
     border: 0;
   }
 }
-.qg-cut-in{
+.qg-cut-in, .cut-in{
   @include media-breakpoint-up(md) {
     float: right;
   }
