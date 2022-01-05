@@ -11,9 +11,6 @@
   <meta name="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur cupiditate eius facere hic molestiae quasi sapiente. Accusantium beatae consectetur cumque, eaque fugit labore officia quisquam quod reprehenderit suscipit! Consectetur, magni!" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur cupiditate eius facere hic molestiae quasi sapiente. Accusantium beatae consectetur cumque, eaque fugit labore officia quisquam quod reprehenderit suscipit! Consectetur, magni!">
   <meta name="keywords" content="KEYWORDS">
 
-  <link rel="schema.DCTERMS" href="http://purl.org/dc/terms/">
-  <link rel="schema.AGLSTERMS" href="https://agls.gov.au/documents/aglsterms/">
-
   <meta name="DCTERMS.creator" scheme="AGLSTERMS.GOLD" content="c=AU; o=The State of Queensland; ou=DEPARTMENT NAME; ou=UNIT NAME">
   <meta name="DCTERMS.publisher" scheme="AGLSTERMS.AglsAgent" content="corporateName=The State of Queensland; jurisdiction=Queensland">
   <meta name="DCTERMS.created" content="2010-11-04">
@@ -42,14 +39,13 @@
   <meta name="twitter:image" content="https://test-static.qgov.net.au/assets/v4/latest/images/coat-of-arms/coa-thumbnail.png" />
 
   <meta name="DCTERMS.license" scheme="DCTERMS.URI" content="https://creativecommons.org/licenses/by/4.0/">
-
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<link rel="schema.DCTERMS" href="http://purl.org/dc/terms/">
+<link rel="schema.AGLSTERMS" href="https://agls.gov.au/documents/aglsterms/">
 <link rel="shortcut icon" href="https://test-static.qgov.net.au/assets/v4/latest/images/favicon.ico">
-
 <link href="//fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic" rel="stylesheet" type="text/css" />
-
 <link href="https://test-static.qgov.net.au/assets/v4/latest/css/qg-main.css" rel="stylesheet" type="text/css" media="all">
 
 <noscript>
@@ -495,8 +491,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   &lt;h2>Alert title&lt;/h2>
   &lt;p>Alert content&lt;/p>
 &lt;/div>
-                                        </code></pre>
-
+        </code></pre>
+        <h3>Deprecation</h3>
+        <p>
+          We will deprecate the CSS support for &lt;i class="fa ..."&gt; Font Awesome icons due to incompatible to semantic HTML (https://github.com/qld-gov-au/qg-web-template/pull/391).
+          <br/>
+          Please replace &lt;i&gt; with &lt;span&gt; for Font Awesome icons if they are used in your application by 22nd June 2022.
+        </p>
+        <div class="alert alert-danger" role="alert">
+          <h2><i class="fa fa-ban"></i> Alert using &lt;i&gt; as Font Awesome icon</h2>
+          <p>A warning will appear in console to remind developer to replace the Font Awesome icon if &lt;i&gt; is used.</p>
+        </div>
+        <p>Please modify your code from:</p>
+        <pre>
+<code class="language-markup">&lt;div class="alert alert-warning" role="alert">
+  &lt;h2>&lt;i class="fa fa-exclamation-triangle">&lt;/i>Alert title&lt;/h2>
+&lt;/div></code></pre>
+        <p>to:</p>
+        <pre>
+<code class="language-markup">&lt;div class="alert alert-warning" role="alert">
+  &lt;h2>&lt;span class="fa fa-exclamation-triangle">&lt;/span>Alert masssage&lt;/h2>
+&lt;/div></code></pre>
       </div>
     </div>
   </div>
