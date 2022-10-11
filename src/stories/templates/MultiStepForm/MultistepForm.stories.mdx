@@ -1,0 +1,27 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+
+import Start from "./templates/multistep-form-start.html";
+import StepOne from "./templates/multistep-form-stepone.html";
+import StepTwo from "./templates/multistep-form-steptwo.html";
+
+<Meta title="Templates/MultiStepForm" />
+
+# Multi-step form
+
+## Start page
+
+<Canvas withSource="close">
+  <Story name="Start">{() => Start}</Story>
+</Canvas>
+
+## Step one
+
+<Canvas withSource="close">
+  <Story name="StepOne">{() => StepOne}</Story>
+</Canvas>
+
+## Step two
+
+<Canvas withSource="close">
+  <Story name="StepTwo">{() => StepTwo}</Story>
+</Canvas>
