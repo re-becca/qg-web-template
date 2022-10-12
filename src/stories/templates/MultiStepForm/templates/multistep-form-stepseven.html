@@ -80,7 +80,7 @@
                 </li>
                 <li class="qg-breadcrumb-list-item">
                 <a href="#" class="qg-breadcrumb-list-item__link">
-                    Consent
+                    Relationship details of the parents
                 </a>
                 </li>
             </ol>
@@ -96,43 +96,51 @@
 
                 <div id="qg-primary-content" role="main">
 
-                    <p class="mb-4 font-weight-bold"><a href="iframe.html?args=&id=templates-multistepform--start&viewMode=story"><span class="fa fa-chevron-left" style="font-size:small;">&nbsp;</span>Back</a></p>
+                    <p class="mb-4 font-weight-bold"><a href="iframe.html?args=&id=templates-multistepform--step-six&viewMode=story"><span class="fa fa-chevron-left" style="font-size:small;">&nbsp;</span>Back</a></p>
 
-                    <h1 class="mb-2">Consent</h1>
-                    <p class="text-muted mb-4">Step 1 of 5</p>
+                    <h1 class="mb-2">Relationship details of the parents</h1>
+                    <p class="text-muted mb-4">Step 4 of 5</p>
                     <p>Required fields are marked with an <span class="text-danger">*</span></p>
 
-                    <h2 class="mt-4 pt-4">By using this service</h2>
-                            
-                    <ul class="mb-0">
-                        <li>I confirm that the child was born in Queensland.</li>
-                        <li>I confirm the birth of this child has <strong>not</strong> been registered before (online or in person).</li>
-                        <li>I consent to the Registry of Births, Deaths and Marriages (RBDM) using my email address and mobile number for the purpose of providing me with an electronic copy of the information provided and for contact using SMS and email that relates to this service.</li>
-                        <li>I understand that it is my responsibility to ensure that I have nominated a secure email address for RBDM to send the completed application and any related correspondence to.</li>
-                        <li>I acknowledge that it is my responsibility to ensure the security of that information upon receipt of it.</li>
-                    </ul>
-
                     <form class="qg-forms-v2" novalidate="true">
+
                         <ol class="questions">
-                    
-                        <li>
-                            <fieldset>
-                              <legend>
-                                <h2 class="mb-1"><span class="text-danger">*</span> By checking this box, you agree that you have read and understood all of the information above.</h2>
-                              </legend>
-                              <ul class="choices qg-forms-v2__checkbox">
-                                <li>
-                                  <input type="checkbox" name="consent-agree" value="agree" id="consent-agree" />
-                                  <label for="consent-agree">I agree</label>
-                                </li>
-                              </ul>
-                            </fieldset>
-                          </li>
+                            <li>
+                                <h2 class="mb-0"><span class="text-danger">*</span> Are you the mother/birthing parent or the father/parent?</h2>
+                                <small class="hint mb-1">Who is applying to register the birth of the child?</small>
+                                <ul class="choices qg-forms-v2__radio">
+                                    <li>
+                                        <input type="radio" name="multiple" value="yes" id="multiple-yes" selected />
+                                        <label for="multiple-yes">Mother/birthing parent</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="multiple" value="no" id="multiple-no" />
+                                        <label for="multiple-no">Father/parent</label>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <h2><span class="text-danger">*</span> Are the parents of the child married or in a registered civil partnership?</h2>
+                                <ul class="choices qg-forms-v2__radio">
+                                    <li>
+                                        <input type="radio" name="ship-details" value="m" id="ship-details-m" />
+                                        <label for="ship-details-m">Married</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="ship-details" value="cp" id="ship-details-cp" />
+                                        <label for="ship-details-cp">Registered civil partnership</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="ship-details" value="no" id="ship-details-no" />
+                                        <label for="ship-details-no">No</label>
+                                    </li>
+                                </ul>
+                            </li>
                         </ol>
-                      </form>
+                    </form>
                     
 
-                    <p class="mt-4"><a href="iframe.html?args=&id=templates-multistepform--step-two&viewMode=story" type="button" class="qg-btn btn-primary" id="button1">Continue</a></p>
+                    <p class="mt-4"><a href="iframe.html?args=&id=templates-multistepform--step-eight&viewMode=story" type="button" class="qg-btn btn-primary" id="button1">Continue</a></p>
 
                     <div style="margin-bottom: 4em;"></div>
             
@@ -159,31 +167,31 @@
                         <li>
                           <ul>
                             <li>
-                                <a class="active" href="">1 Consent</a>
+                                <a href="iframe.html?args=&id=templates-multistepform--step-one&viewMode=story">1 Consent</a>
                             </li>
                             <li>
-                                <a class="disabled">2 Details of your child</a>
+                                <a href="iframe.html?args=&id=templates-multistepform--step-two&viewMode=story" class="disabled">2 Details of your child</a>
                             </li>
                             <li>
-                                <a class="disabled">3 Personal details of the mother/birthing parent</a>
+                                <a href="iframe.html?args=&id=templates-multistepform--step-three&viewMode=story" class="disabled">3 Personal details of the mother/birthing parent</a>
                             </li>
                             <li>
-                                <a class="disabled">4 Contact details of the mother/birthing parent</a>
+                                <a href="iframe.html?args=&id=templates-multistepform--step-four&viewMode=story" class="disabled">4 Contact details of the mother/birthing parent</a>
                             </li>
                             <li>
-                                <a class="disabled">5 Personal details of the father/parent</a>
+                                <a href="iframe.html?args=&id=templates-multistepform--step-five&viewMode=story" class="disabled">5 Personal details of the father/parent</a>
                             </li>
                             <li>
-                                <a class="disabled">6 Contact details of the father/parent</a>
+                                <a href="iframe.html?args=&id=templates-multistepform--step-six&viewMode=story" class="disabled">6 Contact details of the father/parent</a>
                             </li>
                             <li>
-                                <a class="disabled">7 Relationship details of the parents</a>
+                                <a class="active">7 Relationship details of the parents</a>
                             </li>
                             <li>
-                                <a class="disabled">8 Previous children</a>
+                                <a class="disabled">8 Previous children </a>
                             </li>
                             <li>
-                                <a class="disabled">9 Birth certificate</a>
+                                <a class="disabled">9 Birth certificate </a>
                             </li>
                             <li>
                                 <a class="disabled">10 Review</a>
