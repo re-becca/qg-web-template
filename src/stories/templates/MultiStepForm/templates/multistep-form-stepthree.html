@@ -80,7 +80,7 @@
                 </li>
                 <li class="qg-breadcrumb-list-item">
                 <a href="#" class="qg-breadcrumb-list-item__link">
-                    Personal details of the mother/birthing parent
+                    Details of your child
                 </a>
                 </li>
             </ol>
@@ -96,10 +96,10 @@
 
                 <div id="qg-primary-content" role="main">
 
-                    <p class="mb-4 font-weight-bold"><a href="iframe.html?args=&id=templates-multistepform--step-two&viewMode=story"><span class="fa fa-chevron-left" style="font-size:small;">&nbsp;</span>Back</a></p>
+                    <p class="mb-4 font-weight-bold"><a href="iframe.html?args=&id=templates-multistepform--step-two&viewMode=story" style="color:#13578b;"><span class="fa fa-chevron-left" style="font-size:small;">&nbsp;</span>Back</a></p>
 
-                    <h1 class="mb-2">Personal details of the mother/birthing parent</h1>
-                    <p class="text-muted mb-4">Step 3 of 5</p>
+                    <h1 class="mb-2">Details of your child</h1>
+                    <p class="text-muted mb-4">Step 3 of 7</p>
                     <p>Required fields are marked with an <span class="text-danger">*</span></p>
 
                     <form class="qg-forms-v2" novalidate="true">
@@ -109,78 +109,74 @@
                                 <input class="form-control" label="First name" type="text" />
                             </li>
                             <li>
-                                <h2 class="mb-0"><span class="text-danger">*</span> Current last name</h2>
-                                <small class="hint mb-1">If the mother/birthing parent doesn't have a last name, enter n/a.</small>
+                                <h2>Middles name/s <span class="text-muted font-weight-normal">(optional)</span></h2>
+                                <input class="form-control" label="middle name" type="text" />
+                            </li>
+                            <li>
+                                <h2 class="mb-0"><span class="text-danger">*</span> Last name</h2>
+                                <small class="hint mb-1">If your child doesn't have a last name, enter n/a.</small>
                                 <input class="form-control" label="last name" type="text" />
                              </li>
-                             <li>
-                                <h2 class="mb-0"><span class="text-danger">*</span> Last name at birth</h2>
-                                <small class="hint mb-1">This is the mother/birthing parent's last name when they were born. If it is the same as their current last name, enter it again. If they didn't have a last name at birth, enter n/a.</small>
-                                <input class="form-control" label="last name" type="text" />
-                             </li>
-                             <li>
+                            <li>
                                 <h2 for="jqueryui-date"><span class="text-danger">*</span> Date of birth</h2>
                                 <div class="form-row">
                                     <div class="col-12 col-sm-4">
                                     <input type="text" class="qg-date-input hasDatepicker form-control" id="jqueryui-date" />
                                     </div>
                                 </div>
-                             </li>
-                             <li>
-                                <h2><span class="text-danger">*</span> Town or city of birth</h2>
-                                <input class="form-control" label="Town or city of birth" type="text" />
                             </li>
                             <li>
-                                <h2 for="exampleFormControlSelect1">State or territory of birth</h2>
-                                <select class="form-control" id="exampleFormControlSelect1">
-                                    <option class="placeholder">Select a state or territory</option>
-                                    <option>Queensland</option>
-                                    <option>New South Wales</option>
-                                    <option>South Australia</option>
-                                    <option>Tasmania</option>
-                                    <option>Western Australia</option>
-                                    <option>Australian Capital Territory</option>
-                                    <option>Northern Territory</option>
-                                    <option>Outside of Australia</option>
-                                </select>
-                            </li>
-                            <li>
-                                <h2><span class="text-danger">*</span> Is the mother/birthing parent of Aboriginal origin?</h2>
+                                <h2 class="mt-2"><span class="text-danger">*</span> Sex</h2>
                                 <ul class="choices qg-forms-v2__radio">
                                     <li>
-                                        <input type="radio" name="aboriginal" value="y" id="aboriginal-y" />
-                                        <label for="aboriginal-y">Yes</label>
+                                        <input type="radio" name="sex" value="f" id="sex-f" />
+                                        <label for="sex-f">Female</label>
                                     </li>
                                     <li>
-                                        <input type="radio" name="aboriginal" value="no" id="aboriginal-n" />
-                                        <label for="aboriginal-n">No</label>
+                                        <input type="radio" name="sex" value="m" id="sex-m" />
+                                        <label for="sex-m">Male</label>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <h2 class="mt-0"><span class="text-danger">*</span> Is the mother/birthing parent of Torres Strait Islander origin?</h2>
+                                <h2 class="mt-0"><span class="text-danger">*</span> Was your child born alive?</h2>
                                 <ul class="choices qg-forms-v2__radio">
                                     <li>
-                                        <input type="radio" name="ts" value="y" id="ts-y" />
-                                        <label for="ts-y">Yes</label>
+                                        <input type="radio" name="one" value="yes" id="one-yes" />
+                                        <label for="one-yes">Yes</label>
                                     </li>
                                     <li>
-                                        <input type="radio" name="ts" value="no" id="ts-n" />
-                                        <label for="aboriginal-n">No</label>
+                                        <input type="radio" name="one" value="no" id="one-no" />
+                                        <label for="one-no">No</label>
+                                    </li>
+                                </ul>
+        
+                            </li>
+                            <li>
+                                <h2 class="mt-0"><span class="text-danger">*</span> Is this a multiple birth?</h2>
+                                <ul class="choices qg-forms-v2__radio">
+                                    <li>
+                                        <input type="radio" name="multiple" value="yes" id="multiple-yes" />
+                                        <label for="multiple-yes">Yes</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="multiple" value="no" id="multiple-no" />
+                                        <label for="multiple-no">No</label>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <h2 class="mt-0 mb-0"><span class="text-danger">*</span> Usual occupation</h2>
-                                <small class="hint mb-1">This is the mother/birthing parent’s occupation at the time of the child's birth. If the occupation is not in the list, select 'Other'.</small>
-                                <select class="form-control" id="exampleFormControlSelect1">
-                                    <option class="placeholder">Select</option>
-                                    <option>One</option>
-                                    <option>Two</option>
-                                    <option>Three</option>
-                                    <option>Four</option>
-                                    <option>Other</option>
-                                </select>
+                                <h2 class="mt-0 mb-1"><span class="text-danger">*</span> Did birth occur in a hospital?</h2>
+                                <ul class="choices qg-forms-v2__radio">
+                                    <li>
+                                        <input type="radio" name="hospital" value="yes" id="hospital-yes" />
+                                        <label for="hospital-yes">Yes</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="hospital" value="no" id="hospital-no" />
+                                        <label for="hospital-no">No</label>
+                                    </li>
+                                </ul>
                             </li>
                         </ol>
                     </form>
@@ -213,34 +209,25 @@
                         <li>
                           <ul>
                             <li>
-                                <a href="iframe.html?args=&id=templates-multistepform--step-one&viewMode=story">1 Consent</a>
+                                <a href="iframe.html?args=&id=templates-multistepform--step-one&viewMode=story"><span class="fa fa-check-circle">&nbsp;</span> Consent</a>
                             </li>
                             <li>
-                                <a href="iframe.html?args=&id=templates-multistepform--step-two&viewMode=story" class="disabled">2 Details of your child</a>
+                                <a href="iframe.html?args=&id=templates-multistepform--step-two&viewMode=story" class="disabled"><span class="fa fa-check-circle">&nbsp;</span> Who's applying</a>
                             </li>
                             <li>
-                                <a class="active">3 Personal details of the mother/birthing parent</a>
+                                <a class="active">3 Details of your child</a>
                             </li>
                             <li>
-                                <a class="disabled">4 Contact details of the mother/birthing parent</a>
+                                <a class="disabled">4 Details of the mother/birthing parent</a>
                             </li>
                             <li>
-                                <a class="disabled">5 Personal details of the father/parent</a>
+                                <a class="disabled">5 Details of the father/parent</a>
                             </li>
                             <li>
-                                <a class="disabled">6 Contact details of the father/parent</a>
+                                <a class="disabled">6 Birth certificate</a>
                             </li>
                             <li>
-                                <a class="disabled">7 Relationship details of the parents</a>
-                            </li>
-                            <li>
-                                <a class="disabled">8 Previous children </a>
-                            </li>
-                            <li>
-                                <a class="disabled">9 Birth certificate </a>
-                            </li>
-                            <li>
-                                <a class="disabled">10 Review</a>
+                                <a class="disabled">7 Review</a>
                             </li>
                           </ul>
                     </ul>

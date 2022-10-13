@@ -96,85 +96,24 @@
 
                 <div id="qg-primary-content" role="main">
 
-                    <p class="mb-4 font-weight-bold"><a href="iframe.html?args=&id=templates-multistepform--step-one&viewMode=story"><span class="fa fa-chevron-left" style="font-size:small;">&nbsp;</span>Back</a></p>
+                    <p class="mb-4 font-weight-bold"><a href="iframe.html?args=&id=templates-multistepform--step-one&viewMode=story" style="color:#13578b;"><span class="fa fa-chevron-left" style="font-size:small;">&nbsp;</span>Back</a></p>
 
-                    <h1 class="mb-2">Details of your child</h1>
-                    <p class="text-muted mb-4">Step 2 of 5</p>
+                    <h1 class="mb-2">Who's applying</h1>
+                    <p class="text-muted mb-4">Step 2 of 7</p>
                     <p>Required fields are marked with an <span class="text-danger">*</span></p>
 
                     <form class="qg-forms-v2" novalidate="true">
                         <ol class="questions">
                             <li>
-                                <h2><span class="text-danger">*</span> First name</h2>
-                                <input class="form-control" label="First name" type="text" />
-                            </li>
-                            <li>
-                                <h2>Middles name/s <span class="text-muted font-weight-normal">(optional)</span></h2>
-                                <input class="form-control" label="middle name" type="text" />
-                            </li>
-                            <li>
-                                <h2 class="mb-0"><span class="text-danger">*</span> Last name</h2>
-                                <small class="hint mb-1">If your child doesn't have a last name, enter n/a.</small>
-                                <input class="form-control" label="last name" type="text" />
-                             </li>
-                            <li>
-                                <h2 for="jqueryui-date"><span class="text-danger">*</span> Date of birth</h2>
-                                <div class="form-row">
-                                    <div class="col-12 col-sm-4">
-                                    <input type="text" class="qg-date-input hasDatepicker form-control" id="jqueryui-date" />
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <h2 class="mt-2"><span class="text-danger">*</span> Sex</h2>
+                                <h2><span class="text-danger">*</span> Who's applying to register the birth of the child?</h2>
                                 <ul class="choices qg-forms-v2__radio">
                                     <li>
-                                        <input type="radio" name="sex" value="f" id="sex-f" />
-                                        <label for="sex-f">Female</label>
+                                        <input type="radio" name="parent-details" value="yes" id="parent-details-yes" />
+                                        <label for="parent-details-yes">Mother/birthing parent</label>
                                     </li>
                                     <li>
-                                        <input type="radio" name="sex" value="m" id="sex-m" />
-                                        <label for="sex-m">Male</label>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <h2 class="mt-0"><span class="text-danger">*</span> Was your child born alive?</h2>
-                                <ul class="choices qg-forms-v2__radio">
-                                    <li>
-                                        <input type="radio" name="one" value="yes" id="one-yes" />
-                                        <label for="one-yes">Yes</label>
-                                    </li>
-                                    <li>
-                                        <input type="radio" name="one" value="no" id="one-no" />
-                                        <label for="one-no">No</label>
-                                    </li>
-                                </ul>
-        
-                            </li>
-                            <li>
-                                <h2 class="mt-0"><span class="text-danger">*</span> Is this a multiple birth?</h2>
-                                <ul class="choices qg-forms-v2__radio">
-                                    <li>
-                                        <input type="radio" name="multiple" value="yes" id="multiple-yes" />
-                                        <label for="multiple-yes">Yes</label>
-                                    </li>
-                                    <li>
-                                        <input type="radio" name="multiple" value="no" id="multiple-no" />
-                                        <label for="multiple-no">No</label>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <h2 class="mt-0 mb-1"><span class="text-danger">*</span> Did birth occur in a hospital?</h2>
-                                <ul class="choices qg-forms-v2__radio">
-                                    <li>
-                                        <input type="radio" name="hospital" value="yes" id="hospital-yes" />
-                                        <label for="hospital-yes">Yes</label>
-                                    </li>
-                                    <li>
-                                        <input type="radio" name="hospital" value="no" id="hospital-no" />
-                                        <label for="hospital-no">No</label>
+                                        <input type="radio" name="parent-details" value="no" id="parent-details-no" />
+                                        <label for="parent-details-no">Father/parent</label>
                                     </li>
                                 </ul>
                             </li>
@@ -209,34 +148,25 @@
                         <li>
                           <ul>
                             <li>
-                                <a href="iframe.html?args=&id=templates-multistepform--step-one&viewMode=story">1 Consent</a>
+                                <a href="iframe.html?args=&id=templates-multistepform--step-one&viewMode=story"><span class="fa fa-check-circle">&nbsp;</span> Consent</a>
                             </li>
                             <li>
-                                <a class="active">2 Details of your child</a>
+                                <a class="active">2 Who's applying</a>
                             </li>
                             <li>
-                                <a class="disabled">3 Personal details of the mother/birthing parent</a>
+                                <a class="disabled">3 Details of your child</a>
                             </li>
                             <li>
-                                <a class="disabled">4 Contact details of the mother/birthing parent</a>
+                                <a class="disabled">4 Details of the mother/birthing parent</a>
                             </li>
                             <li>
-                                <a class="disabled">5 Personal details of the father/parent</a>
+                                <a class="disabled">5 Details of the father/parent</a>
                             </li>
                             <li>
-                                <a class="disabled">6 Contact details of the father/parent</a>
+                                <a class="disabled">6 Birth certificate</a>
                             </li>
                             <li>
-                                <a class="disabled">7 Relationship details of the parents</a>
-                            </li>
-                            <li>
-                                <a class="disabled">8 Previous children </a>
-                            </li>
-                            <li>
-                                <a class="disabled">9 Birth certificate </a>
-                            </li>
-                            <li>
-                                <a class="disabled">10 Review</a>
+                                <a class="disabled">7 Review</a>
                             </li>
                           </ul>
                     </ul>
