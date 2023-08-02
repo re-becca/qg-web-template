@@ -2016,7 +2016,9 @@ $(function () {
 
 
   qgSiteSearch.fn.onFocus = function (inputValue, targetInput) {
-    var initialConcierge = targetInput.parent().find($('.qg-search-concierge-initial'));
+    var initialConcierge = targetInput.parent().find($('.qg-search-concierge-initial')); // Toggle aria-expanded for the search input
+
+    targetInput.attr('aria-expanded', 'true');
 
     if (inputValue === '') {
       // Transition reveal initial state
@@ -2055,6 +2057,12 @@ $(function () {
 
       initialConcierge.addClass('show');
       helpfulConcierge.removeClass('show');
+    }
+
+    if (initialConcierge.hasClass('show') || helpfulConcierge.hasClass('show')) {
+      targetInput.attr('aria-expanded', 'true');
+    } else {
+      targetInput.attr('aria-expanded', 'false');
     }
   };
 
@@ -2341,15 +2349,18 @@ $(function () {
   }; //
   // Functions
   //
-  // Close the conceirge menus
+  // Close the concierge menus
 
 
   qgSiteSearch.fn.closeConciergePanels = function () {
     var initialConcierge = $('.qg-search-concierge-initial');
-    var helpfulConcierge = $('.qg-search-concierge-help'); // Immediately close both concierge panels
+    var helpfulConcierge = $('.qg-search-concierge-help');
+    var targetInput = $('.qg-search-site__input'); // Immediately close both concierge panels
 
     initialConcierge.addClass('hide').removeClass('show');
-    helpfulConcierge.addClass('hide').removeClass('show');
+    helpfulConcierge.addClass('hide').removeClass('show'); // Toggle aria-expanded for the search input
+
+    targetInput.attr('aria-expanded', 'false');
     setTimeout(function () {
       initialConcierge.removeClass('hide');
       helpfulConcierge.removeClass('hide');
@@ -2423,6 +2434,7 @@ $(function () {
       suggestionsHTML += '</div>';
     } else {
       targetInput.parent().find($('.qg-search-concierge-help')).hide();
+      targetInput.attr('aria-expanded', 'false');
     } // Update the concierge container
 
 
@@ -2575,7 +2587,7 @@ $(function () {
     searchInput.on('focus keydown', debouncer(qgSiteSearch.fn.inputEventHandler, 200));
   }); // Binds
 
-  $('body').on('focusin', '.qg-navigation .nav-link', qgSiteSearch.fn.handleFocus);
+  $('body').on('focusin', '.qg-navigation .nav-link, .qg-service-finder__popular-apps a, .qg-coat-of-arms a', qgSiteSearch.fn.handleFocus);
   $('body').on('click', qgSiteSearch.fn.handleBodyClick);
   $('body').on('click', '.qg-search-close-concierge', qgSiteSearch.fn.clearInputField);
   $('body').on('click', '.qg-search-concierge-group.suggestions button', qgSiteSearch.fn.searchSuggestionClick);
@@ -3519,7 +3531,8 @@ $(function () {
     if (jsonResponse.hasOwnProperty('features')) {
       // Add each suburb to the location list
       jsonResponse['features'].forEach(function (object) {
-        var sourceName = object['attributes']['ADMINAREANAME'].toLowerCase();
+        var sourceName = object['attributes']['ADMINAREANAME'] || object['attributes']['adminareaname'];
+        sourceName = sourceName.toLowerCase();
         var suburbLGA = titleCase(sourceName);
         var suburbObject = {
           'name': sourceName,
@@ -3555,7 +3568,7 @@ $(function () {
       // Maps not loaded
       // Create script tag
       var apiKey = 'AIzaSyDvR5MCDqi0HtcjkehKqbKhyoCxt4Khqac';
-      var scriptURL = 'https://maps.googleapis.com/maps/api/js?key=' + apiKey;
+      var scriptURL = 'https://maps.googleapis.com/maps/api/js?callback=qg_location_init&key=' + apiKey;
       var scriptElement = document.createElement('script'); // Populate tag
 
       scriptElement['type'] = 'text/javascript';
@@ -3563,6 +3576,8 @@ $(function () {
       scriptElement['id'] = scriptID; // Insert into the DOM
 
       document.querySelector('body').appendChild(scriptElement);
+
+      window.qg_location_init = function () {};
 
       scriptElement.onload = function () {
         qgLocation.fn.init();
@@ -5474,7 +5489,7 @@ qg.date = function () {
         textField = hint.closest('label').nextAll('textarea'),
         counter; // add counter
 
-    counter = $('<span/>').generateId('word-count'); //eg. Maximum: 50 words (50 remaining)
+    counter = $('<span></span>').generateId('word-count'); //eg. Maximum: 50 words (50 remaining)
 
     hint.append(' (', counter, ' remaining)');
     textField.simplyCountable({
@@ -5821,19 +5836,18 @@ var QgLoadGoogleApi = /*#__PURE__*/function () {
   }); // this function equals the height of the cards in a group, if it finds a class '.cards__equal-height'.
 
   function setHeight() {
-    if ($('.cards__equal-height').length > 0) {
-      $('.qg-cards.cards__equal-height').each(function () {
-        // Cache the highest
-        var highestBox = 0; // Select and loop the elements you want to equalise
+    var equalHeightCards = document.querySelectorAll('.qg-cards__equal-height');
 
-        $(this).find('.details').each(function () {
-          // If this box is higher than the cached highest then store it
-          if ($(this).height() > highestBox) {
-            highestBox = $(this).height();
-          }
-        }); // Set the height of all those children to whichever was highest
-
-        $(this).find('.details').height(highestBox);
+    if (equalHeightCards.length > 0) {
+      equalHeightCards.forEach(function (cardBlock) {
+        var maxHeight = 0;
+        var cards = cardBlock.querySelectorAll('.qg-card .details');
+        cards.forEach(function (card) {
+          maxHeight = Math.max(maxHeight, card.offsetHeight);
+        });
+        cards.forEach(function (card) {
+          card.style.height = "".concat(maxHeight, "px");
+        });
       });
     }
   }
@@ -6594,6 +6608,12 @@ __webpack_require__.r(__webpack_exports__);
   _layout_section_nav_qg_step_nav__WEBPACK_IMPORTED_MODULE_6__["default"].init();
   _layout_footer_feedback_form__WEBPACK_IMPORTED_MODULE_11___default().init(franchiseTitle);
 })();
+
+$(function () {
+  if ($('#qg-quick-exit__input').length > 0) {
+    $('body').addClass('qg-private-content');
+  }
+});
 })();
 
 /******/ })()
