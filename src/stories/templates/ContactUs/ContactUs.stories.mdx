@@ -1,0 +1,20 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+
+import Current from "./templates/contact-us-current.html";
+import One from "./templates/contact-us-one.html";
+
+<Meta title="Templates/ContactUs" />
+
+# Contact us
+
+## Current
+
+<Canvas withSource="close">
+  <Story name="Current">{() => Current}</Story>
+</Canvas>
+
+## One
+
+<Canvas withSource="close">
+  <Story name="One">{() => One}</Story>
+</Canvas>
