@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Contact | Queensland Government</title>
+
+    <meta name="description" content="DESCRIPTION">
+    <meta name="keywords" content="KEYWORDS">
+
+    <meta name="DCTERMS.creator" scheme="AGLSTERMS.GOLD" content="c=AU; o=The State of Queensland; ou=DEPARTMENT NAME; ou=UNIT NAME">
+    <meta name="DCTERMS.publisher" scheme="AGLSTERMS.AglsAgent" content="corporateName=The State of Queensland; jurisdiction=Queensland">
+    <meta name="DCTERMS.created" content="2010-11-04">
+    <meta name="DCTERMS.modified" content="2011-03-05">
+    <meta name="DCTERMS.title" content="Add your heading">
+    <meta name="DCTERMS.alternative" content="Add your heading">
+    <meta name="DCTERMS.description" content="DESCRIPTION">
+    <meta name="DCTERMS.subject" scheme="AGLSTERMS.APAIS" content="SUBJECT">
+    <meta name="AGLSTERMS.function" scheme="AGLSTERMS.AGIFT" content="FUNCTION">
+    <meta name="DCTERMS.type" scheme="DCTERMS.DCMIType" content="Text">
+    <meta name="AGLSTERMS.documentType" scheme="AGLSTERMS.agls-document" content="guidelines">
+    <meta name="DCTERMS.audience" scheme="AGLSTERMS.agls-audience" content="">
+    <meta name="DCTERMS.jurisdiction" scheme="AGLSTERMS.AglsJuri" content="Queensland">
+
+    <!-- Open graph -->
+    <meta property="og:title" content="Queensland Government">
+    <meta property="og:description" content="DESCRIPTION">
+    <meta property="og:image" content="/assets/v4/latest/images/coat-of-arms/coa-thumbnail.png">
+    <meta property="og:url" content="">
+    <meta property="og:type" content="article" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Queensland Government" />
+    <meta name="twitter:description" content="DESCRIPTION" />
+    <meta name="twitter:image" content="/assets/v4/latest/images/coat-of-arms/coa-thumbnail.png" />
+
+    <!--#include virtual="/assets/includes-local/head-assets.html"-->
+
+    <!-- JavaScript code -->
+    <script>
+        // Get references to the select input and the div to display the selected option text
+        const selectInput = document.getElementById('select-input');
+        const selectedOptionText = document.getElementById('selected-option-text');
+    
+        // Add event listener to the select input
+        selectInput.addEventListener('change', () => {
+        // Get the selected option value
+        const selectedOption = selectInput.value;
+    
+        // Update the text below the select input based on the selected option
+        switch (selectedOption) {
+            case 'One':
+            selectedOptionText.innerHTML = `
+            <section class="row qg-cards qg-cards__equal-height">
+                <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-md-5">
+                    <div class="content">
+                        <div class="details qg-cards__row-1" >
+                            <h2>Transport and Main Roads (TMR)</h2>
+                            <p>For enquiries about driving, vehicles, registrations, boating, public transport and roads.</p>
+                            <ul>
+                                <li><a href="https://www.tmr.qld.gov.au/About-us/Contact-us" target="_blank">Contact us - Transport and Main Roads</a></li>
+                                <li><a href="https://www.qld.gov.au/transport/contacts/centres" target="_blank">Find a TMR service centre near you</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+                <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-md-5">
+                    <div class="content">
+                        <div class="details qg-cards__row-1" >
+                            <h2>You might be looking for</h2>
+                            <ul>
+                                <li><a href="https://www.qld.gov.au/transport/registration/register/renew/renew-rego">Pay your rego</a></li>
+                                <li><a href="https://www.qld.gov.au/transport/licensing/getting/learner">Getting a learner licence</a></li>
+                                <li><a href="https://www.qld.gov.au/disability/out-and-about/travel-transport/driving/parking-permits">Apply for a disability parking permit</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+            </section>
+            `;
+            break;
+            case 'Two':
+            selectedOptionText.innerHTML = selectedOptionText.innerHTML = `
+            <section class="row qg-cards qg-cards__equal-height">
+                <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-md-5">
+                    <div class="content">
+                        <div class="details qg-cards__row-1" >
+                            <h2>QGov identity</h2>
+                            <p>For help with using and setting up your QGov identity.</p>
+                            <ul>
+                                <li><a href="https://identity.qld.gov.au/help/faq.html" target="_blank">QGov frequently asked questions</a></li>
+                                <li><a href="tel:137468" data-analytics-link-group="qg-contact-phone">Call 13 QGOV (13 74 68)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+                <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-md-5">
+                    <div class="content">
+                        <div class="details qg-cards__row-1" >
+                            <h2>You might be looking for</h2>
+                            <ul>
+                                <li><a href="https://identity.qld.gov.au/help/faq.html#whatIfIForgetMyQGovLoginPassword">How do I reset my QGov identity password?</a></li>
+                                <!--<li><a href="https://identity.qld.gov.au/help/faq.html#whatAreTheBenefitsOfALogin">What are the benefits of a QGov identity?</a></li>-->
+                                <li><a href="https://identity.qld.gov.au/help/faq.html#howDoIProveMyDigitalIdentity">How do I prove my digital identity?</a></li>
+                                <!--<li><a href="https://identity.qld.gov.au/help/faq.html#isMyPrivacyProtected">Is my privacy protected?</a></li>-->
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+            </section>
+            `;;
+            break;
+            case 'Three':
+            selectedOptionText.innerHTML = `
+            <section class="row qg-cards qg-cards__equal-height">
+                <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-md-5">
+                    <div class="content">
+                        <div class="details qg-cards__row-1" >
+                            <h2>Births, Deaths and Marriages (BDM)</h2>
+                            <p>Contact BDM for enquiries about births, deaths, marriages, divorces, and changing your name.</p> 
+                            <ul>
+                                <li><a href="https://www.forms.services.bdm.qld.gov.au/#/generalenquiry" target="_blank">BDM online general enquiry form</a></li>
+                                <li><a href="tel:137468" data-analytics-link-group="qg-contact-phone">Call 13 QGOV (13 74 68)</a></li>                                
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+                <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-md-5">
+                    <div class="content">
+                        <div class="details qg-cards__row-1" >
+                            <h2>You might be looking for</h2>
+                            <ul>
+                                <li><a href="https://www.qld.gov.au/law/births-deaths-marriages-and-divorces/birth-death-and-marriage-certificates/birth-certificates">How do I order a birth certificate?</a></li>
+                                <li><a href="https://www.qld.gov.au/law/births-deaths-marriages-and-divorces/birth-registration-and-adoption-records/register-a-birth">How do I register a birth?</a></li>
+                                <li><a href="https://www.qld.gov.au/law/births-deaths-marriages-and-divorces/changing-your-name">Changing your name as an adult</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+            </section>`;
+            break;
+            case 'Four':
+            selectedOptionText.innerHTML = `
+            <section class="row qg-cards qg-cards__equal-height">
+                <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-md-5">
+                    <div class="content">
+                        <div class="details qg-cards__row-1" >
+                            <h2>Housing and homes</h2>
+                            <p>For help with homes and housing, including public and community housing, renting, emergency and temporary accommodation and buying and modifying a home.</p>
+                            <ul>
+                                <li><a href="https://www.qld.gov.au/housing/public-community-housing/housing-service-centre" target="_blank">Contact or visit a Housing Service Centre</a></li>
+                                <li><a href="tel:137468" data-analytics-link-group="qg-contact-phone">Call 13 QGOV (13 74 68)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+                <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-md-5">
+                    <div class="content">
+                        <div class="details qg-cards__row-1" >
+                            <h2>You might be looking for</h2>
+                            <ul>
+                                <li><a href="https://www.qld.gov.au/housing/renting/rent-assistance">Help with renting</a></li>
+                                <li><a href="https://www.qld.gov.au/housing/public-community-housing/eligibility-applying-for-housing">Eligibility and applying for housing</a></li>
+                                <li><a href="https://www.qld.gov.au/housing/emergency-temporary-accommodation/housing-help-after-disaster">Housing help after a disaster</a></li>
+                                <li><a href="https://www.qld.gov.au/housing/buying-owning-home/advice-buying-home">Advice on buying a home</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+            </section>`;
+            break;
+            case 'Five':
+            selectedOptionText.innerHTML = `
+            <section class="row qg-cards qg-cards__equal-height">
+                <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-md-5">
+                    <div class="content">
+                        <div class="details qg-cards__row-1" >
+                            <h2>Blue Card Services</h2>
+                            <p>For help with your blue card application and for questions about working and volunteering with children.</p>
+                            <ul>
+                                <li><a href="https://www.qld.gov.au/law/laws-regulated-industries-and-accountability/queensland-laws-and-regulations/regulated-industries-and-licensing/blue-card/contacting/contact" target="_blank">Contact us - Blue Card Services</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+                <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-md-5">
+                    <div class="content">
+                        <div class="details qg-cards__row-1" >
+                            <h2>You might be looking for</h2>
+                            <ul>
+                                <li><a href="https://my.bluecard.qld.gov.au">Check the status of your blue card application</a></li>
+                                <li><a href="https://www.qld.gov.au/law/laws-regulated-industries-and-accountability/queensland-laws-and-regulations/regulated-industries-and-licensing/blue-card/system/system-explained">The blue card system explained</a></li>
+                                <li><a href="https://www.qld.gov.au/law/laws-regulated-industries-and-accountability/queensland-laws-and-regulations/regulated-industries-and-licensing/blue-card/required">Do I need a blue card?</a></li>
+                        </div>
+                    </div>
+                </article>
+            </section>`;
+            break;
+            case 'Six':
+            selectedOptionText.innerHTML = ``;
+            break;
+            case 'Seven':
+            selectedOptionText.innerHTML = ``;
+            break;
+            case 'Eight':
+            selectedOptionText.innerHTML = ``;
+            break;
+            case 'Nine':
+            selectedOptionText.innerHTML = `
+            <section class="row qg-cards qg-cards__equal-height">
+                <article class="qg-card qg-card__light-theme col-12 col-sm-9 col-md-5">
+                    <div class="content">
+                        <div class="details qg-cards__row-1" >
+                            <h2>General enquiries</h2>
+                            <p>We welcome your questions, comments and feedback on all of our services. We can answer your calls 24 hours a day, 7 days a week.</p>
+                            <ul>
+                                <li><a href="tel:137468" data-analytics-link-group="qg-contact-phone">Call 13 QGOV (13 74 68) </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+            </section>`;
+            break;
+            default:
+            selectedOptionText.innerHTML = ''; // Hide the text if no option is selected
+            break;
+        }
+        });
+    </script>
+
+    <style>
+        #qg-primary-content a,
+        .qg-card .content a,
+        #qg-primary-content a:visited,
+        .qg-card .content a:visited {
+            color:#13578b !important;
+            text-decoration-color: #457aa3 !important;
+        }
+
+        #qg-banner-blurb {
+            width: 100% !important;
+            flex: 0 0 100% !important;
+            max-width: 100% !important;
+            min-height: 361px !important;
+            height: auto !important;
+            box-sizing: border-box !important;
+            padding: 1px !important;
+            clear: both !important;
+            position: relative !important;
+        }
+
+        #qg-banner-blurb .blurb {
+            background: #f5f5f5 url(https://www.qld.gov.au/__data/assets/image/0021/177501/varieties/1600x361.png) no-repeat center/cover !important;
+        }
+
+        @media (min-width: 768px) {
+            #qg-banner-blurb .blurb  {
+                background-image: none !important;
+                background-color: transparent !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #qg-banner-blurb .blurb  {
+                padding: 40px 25px !important;
+            }
+        }
+
+        #qg-primary-content {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        ul.qg-share-list {
+            margin-bottom: 0 !important;
+        }
+
+        ul.qg-share-list li {
+            margin-bottom: 0 !important;
+        }
+
+        .qg-accordion--ga {
+            margin: 0 !important;
+        }
+
+        .blurb {
+            background: none !important;
+            width: auto !important;
+        }
+
+        .blurb label {
+            color: white !important;
+            margin-top: 0.8rem;
+            margin-bottom: 0.5rem;
+            display: block;
+            font-weight: 400;
+        }
+
+        .qg-banner-blurb_wrapper .qg-forms-v2 .form-control {
+            border: 4px solid white;
+        }
+
+        .qg-banner-blurb_wrapper .qg-card {
+            display: block !important;
+            margin-top: 1rem;
+            margin-bottom: 0;
+        }
+
+        .qg-banner-blurb_wrapper .qg-card .content {
+            background-color: white !important;
+            border: white !important;
+        }
+
+        #qg-banner-blurb .blurb>h1,
+        #qg-banner-blurb .blurb>p {
+            color: white !important;
+        }
+
+        .qg-banner-blurb_wrapper .qg-card .content ul>li {
+            margin-top: 0.6em;
+        }
+
+        .qg-banner-blurb_wrapper .qg-card .content ul {
+            margin-bottom: 10px !important;
+        }
+
+    </style>
+
+</head>
+
+<body data-qg-accessibility="true">
+
+    <!--#include virtual="/assets/includes-local/analytics.html"-->
+    <!--#include virtual="/assets/includes-local/header/access.html"-->
+    <!-- global alert -->
+
+    <!--#include virtual="/assets/includes-local/header/header-without-location.html"-->
+    
+    <div class="qg-global-breadcrumb qg-breadcrumb">
+        <div class="container-fluid qg-site-width">
+            <nav id="qg-breadcrumb" aria-label="breadcrumb" class="qg-breadcrumb-nav row">
+            <ol class="qg-breadcrumb-list">
+                <li class="qg-breadcrumb-list-item">
+                <a href="/" class="qg-breadcrumb-list-item__link">
+                    Home
+                </a>
+                </li>
+                <li class="qg-breadcrumb-list-item">
+                    Contact us
+                </li>
+            </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div id="qg-content">
+            <div id="qg-one-col" class="row wide">
+                  
+                <section id="qg-banner-blurb" style="background:#f5f5f5 url('https://www.qld.gov.au/__data/assets/image/0021/177501/varieties/1600x361.png') no-repeat center/cover; padding-right: 0 !important; padding-left: 0 !important;" class="hide-xs-hero-img ">
+                     
+                    <div class="qg-banner-blurb_wrapper">
+                        <div class="blurb dark  top-left ">
+                            <h1>Contact the Queensland Government</h1>
+                            <p>Find the right support by selecting from the options below.</p>
+                            
+                            <section class="qg-service-finder__container">
+                                <div class="row">        
+                                    <div class="qg-service-finder__search-bar col-12 col-sm-12 col-md-6">
+                                        <form class="qg-forms-v2">
+                                            <label for="select-input"><h3>I have an enquiry about ...</h3></label>
+                                            <select class="form-control" id="select-input">
+                                              <option class="placeholder">Select</option>
+                                              <option value="One">Transport and motoring (TMR)</option>
+                                              <option value="Two">QGov identity</option>
+                                              <option value="Three">Births, deaths and marriages (BDM)</option>
+                                              <option value="Four">Housing and homes</option>
+                                              <option value="Five">Blue Card</option>
+                                              <option value="Six">Seniors Card</option>
+                                              <option value="Seven">Fines and penalties (SPER)</option>
+                                              <option value="Eight">Office of Fair Trading (OFT)</option>
+                                              <option value="Nine">Other</option>
+                                            </select>
+                                        </form>
+                                                                              
+                                    </div> 
+                                </div>
+                            </section> 
+
+                            <div id="selected-option-text"><!-- Empty div to display the selected option text --></div> 
+
+                        </div>    
+                    </div>
+                      
+                </section>
+            
+                <div class="qg-site-width container-fluid">
+
+                    <div id="qg-primary-content" role="main" style="margin-top: 10px;">
+
+                        <div class="row">
+                            <div class="col-12">
+
+                                <h2>Other ways to contact us</h2>
+                                    
+                                <section class="row qg-cards">
+                                    <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-lg-4 ">
+                                        <div class="content">
+                                            <div class="details  qg-cards__row-1">
+                                                <h3>Message us</h3>
+                                                <p>Our virtual assistant can answer your questions instantly or connect you with us.</p>
+                                                <p class="mt-2"><a href="#" target="_blank">Send a message</a></p>
+                                            </div>
+                                        </div>
+                                    </article>
+
+                                    <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-lg-4 ">
+                                        <div class="content">
+                                            <div class="details  qg-cards__row-1">
+                                                <h3>Complaints and compliments</h3>
+                                                <p>We're committed to providing excellent customer service. Your feedback helps us improve what we do.</p> 
+                                                <p><a href="#" target="_blank">Complaints and compliments form</a></p>
+                                            </div>
+                                        </div>
+                                    </article>
+
+                                    <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-lg-4 ">
+                                        <div class="content">
+                                            <div class="details  qg-cards__row-1">
+                                                <h3>Visit a government service office</h3>
+                                                <p>Find your nearest <a href="https://www.qld.gov.au/about/contact-government/contacts/government-service-offices">Queensland Government service office</a>.</p>
+                                            </div>
+                                        </div>
+                                    </article>
+                                
+                                    <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-lg-4 ">
+                                        <div class="content">
+                                            <div class="details  qg-cards__row-1">
+                                                <h3>Look up departments and agencies</h3>
+                                                <p>Find contact information in our <a href="https://www.qld.gov.au/about/how-government-works/government-structure">departmental directory</a> or find <a href="https://www.qld.gov.au/contact-us/postal">postal addresses</a>.</p>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    
+                                    <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-lg-4 ">
+                                        <div class="content">
+                                            <div class="details  qg-cards__row-1">
+                                                <h3>Find information for your local Member of Parliament</h3>
+                                                <p>Find contact information for <a href="https://www.qld.gov.au/about/contact-government/contacts/local-mp">your local MP</a>.</p>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </section>
+
+                                <section>
+                                    <h2 class="mt-0">Connect with us on social media</h2>
+                                    <p>Use our social media to ask us questions and stay up to date.</p>
+                                    <ul class="mb-5">
+                                        <li>Facebook (<a href="https://www.facebook.com/QueenslandGovernment" style="border:0px">/QueenslandGovernment</a>)</li>
+                                        <li>Instagram (<a href="https://www.instagram.com/qldgov" style="border:0px">@QldGov</a>)</li>
+                                        <li>Twitter (<a href="https://twitter.com/QldGov" style="border:0px">@QldGov</a>)</li>
+                                    </ul>
+                                </section>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div><!-- /#qg-content -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+    <!--#include virtual="/assets/includes-local/footer/footer-without-location.html"-->
+
+    <script>
+      var qg = qg || {};
+      qg.swe = qg.swe || {};
+      // Used by the feedback form.
+      qg.swe.franchiseTitle = 'Franchise Title';
+    </script>
+
+    <!--#include virtual="/assets/includes-local/footer/footer-scripts.html"-->
+
+
+</body>
+
+</html>
