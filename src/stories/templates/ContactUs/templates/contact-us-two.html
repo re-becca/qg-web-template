@@ -150,7 +150,7 @@
                     <div class="content">
                         <div class="details qg-cards__row-1" >
                             <h2>Housing and homes</h2>
-                            <p>For help with homes and housing, including public and community housing, renting, emergency and temporary accommodation and buying and modifying a home.</p>
+                            <p>For help with homes and housing, including public and community housing, renting, emergency and temporary accommodation, and buying, building and modifying a home.</p>
                             <ul>
                                 <li><a href="https://www.qld.gov.au/housing/public-community-housing/housing-service-centre" target="_blank">Contact or visit a Housing Service Centre</a></li>
                                 <li><a href="tel:137468" data-analytics-link-group="qg-contact-phone">Call 13 QGOV (13 74 68)</a></li>
@@ -201,13 +201,82 @@
             </section>`;
             break;
             case 'Six':
-            selectedOptionText.innerHTML = ``;
+            selectedOptionText.innerHTML = `
+            <section class="row qg-cards qg-cards__equal-height">
+                <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-md-5">
+                    <div class="content">
+                        <div class="details qg-cards__row-1" >
+                            <h2>Seniors Card</h2>
+                            <p>Need help applying for a Seniors Card, Seniors Card +go or Seniors Business Discount Card?</p>
+                            <ul>
+                                <li><a href="tel:137468" data-analytics-link-group="qg-contact-phone">Call 13 QGOV (13 74 68)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+                <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-md-5">
+                    <div class="content">
+                        <div class="details qg-cards__row-1" >
+                            <h2>You might be looking for</h2>
+                            <ul>
+                                <li><a href="https://www.qld.gov.au/seniors/legal-finance-concessions/seniors-card/applying-seniors-card">Am I eligible for a Seniors Card?</a></li>
+                                <li><a href="https://www.qld.gov.au/seniors/legal-finance-concessions/seniors-card/using-seniors-card">Where can I use my Seniors Card?</a></li>
+                        </div>
+                    </div>
+                </article>
+            </section>`;
             break;
             case 'Seven':
-            selectedOptionText.innerHTML = ``;
+            selectedOptionText.innerHTML = `
+            <section class="row qg-cards qg-cards__equal-height">
+                <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-md-5">
+                    <div class="content">
+                        <div class="details qg-cards__row-1" >
+                            <h2>Fines and penalties e.g. SPER</h2>
+                            <p>Contact State Penalties Enforcement Register (SPER) for questions about paying your fines and penalties, including infringement notice fines.</p>
+                            <ul>
+                                <li><a href="https://qro.qld.gov.au/about-qro/sper/contact-us/" target="_blank">Contact us - SPER</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+                <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-md-5">
+                    <div class="content">
+                        <div class="details qg-cards__row-1" >
+                            <h2>You might be looking for</h2>
+                            <ul>
+                                <li><a href="https://www.qld.gov.au/transport/safety/fines/pay">Pay a fine</a></li>
+                                <li><a href="https://online.sper.qld.gov.au/home">Manage your SPER debt</a></li>
+                        </div>
+                    </div>
+                </article>
+            </section>`;
             break;
             case 'Eight':
-            selectedOptionText.innerHTML = ``;
+            selectedOptionText.innerHTML = `
+            <section class="row qg-cards qg-cards__equal-height">
+                <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-md-5">
+                    <div class="content">
+                        <div class="details qg-cards__row-1" >
+                            <h2>Office of Fair Trading (OFT)</h2>
+                            <p>Contact OFT for questions about consumer protection laws.</p>
+                            <ul>
+                                <li><a href="https://www.qld.gov.au/law/laws-regulated-industries-and-accountability/queensland-laws-and-regulations/fair-trading-services-programs-and-resources/fair-trading-services-and-contact-information" target="_blank">Contact us - Office of Fair Trading</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+                <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-md-5">
+                    <div class="content">
+                        <div class="details qg-cards__row-1" >
+                            <h2>You might be looking for</h2>
+                            <ul>
+                                <li><a href="https://www.qld.gov.au/law/your-rights/consumer-rights-complaints-and-scams/make-a-consumer-complaint">Make a consumer complaint</a></li>
+                                <li><a href="https://www.qld.gov.au/law/your-rights/consumer-rights-complaints-and-scams/scams-fraud">Learn about recent and common scams</a></li>
+                        </div>
+                    </div>
+                </article>
+            </section>`;
             break;
             case 'Nine':
             selectedOptionText.innerHTML = `
@@ -220,6 +289,7 @@
                             <ul>
                                 <li><a href="tel:137468" data-analytics-link-group="qg-contact-phone">Call 13 QGOV (13 74 68) </a></li>
                             </ul>
+                            <p>International callers: <a href="tel:+61733284811" data-analytics-link-group="qg-contact-phone">+61 7 3328 4811</a>(+10 hours UTC).</p>
                         </div>
                     </div>
                 </article>
@@ -381,7 +451,7 @@
                                               <option value="Four">Housing and homes</option>
                                               <option value="Five">Blue Card</option>
                                               <option value="Six">Seniors Card</option>
-                                              <option value="Seven">Fines and penalties (SPER)</option>
+                                              <option value="Seven">Fines and penalties e.g. SPER</option>
                                               <option value="Eight">Office of Fair Trading (OFT)</option>
                                               <option value="Nine">Other</option>
                                             </select>
@@ -457,7 +527,22 @@
                                 </section>
 
                                 <section>
-                                    <h2 class="mt-0">Connect with us on social media</h2>
+                                    <h2 class="mt-3">National Relay Service</h2>
+                                    
+                                    <p>If you are deaf or have a hearing or speech impediment, contact us through the <a href="https://www.infrastructure.gov.au/media-communications-arts/phone/services-people-disability/accesshub/national-relay-service">National Relay Service</a>.</p>
+                                    
+                                    <ul>
+                                        <li><strong>Teletypewriter</strong>: phone <a href="tel:133677">13 36 77</a> and ask for 13 QGOV (13 74 68).</li>
+                                        <li><b>Voice relay</b>: phone <a href="tel:1300555727">1300 555 727</a> and ask for 13 74 68.</li>
+                                        <li><strong>Internet relay (NRS chat)</strong>: log into the <a href="https://www.infrastructure.gov.au/media-communications-arts/phone/services-people-disability/accesshub/national-relay-service/service-features#nrschat">internet relay call (NRS Chat)</a> page and type in 13 QGOV (13 74 68).</li>
+                                        <li><strong>Video relay</strong>: choose the available video relay contact on Skype and ask for 13 QGOV (13 74 68).</li>
+                                        <li><strong>SMS relay</strong>: send a text message to <a href="tel:0423677767">0423 677 767</a> asking for 13 QGOV (13 74 68).</li>
+                                    </ul>
+                                    
+                                    <h2 class="pt-4">Interpreter services</h2>
+                                    <p>If you need an interpreter, call <a href="tel:1800512451">1800 512 451</a>.</p>
+         
+                                    <h2 class="pt-4">Connect with us on social media</h2>
                                     <p>Use our social media to ask us questions and stay up to date.</p>
                                     <ul class="mb-5">
                                         <li>Facebook (<a href="https://www.facebook.com/QueenslandGovernment" style="border:0px">/QueenslandGovernment</a>)</li>
