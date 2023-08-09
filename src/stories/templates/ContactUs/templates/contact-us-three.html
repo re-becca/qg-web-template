@@ -285,11 +285,11 @@
                     <div class="content">
                         <div class="details qg-cards__row-1" >
                             <h2>General enquiries</h2>
-                            <p>We welcome your questions, comments and feedback on all of our services. We can answer your calls 24 hours a day, 7 days a week.</p>
+                            <p>We welcome your questions, comments and feedback on all services.</p>
                             <ul>
-                                <li><a href="tel:137468" data-analytics-link-group="qg-contact-phone">Call 13 QGOV (13 74 68) </a></li>
+                                <li><a href="tel:137468" data-analytics-link-group="qg-contact-phone">Call 13 QGOV (13 74 68) </a> <p>We can answer your calls 24 hours a day, 7 days a week. International callers: <a href="tel:+61733284811" data-analytics-link-group="qg-contact-phone">+61 7 3328 4811</a>(+10 hours UTC).</p></li>
+                                <li><a href="https://www.tmr.qld.gov.au/help/online-services-help/live-chat-with-us-via-messaging" target="_blank"> Message us</a> </li>
                             </ul>
-                            <p>International callers: <a href="tel:+61733284811" data-analytics-link-group="qg-contact-phone">+61 7 3328 4811</a>(+10 hours UTC).</p>
                         </div>
                     </div>
                 </article>
@@ -299,6 +299,22 @@
             selectedOptionText.innerHTML = ''; // Hide the text if no option is selected
             break;
         }
+        });
+    </script>
+
+    <script>
+        // Get references to the radio buttons and div elements
+        const radioButtons = document.querySelectorAll('input[type="radio"][name="tabs-radio"]');
+        const tabContents = document.querySelectorAll('.qg-tab-content');
+        
+        // Add event listeners to the radio buttons
+        radioButtons.forEach(radioButton => {
+            radioButton.addEventListener('click', () => {
+            // Loop through the div elements and show/hide based on the selected radio button
+            tabContents.forEach(tabContent => {
+                tabContent.style.display = (radioButton.value === tabContent.id) ? 'block' : 'none';
+            });
+            });
         });
     </script>
 
@@ -475,90 +491,149 @@
                         <div class="row">
                             <div class="col-12">
 
-                                <h2>Other ways to contact us</h2>
-                                    
-                                <section class="row qg-cards">
-                                    <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-lg-4 ">
-                                        <div class="content">
-                                            <div class="details  qg-cards__row-1">
-                                                <h3><i class="fa fa-phone mr-1" aria-hidden="true"></i> Phone us</h3>
-                                                <p>We welcome your questions, comments and feedback on all of our services.</p>
-                                                <p class="mt-2"><a href="tel:137468" data-analytics-link-group="qg-contact-phone">Call 13 QGOV (13 74 68) </a></p>
-                                            </div>
-                                        </div>
-                                    </article>
-                                    
-                                    <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-lg-4 ">
-                                        <div class="content">
-                                            <div class="details  qg-cards__row-1">
-                                                <h3><i class="fa fa-comment mr-1" aria-hidden="true"></i> Message us</h3>
-                                                <p>Our virtual assistant can answer your questions instantly or connect you with us.</p>
-                                                <p class="mt-2"><a href="https://www.tmr.qld.gov.au/help/online-services-help/live-chat-with-us-via-messaging" target="_blank">Send a message</a></p>
-                                            </div>
-                                        </div>
-                                    </article>
+                                <section class="pt-2 pb-3">
+                                    <h2>Or choose another contact method</h2>
+                                    <!-- 
+                                        radio component template from https://qld-gov-au.github.io/web-template-release/forms.html#radio-checkbox-custom-theme.
+                                        need to add "w-100" in serveral places to fix the tab style.
+                                        a11y is not considered here, as it will require to develop proper tabs component in SWE
+                                        ie. develop tabs component based on https://www.w3.org/TR/2018/WD-wai-aria-practices-1.2-20181218/examples/tabs/tabs-2/tabs.html
+                                    -->
+                                    <form id="contact-us-tabs">
+                                        <ul class="choices compact rc-theme qg-radio-tabs">
+                                            <li class="rc-theme__active">
+                                                <input type="radio" value="tab2" name="tabs-radio" id="tab2-radio" checked>
+                                                <label for="tab2-radio" class="rc-theme__with-image w-100">
+                                                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="58" height="58" viewBox="0 0 100 100">
+                                                        <path class="rc-theme__icon" fill-rule="evenodd" clip-rule="evenodd" d="M77.2778 64.5278C72.625 64.5278 68.1583 63.7833 63.9894 62.4061C63.6172 62.2944 63.2078 62.22 62.8356 62.22C61.8678 62.22 60.9372 62.5922 60.1928 63.2994L52.0039 71.4883C41.47 66.1283 32.8344 57.53 27.4744 46.9961L35.6633 38.77C36.7056 37.765 37.0033 36.3133 36.5939 35.0106C35.2167 30.8417 34.4722 26.375 34.4722 21.7222C34.4722 19.675 32.7972 18 30.75 18H17.7222C15.675 18 14 19.675 14 21.7222C14 56.6739 42.3261 85 77.2778 85C79.325 85 81 83.325 81 81.2778V68.25C81 66.2028 79.325 64.5278 77.2778 64.5278ZM27.14 25.4443C27.4005 28.7199 27.9589 31.9582 28.8522 35.0849L24.3855 39.5888C22.8594 35.0849 21.8916 30.3577 21.5566 25.4443H27.14ZM59.4102 74.6151C63.8768 76.1412 68.6413 77.109 73.5546 77.444V71.8234C70.279 71.6001 67.0407 71.0418 63.8768 70.1484L59.4102 74.6151ZM47.5 18V55.2222L58.6667 44.0556H81V18H47.5ZM54.9453 36.611H73.5564V25.4443H54.9453V36.611Z"/>
+                                                    </svg>
+                                                    <span class="rc-theme__label-desc w-100">Phone</span>
+                                                </label>
+                                            </li>
+                                            <li>
+                                            <!-- first tab checked by default -->
+                                            <input type="radio" value="tab1" name="tabs-radio" id="tab1-radio">
+                                            <label for="tab1-radio" class="rc-theme__with-image w-100">
+                                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="58" height="58" viewBox="0 0 100 100">
+                                                    <path class="rc-theme__icon" d="M39.066 87.3823L85.9449 24.4789L8.02973 33.6257L20.0697 54.5482L68.1086 34.7767L26.9666 66.4941L39.066 87.3823Z"/>
+                                                </svg>
+                                                <span class="rc-theme__label-desc w-100">Message</span>
+                                            </label>
+                                            </li>
+                                            
+                                            <li>
+                                            <input type="radio" value="tab3" name="tabs-radio" id="tab3-radio">
+                                            <label for="tab3-radio" class="rc-theme__with-image w-100">
+                                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="58" height="58" viewBox="0 0 100 100">
+                                                    <path class="rc-theme__icon" fill-rule="evenodd" clip-rule="evenodd" d="M43.375 47C42.0688 47 41 48.125 41 49.5C41 50.875 42.0688 52 43.375 52C44.6813 52 45.75 50.875 45.75 49.5C45.75 48.125 44.6813 47 43.375 47ZM57.625 47C56.3188 47 55.25 48.125 55.25 49.5C55.25 50.875 56.3188 52 57.625 52C58.9312 52 60 50.875 60 49.5C60 48.125 58.9312 47 57.625 47ZM48.125 49.5C48.125 48.125 49.1938 47 50.5 47C51.8062 47 52.875 48.125 52.875 49.5C52.875 50.875 51.8062 52 50.5 52C49.1938 52 48.125 50.875 48.125 49.5Z"/>
+                                        <path class="rc-theme__icon" fill-rule="evenodd" clip-rule="evenodd" d="M49.5 26C37.0736 26 27 36.0736 27 48.5C27 60.9264 37.0736 71 49.5 71C61.9264 71 72 60.9264 72 48.5C72 36.0736 61.9264 26 49.5 26ZM21 48.5C21 32.7599 33.7599 20 49.5 20C65.2401 20 78 32.7599 78 48.5C78 64.2401 65.2401 77 49.5 77C33.7599 77 21 64.2401 21 48.5Z"/>
 
-                                    <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-lg-4 ">
-                                        <div class="content">
-                                            <div class="details  qg-cards__row-1">
-                                                <h3><i class="fa fa-envelope-o mr-1" aria-hidden="true"></i> Complaints and compliments</h3>
-                                                <p>We're committed to providing excellent customer service. Your feedback helps us improve what we do.</p> 
-                                                <p><a href="#" target="_blank">Complaints and compliments form</a></p>
-                                            </div>
-                                        </div>
-                                    </article>
+                                                </svg>
+                                                <span class="rc-theme__label-desc w-100">Other ways to contact us</span>
+                                            </label>
+                                            </li>
+                                        </ul>
+                                    </form>
 
-                                    <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-lg-4 ">
-                                        <div class="content">
-                                            <div class="details  qg-cards__row-1">
-                                                <h3><i class="fa fa-map-marker mr-1" aria-hidden="true"></i> Visit a government service office</h3>
-                                                <p>Find your nearest <a href="https://www.qld.gov.au/about/contact-government/contacts/government-service-offices">Queensland Government service office</a>.</p>
-                                            </div>
+                                    <div id="tab1" class="qg-tab-content" style="display: none;">
+                                        <h2>Message us</h2>
+                                        <p>Our virtual assistant can answer your questions instantly or connect you with us.</p>
+                                        <p class="mt-2 pb-3"><a href="https://www.tmr.qld.gov.au/help/online-services-help/live-chat-with-us-via-messaging" target="_blank">Send a message</a></p>
+
+                                        <h2>Complaints and compliments</h2>
+                                        <p>We're committed to providing excellent customer service. Your feedback helps us improve what we do.</p> 
+                                        <p class="mb-3"><a href="#" target="_blank">Complaints and compliments form</a></p>
+                                    </div>
+
+                                    <div id="tab2" class="qg-tab-content" >
+                                        <div class="mw-sm">
+                                            <h2>Phone us</h2>
+
+                                            <h3>General enquiries</h3>
+                                            <p class="mt-2">Call <a href="tel:137468" data-analytics-link-group="qg-contact-phone">13 QGOV (13 74 68)</a></p>
+                                            <p>International callers: <a href="tel:+61733284811">+61 7 3328 4811</a>(+10 hours UTC).</p>
+                                            <p><strong>If it is an emergency, call Triple Zero (000) or dial 106 if you are using TTY.</strong></p>    
+
+                                            <h3>National Relay Service</h3>                                    
+                                            <p>If you are deaf or have a hearing or speech impediment, contact us through the <a href="https://www.infrastructure.gov.au/media-communications-arts/phone/services-people-disability/accesshub/national-relay-service">National Relay Service</a>.</p>
+                                            
+                                            <ul>
+                                                <li><strong>Teletypewriter</strong>: phone <a href="tel:133677">13 36 77</a> and ask for 13 QGOV (13 74 68).</li>
+                                                <li><b>Voice relay</b>: phone <a href="tel:1300555727">1300 555 727</a> and ask for 13 74 68.</li>
+                                                <li><strong>Internet relay (NRS chat)</strong>: log into the <a href="https://www.infrastructure.gov.au/media-communications-arts/phone/services-people-disability/accesshub/national-relay-service/service-features#nrschat">internet relay call (NRS Chat)</a> page and type in 13 QGOV (13 74 68).</li>
+                                                <li><strong>Video relay</strong>: choose the available video relay contact on Skype and ask for 13 QGOV (13 74 68).</li>
+                                                <li><strong>SMS relay</strong>: send a text message to <a href="tel:0423677767">0423 677 767</a> asking for 13 QGOV (13 74 68).</li>
+                                            </ul>
+                                            
+                                            <h3>Interpreter services</h3>
+                                            <p>If you need an interpreter, call <a href="tel:1800512451">1800 512 451</a>.</p>
                                         </div>
-                                    </article>
-                                
-                                    <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-lg-4 ">
-                                        <div class="content">
-                                            <div class="details  qg-cards__row-1">
-                                                <h3><i class="fa fa-list-alt mr-1" aria-hidden="true"></i> Look up departments and agencies</h3>
-                                                <p>Find contact information in our <a href="https://www.qld.gov.au/about/how-government-works/government-structure">departmental directory</a> or find <a href="https://www.qld.gov.au/contact-us/postal">postal addresses</a>.</p>
-                                            </div>
-                                        </div>
-                                    </article>
-                                    
-                                    <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-lg-4 ">
-                                        <div class="content">
-                                            <div class="details  qg-cards__row-1">
-                                                <h3><i class="fa fa-address-card-o mr-1" aria-hidden="true"></i> Find information for your local Member of Parliament</h3>
-                                                <p>Find contact information for <a href="https://www.qld.gov.au/about/contact-government/contacts/local-mp">your local MP</a>.</p>
-                                            </div>
-                                        </div>
-                                    </article>
+                                    </div>
+
+                                    <div id="tab3" class="qg-tab-content" style="display: none;">
+                                        <h2>Other ways to contact us</h2>
+                                        
+                                        <section class="row qg-cards">
+                                            
+                                            <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-lg-4 ">                                        
+                                                <div class="content">
+                                                    <div class="details  qg-cards__row-1">
+                                                        <h3>Visit a government service office</h3>
+                                                        <p>Find your nearest <a href="https://www.qld.gov.au/about/contact-government/contacts/government-service-offices">Queensland Government service office</a>.</p>
+                                                    </di>
+                                                </div>
+                                            </article>
+                                            
+                                            <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-lg-4 ">
+                                                <div class="content">
+                                                    <div class="details  qg-cards__row-1">                                                
+                                                        <h3>Look up departments and agencies</h3>
+                                                        <p>Find contact information in our <a href="https://www.qld.gov.au/about/how-government-works/government-structure">departmental directory</a> or find <a href="https://www.qld.gov.au/contact-us/postal">postal addresses</a>.</p>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                            
+                                            <article class="qg-card qg-card__light-theme col-12 col-sm-6 col-lg-4 ">
+                                                <div class="content">
+                                                    <div class="details  qg-cards__row-1">                                                
+                                                        <h3>Find information for your local Member of Parliament</h3>
+                                                        <p>Find contact information for <a href="https://www.qld.gov.au/about/contact-government/contacts/local-mp">your local MP</a>.</p>
+                                                    </div>
+                                                </div>
+                                            </article>
+
+                                        </section>
+                                        
+                                        <h2 class="mt-3">Connect with us on social media</h2><p>Use our social media to ask us questions and stay up to date.</p>
+                                        <ul class="mb-3">
+                                            <li>Facebook (<a href="https://www.facebook.com/QueenslandGovernment" style="border:0px">/QueenslandGovernment</a>)</li>
+                                            <li>Instagram (<a href="https://www.instagram.com/qldgov" style="border:0px">@QldGov</a>)</li>
+                                            <li>Twitter (<a href="https://twitter.com/QldGov" style="border:0px">@QldGov</a>)</li>
+                                        </ul>
+
+                                    </div>
                                 </section>
 
-                                <section>
-                                    <h2 class="mt-3">National Relay Service</h2>
-                                    
-                                    <p>If you are deaf or have a hearing or speech impediment, contact us through the <a href="https://www.infrastructure.gov.au/media-communications-arts/phone/services-people-disability/accesshub/national-relay-service">National Relay Service</a>.</p>
-                                    
-                                    <ul>
-                                        <li><strong>Teletypewriter</strong>: phone <a href="tel:133677">13 36 77</a> and ask for 13 QGOV (13 74 68).</li>
-                                        <li><b>Voice relay</b>: phone <a href="tel:1300555727">1300 555 727</a> and ask for 13 74 68.</li>
-                                        <li><strong>Internet relay (NRS chat)</strong>: log into the <a href="https://www.infrastructure.gov.au/media-communications-arts/phone/services-people-disability/accesshub/national-relay-service/service-features#nrschat">internet relay call (NRS Chat)</a> page and type in 13 QGOV (13 74 68).</li>
-                                        <li><strong>Video relay</strong>: choose the available video relay contact on Skype and ask for 13 QGOV (13 74 68).</li>
-                                        <li><strong>SMS relay</strong>: send a text message to <a href="tel:0423677767">0423 677 767</a> asking for 13 QGOV (13 74 68).</li>
-                                    </ul>
-                                    
-                                    <h2 class="pt-4">Interpreter services</h2>
-                                    <p>If you need an interpreter, call <a href="tel:1800512451">1800 512 451</a>.</p>
-         
-                                    <h2 class="pt-4">Connect with us on social media</h2>
-                                    <p>Use our social media to ask us questions and stay up to date.</p>
-                                    <ul class="mb-5">
-                                        <li>Facebook (<a href="https://www.facebook.com/QueenslandGovernment" style="border:0px">/QueenslandGovernment</a>)</li>
-                                        <li>Instagram (<a href="https://www.instagram.com/qldgov" style="border:0px">@QldGov</a>)</li>
-                                        <li>Twitter (<a href="https://twitter.com/QldGov" style="border:0px">@QldGov</a>)</li>
-                                    </ul>
+                                <section class="qg-promotional-banner__container row">
+                                    <div class="wrapper qg-site-width container-fluid">
+                                      <div class="qg-promotional-banner__info col-12 col-sm-6">
+                                            <h2>Looking for information or services?</h2>
+                                            <p>Browse information for Queenslanders or use the 'Service finder' to find Queensland Government online services anywhere, at anytime.</p>
+                                            <a href="https://www.qld.gov.au/services" class="qg-btn btn-primary mt-2" style="color:black !important;">Service finder</a>
+                                      </div>
+                                      <div class="qg-promotional-banner__popular-apps col-12 col-sm-6">
+                                            <h4 class="qg-promotional-banner__popular-apps-title">Most active</h4>
+                                            <section class="qg-promotional-banner__popular-apps-tags">
+                                                <ul>
+                                                    <li><a href="https://www.qld.gov.au/transport/registration/register/renew" class="qg-btn btn-outline-dark m-1">Renew vehicle or boat rego</a></li>
+                                                    <li><a href="https://www.qld.gov.au/environment/land/title" class="qg-btn btn-outline-dark m-1">Property title search</a></li>
+                                                    <li><a href="https://www.service.transport.qld.gov.au/checkmydemeritpoints/public/Welcome.xhtml?dswid=-4297" class="qg-btn btn-outline-dark m-1">Check my licence demerit points</a></li>
+                                                    <li><a href="https://www.qld.gov.au/transport/licensing/driver-licensing/renew-replace/renew/online" class="qg-btn btn-outline-dark m-1">Renew my driver licence</a></li>
+                                                    <li><a href="https://www.change-of-address.services.qld.gov.au/" class="qg-btn btn-outline-dark m-1">Change my address</a></li>
+                                                </ul>
+                                            </section>
+                                        </div>
+                                    </div>
                                 </section>
 
                             </div>
