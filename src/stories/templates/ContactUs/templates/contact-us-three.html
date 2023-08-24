@@ -40,6 +40,8 @@
 
     <!--#include virtual="/assets/includes-local/head-assets.html"-->
 
+    <script src="https://cdn.form.io/formiojs/formio.full.min.js"></script>
+
     <!-- JavaScript code -->
     <script>
         // Get references to the select input and the div to display the selected option text
@@ -446,6 +448,10 @@
             }
         }
 
+        .formio-component-fieldSet .fieldset-body {
+            display: none!important;
+        }
+
     </style>
 
 </head>
@@ -608,8 +614,8 @@
 
                             <div id="tab3" class="qg-tab-content" style="display: none;">
                                 <h2>Complaints and compliments</h2>
-                                <p>We're committed to providing excellent customer service. Your feedback helps us improve what we do.</p> 
-                                <p class="mb-3"><a href="#" target="_blank">Complaints and compliments form</a></p>
+                                <p class="mb-0">We're committed to providing excellent customer service. Your feedback helps us improve what we do.</p> 
+                                <div id="formio" class="qg-forms-v2"></div>
                             </div>
 
                             <div id="tab4" class="qg-tab-content" style="display: none;">
@@ -698,6 +704,12 @@
     </script>
 
     <!--#include virtual="/assets/includes-local/footer/footer-scripts.html"-->
+
+    <script type="text/javascript">
+        window.onload = function() {
+            Formio.createForm(document.getElementById('formio'), 'https://api.forms.platforms.qld.gov.au/dev-oldkihhcwbdtwye/cccomplaintsandcompliments');
+        };
+    </script>
 
 
 </body>
