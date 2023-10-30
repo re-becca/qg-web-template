@@ -7,7 +7,9 @@
     "type": "git",
     "url": "git+https://github.com/qld-gov-au/qg-web-template.git"
   },
-  "publishConfig":{"registry":"https://registry.npmjs.org"},
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "scripts": {
     "clean": "gulp clean-build && gulp clean-release",
     "prebuild": "gulp clean-build",
@@ -113,6 +115,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.13",
+    "ajv": "^8.12.0",
     "bootstrap": "^4.6.2",
     "chromium": "^3.0.3",
     "jquery": "^3.6.3",
