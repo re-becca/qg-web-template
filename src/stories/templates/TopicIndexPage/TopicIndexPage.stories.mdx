@@ -5,6 +5,7 @@ import { getCanvasMobileProps, getStoryMobileParameters, getStoryMobileHeight } 
 import Default from "../../../template-pages/topic-index-page.html";
 import Mobile from "../../../template-pages/topic-index-page.html";
 import New from "../../../template-pages/new-topic-index-page.html";
+import New2 from "../../../template-pages/new-topic-index-page2.html";
 
 <Meta title="Templates/TopicIndexPage" />
 
@@ -16,12 +17,17 @@ import New from "../../../template-pages/new-topic-index-page.html";
   <Story name="Default">{() => Default}</Story>
 </Canvas>
 
-<Canvas withSource="close">
-  <Story name="New">{() => New}</Story>
-</Canvas>
-
 ## Mobile
 
 <Canvas withSource="none" {...getCanvasMobileProps()}>
   <Story name="Mobile" parameters={getStoryMobileParameters()} height={getStoryMobileHeight()}>{() => Mobile}</Story>
+</Canvas>
+
+
+<Canvas withSource="close">
+  <Story name="New">{() => New}</Story>
+</Canvas>
+
+<Canvas withSource="close">
+  <Story name="New2">{() => New2}</Story>
 </Canvas>
