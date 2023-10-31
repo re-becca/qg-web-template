@@ -6,6 +6,7 @@ import Default from "../../../template-pages/topic-index-page.html";
 import Mobile from "../../../template-pages/topic-index-page.html";
 import New from "../../../template-pages/new-topic-index-page.html";
 import Nocards from "../../../template-pages/new-topic-index-page-nocards.html";
+import Noaside from "../../../template-pages/new-topic-index-page-noaside.html";
 
 <Meta title="Templates/TopicIndexPage" />
 
@@ -30,4 +31,8 @@ import Nocards from "../../../template-pages/new-topic-index-page-nocards.html";
 
 <Canvas withSource="close">
   <Story name="Nocards">{() => Nocards}</Story>
+</Canvas>
+
+<Canvas withSource="close">
+  <Story name="Noaside">{() => Noaside}</Story>
 </Canvas>
