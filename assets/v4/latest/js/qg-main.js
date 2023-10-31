@@ -284,60 +284,53 @@ var QgAccordion = /*#__PURE__*/function () {
 /*!************************************************************************!*\
   !*** ./src/assets/_project/_blocks/components/carousel/qg-carousel.js ***!
   \************************************************************************/
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+/***/ (() => {
 
 "use strict";
 /*aside carousel play and pause feature*/
 
 
-var _toConsumableArray = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "./node_modules/@babel/runtime/helpers/toConsumableArray.js");
 (function ($) {
   var carousels = [];
   var eqHeight = function eqHeight(carousels) {
-    //For each carousel on the page...
-    carousels.forEach(function (carousel) {
-      //Get the height of each carousel slide in the carousel...
-      var slides = $('#' + carousel).find('.carousel-item');
-
-      //Each slides height into an array...
-      var slideHeights = slides.map(function (e, slide) {
-        return $(slide).height();
-      });
-
-      //Assign the tallest value to every slide
-      slideHeights.map(function (e, slide) {
-        $(slide).css('min-height', Math.max.apply(Math, _toConsumableArray(slideHeights)) + 'px');
-      });
-    });
-  };
-  $('.qg-featured .carousel.slide').each(function (int, element) {
-    var carouselID = $(element).attr('id');
-    carousels.push(carouselID);
-
-    //Start all slides to cycle by default
-    $(this).attr('data-state', 'cycle');
-
-    //Bind click/tap event
-    $('#' + carouselID).find('.toggleCarousel').on('click', function (e) {
-      e.preventDefault();
-      var parentCarousel = $(this).parents('div.carousel.slide');
-      var currentState = parentCarousel.attr('data-state');
-      switch (currentState) {
-        //If paused, switch to cycling state
-        case 'pause':
-          parentCarousel.attr('data-state', 'cycle').carousel('cycle');
-          $(this).find('i, span').not('.button-title').removeClass('fa-sync fa-pause').addClass('fa-pause');
-          break;
-        case 'cycle':
-          //If cycling, switch to a paused state
-          parentCarousel.attr('data-state', 'pause').carousel('pause');
-          $(this).find('i, span').not('.button-title').removeClass('fa-sync fa-pause').addClass('fa-sync');
-          break;
+    carousels.forEach(function (e) {
+      var items = $('#' + e + '').find('.carousel-item');
+      var heights = [];
+      var tallest;
+      if (items.length) {
+        var normalizeHeights = function normalizeHeights() {
+          items.each(function () {
+            heights.push($(this).height());
+          });
+          tallest = Math.max.apply(null, heights);
+          items.each(function () {
+            $(this).css('min-height', tallest + 'px');
+          });
+        };
+        normalizeHeights();
+        $(window).on('resize orientationchange', function () {
+          tallest = 0;
+          heights.length = 0;
+          items.each(function () {
+            $(this).css('min-height', '0');
+          });
+          normalizeHeights();
+        });
       }
     });
+  };
+  $('.qg-featured .carousel.slide').each(function (i, e) {
+    var carousel = $(e).attr('id');
+    carousels.push(carousel);
+    $(this).attr('data-state', 'cycle');
+    $('#' + carousel + '').find('.toggleCarousel').click(function (e) {
+      e.preventDefault();
+      var $parentCarousel = $(this).parents('div.carousel.slide');
+      $parentCarousel.attr('data-state') === 'cycle' ? $parentCarousel.attr('data-state', 'pause') : $parentCarousel.attr('data-state', 'cycle');
+      $parentCarousel.carousel($parentCarousel.attr('data-state'));
+      $(this).find('i').toggleClass('fa-sync fa-pause');
+    });
   });
-
-  //Equal height each carousel slide
   window.onload = function () {
     eqHeight(carousels);
   };
@@ -977,34 +970,35 @@ if ($("script[src*='jquery.fancybox']").length === 0) {
   \**************************************************************************/
 /***/ (() => {
 
-// This function looks for file summary strings on a page and reformats values for consistency and readability.
-// It is an update a previous SWE function with the same behaviour.
-// It has been converted from jQuery to vanilla JS and it now rounds up filesize values. The previous function stripped all values after the decimal point.
+(function ($) {
+  'use strict';
 
-// 1. looks for this file summary pattern: for example "(PDF, 1.3 MB) or (DOCX 23.5KB)" on all links (A tags) in the DOM
-// 2. checks the HREF of the link ends in .PDF, .RTF etc
-// 3. reformats the file summary for consistency (PDF 517 KB)
-// 4. Rounds UP the file size value to the nearest whole integer
-// 5. Assumes a bias for over inflated sizes. e.g. 1.3 MB will round up to 2 MB
-
-document.addEventListener('DOMContentLoaded', function () {
-  var filePattern = /\.(?:PDF|DOC|DOCX|XLS|XLSX|RTF)$/i;
-  var summaryPattern = /\((PDF|DOC|DOCX|XLS|XLSX|RTF)\s*,?\s*([\d.]+)\s*(KB|MB|GB)\)/i;
-  var elements = document.querySelectorAll('#qg-primary-content a, #qg-secondary-content a');
-  elements.forEach(function (element) {
-    var fileMatch = element.href.match(filePattern);
-    var summaryMatch = element.text.match(summaryPattern);
-    if (fileMatch && summaryMatch) {
-      var originalSummary = summaryMatch[0]; // "(PDF 1.56MB)"
-      var contentType = summaryMatch[1].toUpperCase(); // "PDF"
-      var fileSize = Math.ceil(parseFloat(summaryMatch[2])); // 1.56
-      var fileSizeUnit = summaryMatch[3].toUpperCase(); // "MB"
-
-      var newSummary = "<span class=\"meta\">(".concat(contentType, ", ").concat(fileSize, " ").concat(fileSizeUnit, ")</span>");
-      element.innerHTML = element.textContent.replace(originalSummary, newSummary); //(PDF 1.6 MB)
-    }
+  var linkType = '.PDF$|.DOC$|.DOCX$|.XLS$|.XLSX$|.RTF$';
+  var contentType = 'PDF|DOC|DOCX|XLS|XLSX|RTF';
+  $(document).ready(function () {
+    $('a', '#qg-primary-content, #qg-secondary-content').each(function () {
+      var $this = $(this);
+      var linkRegex = new RegExp(linkType, 'i');
+      // check to see if a link with a selected linkType exist
+      // Example - cue-template-change-log.pdf|rtf...
+      if (linkRegex.test($this.attr('href'))) {
+        var contentRegex = new RegExp(contentType);
+        var currContent = $this.text();
+        if (/\.\d*?/.test(currContent)) {
+          // check to see if decimals exist, if yes then round then off
+          // Example (PDF 106.66) -> (PDF 106)
+          var extractSize = new RegExp('\\((?:' + contentType.toUpperCase() + '),?\\s+[0-9\\.]+\\s*[KM]B\\)', 'i');
+          currContent.match(extractSize) ? $(this).find('.meta').empty().append(currContent.match(extractSize)[0].toUpperCase().replace(/(\.\d*)/gi, '')) : '';
+        } else if (!contentRegex.test(currContent)) {
+          // check to see there is no doc type present in the content section
+          // If yes then insert <span class="meta">PDF</span>
+          var linkText = $this.attr('href').replace(/^.*\.(.+)$/, '$1').toUpperCase();
+          $this.append(' <span class="meta">(' + linkText + ')</span>');
+        }
+      }
+    });
   });
-});
+})(jQuery);
 
 /***/ }),
 
@@ -1736,47 +1730,6 @@ var QgQuickExit = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./src/assets/_project/_blocks/components/site-search/qg-funnelback-v16-refs.js":
-/*!**************************************************************************************!*\
-  !*** ./src/assets/_project/_blocks/components/site-search/qg-funnelback-v16-refs.js ***!
-  \**************************************************************************************/
-/***/ (() => {
-
-(function () {
-  var replacements = [['find.search.qld.gov.au', 'discover.search.qld.gov.au'], ['qld-gov', 'qgov~sp-search'], ['qgov-content', 'qgov~sp-content'], ['services-web', 'qgov~sp-services']];
-  function updateRefs(originalValue) {
-    var newValue = originalValue;
-    replacements.forEach(function (pair) {
-      newValue = newValue.replace(new RegExp(pair[0], 'g'), pair[1]);
-      if (originalValue.includes(pair[0])) {
-        var depReference = pair[1].includes('qgov~') ? "\"".concat(pair[0], "\" collection,") : "\"".concat(pair[0], "\"");
-        console.log("SWE/Funnelback notice:\nThis application contains a reference to ".concat(depReference, " which is deprecated. It must be replaced with \"").concat(pair[1], "\".\n"));
-      }
-    });
-    return newValue;
-  }
-  document.querySelectorAll('form[data-suggestions], form[data-results-url], div[data-centres], input[name=collection]').forEach(function (element) {
-    if (element.hasAttribute('data-suggestions')) {
-      var currentValue = element.getAttribute('data-suggestions');
-      element.setAttribute('data-suggestions', updateRefs(currentValue));
-    }
-    if (element.hasAttribute('data-results-url')) {
-      var _currentValue = element.getAttribute('data-results-url');
-      element.setAttribute('data-results-url', updateRefs(_currentValue));
-    }
-    if (element.hasAttribute('data-centres')) {
-      var _currentValue2 = element.getAttribute('data-centres');
-      element.setAttribute('data-centres', updateRefs(_currentValue2));
-    }
-    if (element.getAttribute('name') === 'collection') {
-      var _currentValue3 = element.getAttribute('value');
-      element.setAttribute('value', updateRefs(_currentValue3));
-    }
-  });
-})();
-
-/***/ }),
-
 /***/ "./src/assets/_project/_blocks/components/site-search/qg-search-minimize.js":
 /*!**********************************************************************************!*\
   !*** ./src/assets/_project/_blocks/components/site-search/qg-search-minimize.js ***!
@@ -2446,11 +2399,7 @@ $(function () {
     // Look for services in standard results
     if (allResults.length > 0) {
       var filteredResults = allResults.filter(function (result) {
-        if (result['listMetadata'] != null && result['listMetadata']['sfinder'] != null) {
-          return result['listMetadata']['sfinder'][0] === 'yes';
-        } else {
-          return false;
-        }
+        return result['metaData']['sfinder'] === 'yes';
       });
       serviceResults = serviceResults.concat(filteredResults);
       if (serviceResults.length > 3) {
@@ -3724,18 +3673,15 @@ $(function () {
     if (results.length > 0) {
       centreData = results[0];
     }
-    if (centreData && centreData['listMetadata']) {
-      var centreName = centreData['listMetadata']['t'];
-      var centreID = centreData['listMetadata']['id'];
+    if (centreData) {
+      var centreName = centreData['metaData']['t'];
+      var centreID = centreData['metaData']['id'];
       var centreDistance = centreData['kmFromOrigin'];
-      var centreAddress1 = centreData['listMetadata']['address1'];
-      var centreAddress2 = centreData['listMetadata']['address2'];
+      var centreAddress1 = centreData['metaData']['address1'];
+      var centreAddress2 = centreData['metaData']['address2'];
 
       // Build URL
-      var centreType = centreData['listMetadata']['datasource'];
-      if (centreType !== undefined) {
-        centreType = centreType[0].toLowerCase();
-      }
+      var centreType = centreData['metaData']['datasource'].toLowerCase();
       var centreURL = centreContainer.attr('data-' + centreType);
 
       // Handle special cases
@@ -3750,12 +3696,10 @@ $(function () {
       // Build HTML
       centreHTML += '<a href="' + centreURL + '" class="qg-service-centre__link" data-analytics-link-group="qg-nearest-service-centre-details">' + centreName + '</a>';
       centreHTML += '<ul class="qg-service-centre-list">';
-      centreHTML += '<li class="qg-service-centre-list-item service-info">';
+      centreHTML += '<li class="qg-service-centre-list-item">';
       centreHTML += '<a href="' + centreURL + '" data-analytics-link-group="qg-nearest-service-centre-services">Services available</a>';
       centreHTML += '</li>';
-      if (centreDistance !== null) {
-        centreHTML += '<li class="qg-service-centre-list-item centre-distance">' + centreDistance + ' km away</li>';
-      }
+      centreHTML += '<li class="qg-service-centre-list-item">' + centreDistance + ' km away</li>';
       centreHTML += '<li class="qg-service-centre-list-item">';
       if (centreAddress1 !== undefined) {
         centreHTML += '<span class="qg-service-centre__address">' + centreAddress1 + '</span>';
@@ -3975,9 +3919,12 @@ var stepNav = {
 /*!***********************************************************!*\
   !*** ./src/assets/_project/_blocks/legacy/forms/forms.js ***!
   \***********************************************************/
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-var _typeof = __webpack_require__(/*! @babel/runtime/helpers/typeof */ "./node_modules/@babel/runtime/helpers/typeof.js");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/typeof */ "./node_modules/@babel/runtime/helpers/esm/typeof.js");
+
 /*! Form validation - v1.1.1 - 2014-04-09
  * https://github.com/bboyle/form-validation
  * Copyright (c) 2014 Ben Boyle; Licensed MIT */
@@ -4015,7 +3962,7 @@ var _typeof = __webpack_require__(/*! @babel/runtime/helpers/typeof */ "./node_m
         var $element = $(domElement),
           labelElement = null,
           foundElement = null;
-        if (_typeof(options) === 'object' && options.level === 'group') {
+        if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(options) === 'object' && options.level === 'group') {
           foundElement = $element.formValidation('group').find(component)[0];
         } else if ($element.is(':radio, :checkbox')) {
           foundElement = $element.closest('fieldset').find(component)[0];
@@ -4266,7 +4213,7 @@ var _typeof = __webpack_require__(/*! @babel/runtime/helpers/typeof */ "./node_m
       // return question element for item
       question: function question(options) {
         // looking for group?
-        if (_typeof(options) === 'object' && options.level === 'group') {
+        if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(options) === 'object' && options.level === 'group') {
           // return the group
           return this.formValidation('group');
         }
@@ -4341,7 +4288,7 @@ var _typeof = __webpack_require__(/*! @babel/runtime/helpers/typeof */ "./node_m
     // http://docs.jquery.com/Plugins/Authoring#Plugin_Methods
     if (methods[method]) {
       return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-    } else if (_typeof(method) === 'object' || !method) {
+    } else if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(method) === 'object' || !method) {
       return methods.init.apply(this, arguments);
     } else {
       $.error('Method ' + method + ' does not exist on jQuery.formValidation');
@@ -4400,7 +4347,7 @@ if (jQuery !== 'undefined') {
       // for feature detection
       input = $('<input>').get(0),
       // polyfill test
-      polyfill = _typeof(input.validity) !== 'object',
+      polyfill = (0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(input.validity) !== 'object',
       // radio button bug (google earth internal browser)
       radioButtonBug = !polyfill && $('<input type="radio" required checked>').get(0).validity.valueMissing === true,
       validateBuggyRadioButtons,
@@ -4547,7 +4494,7 @@ if (jQuery !== 'undefined') {
         if (polyfill) {
           // set us up the API
           candidates.filter(function () {
-            return _typeof(this.validity) !== 'object';
+            return (0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(this.validity) !== 'object';
           }).each(function () {
             this.validity = validityState(false, false, false, '', false);
             this.validationMessage = '';
@@ -4807,7 +4754,7 @@ if (jQuery !== 'undefined') {
       },
       valueInArray = function valueInArray(possibleValues, actualValues) {
         var i;
-        if (_typeof(possibleValues) !== 'object') {
+        if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(possibleValues) !== 'object') {
           possibleValues = [possibleValues];
         }
         for (i = 0; i < actualValues.length; i++) {
@@ -4834,9 +4781,9 @@ if (jQuery !== 'undefined') {
         form = this.closest('form');
         if (form.length) {
           dependencyMap = form.data('relevance');
-          if (_typeof(dependencyMap) === 'object') {
+          if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(dependencyMap) === 'object') {
             dependencyMap = dependencyMap.dependencyMap;
-            if (_typeof(dependencyMap) === 'object') {
+            if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(dependencyMap) === 'object') {
               // get descendent-or-self select, radio and checkbox
               targets = this.add(this.find('select,input')).filter('select,:radio,:checkbox');
               // get unique @name for select, radio and checkbox
@@ -4846,7 +4793,7 @@ if (jQuery !== 'undefined') {
               $.each(targets, function (index, name) {
                 var map = dependencyMap[name],
                   values;
-                if (_typeof(map) === 'object') {
+                if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(map) === 'object') {
                   $.each(map, function (index, config) {
                     if (isRelevant === false) {
                       config.items.relevance('relevant', false);
@@ -4938,14 +4885,14 @@ if (jQuery !== 'undefined') {
           form = this.closest('form');
           // get dependency map (create it if needed)
           data = form.data('relevance');
-          if (_typeof(data) !== 'object') {
+          if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(data) !== 'object') {
             data = {};
             form.data('relevance', data);
           }
-          if (_typeof(data.dependencyMap) !== 'object') {
+          if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(data.dependencyMap) !== 'object') {
             data.dependencyMap = {};
           }
-          if (_typeof(data.dependencyMap[name]) !== 'object') {
+          if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(data.dependencyMap[name]) !== 'object') {
             data.dependencyMap[name] = [];
             // setup event handlers for name
             formElementsByName(form[0], name).filter(':radio,:checkbox').on('click', recalculateRelevance).end().filter('select').on('change', recalculateRelevance);
@@ -5035,7 +4982,7 @@ if (jQuery !== 'undefined') {
       // http://docs.jquery.com/Plugins/Authoring#Plugin_Methods
       if (methods[method]) {
         return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-      } else if (_typeof(method) === 'object' || !method) {
+      } else if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(method) === 'object' || !method) {
         // return methods.init.apply( this, arguments );
         return this;
       } else {
@@ -5051,7 +4998,7 @@ if (jQuery !== 'undefined') {
   var displayFileSize;
 
   // bail out if no file API support
-  if (_typeof($('<input type="file">')[0].files) !== 'object') {
+  if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])($('<input type="file">')[0].files) !== 'object') {
     // duplicate fsize instruction before submit button
     $('.max-fsize').each(function () {
       var fsize = $(this),
@@ -5486,25 +5433,16 @@ if (!browserSupportsDateInput() && $('input[type=\'date\']').length > 0) {
   });
 }
 // 'qg-date-input' adds a jquery ui datepicker
-if ($('input[class*=\'qg-date-input\']').length > 0) {
+if ($('input[class=\'qg-date-input\']').length > 0) {
   $.getScript('/assets/v4/latest/lib/ext/jquery-ui-bundle/jquery-ui.min.js', function () {
     $('head').append($("<link rel='stylesheet' href='/assets/v4/latest/lib/ext/jquery-ui-bundle/jquery-ui.min.css' type='text/css' media='screen' />"));
-  });
-}
-$(window).on('load', function () {
-  if ($('input[class*=\'qg-date-input\']').length > 0) {
-    // hasDatepicker class has to be removed from the input when the page is loaded. jquery-ui.min.js will add the
-    // calendar widget when the class does not exist on the input. Then hasDatepicker will be dynamically added to the input.
-    // This needs to be done when the page is loaded
-    $('.qg-date-input').removeClass('hasDatepicker');
     $('.qg-date-input').datepicker({
       dateFormat: 'dd/mm/yy',
       changeYear: true,
       changeMonth: true
     });
-    $('.qg-date-input').attr('placeholder', 'dd/mm/yyyy');
-  }
-});
+  });
+}
 
 /***/ }),
 
@@ -5707,7 +5645,7 @@ var QgLoadGoogleApi = /*#__PURE__*/function () {
     contentDefaultHeight: '90%',
     reuseFragment: true
   });
-  // this function equals the height of the cards in a group, if it finds a class '.qg-cards__equal-height'.
+  // this function equals the height of the cards in a group, if it finds a class '.cards__equal-height'.
   function setHeight() {
     var equalHeightCards = document.querySelectorAll('.qg-cards__equal-height');
     if (equalHeightCards.length > 0) {
@@ -6269,116 +6207,6 @@ module.exports = (function(doc, win) {
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/arrayLikeToArray.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/arrayLikeToArray.js ***!
-  \*****************************************************************/
-/***/ ((module) => {
-
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-  return arr2;
-}
-module.exports = _arrayLikeToArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/arrayWithoutHoles.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/arrayWithoutHoles.js ***!
-  \******************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var arrayLikeToArray = __webpack_require__(/*! ./arrayLikeToArray.js */ "./node_modules/@babel/runtime/helpers/arrayLikeToArray.js");
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return arrayLikeToArray(arr);
-}
-module.exports = _arrayWithoutHoles, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/iterableToArray.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/iterableToArray.js ***!
-  \****************************************************************/
-/***/ ((module) => {
-
-function _iterableToArray(iter) {
-  if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
-}
-module.exports = _iterableToArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/nonIterableSpread.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/nonIterableSpread.js ***!
-  \******************************************************************/
-/***/ ((module) => {
-
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-module.exports = _nonIterableSpread, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/toConsumableArray.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/toConsumableArray.js ***!
-  \******************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var arrayWithoutHoles = __webpack_require__(/*! ./arrayWithoutHoles.js */ "./node_modules/@babel/runtime/helpers/arrayWithoutHoles.js");
-var iterableToArray = __webpack_require__(/*! ./iterableToArray.js */ "./node_modules/@babel/runtime/helpers/iterableToArray.js");
-var unsupportedIterableToArray = __webpack_require__(/*! ./unsupportedIterableToArray.js */ "./node_modules/@babel/runtime/helpers/unsupportedIterableToArray.js");
-var nonIterableSpread = __webpack_require__(/*! ./nonIterableSpread.js */ "./node_modules/@babel/runtime/helpers/nonIterableSpread.js");
-function _toConsumableArray(arr) {
-  return arrayWithoutHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableSpread();
-}
-module.exports = _toConsumableArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/typeof.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/typeof.js ***!
-  \*******************************************************/
-/***/ ((module) => {
-
-function _typeof(obj) {
-  "@babel/helpers - typeof";
-
-  return (module.exports = _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
-    return typeof obj;
-  } : function (obj) {
-    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-  }, module.exports.__esModule = true, module.exports["default"] = module.exports), _typeof(obj);
-}
-module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/unsupportedIterableToArray.js":
-/*!***************************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/unsupportedIterableToArray.js ***!
-  \***************************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var arrayLikeToArray = __webpack_require__(/*! ./arrayLikeToArray.js */ "./node_modules/@babel/runtime/helpers/arrayLikeToArray.js");
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
-}
-module.exports = _unsupportedIterableToArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
 /***/ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js":
 /*!*******************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/esm/classCallCheck.js ***!
@@ -6490,14 +6318,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ _typeof)
 /* harmony export */ });
-function _typeof(obj) {
+function _typeof(o) {
   "@babel/helpers - typeof";
 
-  return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
-    return typeof obj;
-  } : function (obj) {
-    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-  }, _typeof(obj);
+  return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) {
+    return typeof o;
+  } : function (o) {
+    return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+  }, _typeof(o);
 }
 
 /***/ }),
@@ -6593,7 +6421,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_qg_env__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_utils_qg_env__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _utils_qg_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils/qg-util */ "./src/assets/_project/_blocks/utils/qg-util.js");
 /* harmony import */ var _legacy_forms_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./legacy/forms/forms */ "./src/assets/_project/_blocks/legacy/forms/forms.js");
-/* harmony import */ var _legacy_forms_forms__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_legacy_forms_forms__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _components_qg_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/qg-components */ "./src/assets/_project/_blocks/components/qg-components.js");
 /* harmony import */ var _layout_footer_footer_legals__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./layout/footer/footer-legals */ "./src/assets/_project/_blocks/layout/footer/footer-legals.js");
 /* harmony import */ var _layout_footer_footer_legals__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_layout_footer_footer_legals__WEBPACK_IMPORTED_MODULE_4__);
@@ -6610,8 +6437,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layout_content_content_types_figure_credits_toggle__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_layout_content_content_types_figure_credits_toggle__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _layout_footer_feedback_form__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./layout/footer/feedback-form */ "./src/assets/_project/_blocks/layout/footer/feedback-form.js");
 /* harmony import */ var _layout_footer_feedback_form__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_layout_footer_feedback_form__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _components_site_search_qg_funnelback_v16_refs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/site-search/qg-funnelback-v16-refs */ "./src/assets/_project/_blocks/components/site-search/qg-funnelback-v16-refs.js");
-/* harmony import */ var _components_site_search_qg_funnelback_v16_refs__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_components_site_search_qg_funnelback_v16_refs__WEBPACK_IMPORTED_MODULE_12__);
 // env initialization
 
 // utils import
@@ -6631,9 +6456,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-//Funnelback refs
 
 (function () {
   'use strict';
