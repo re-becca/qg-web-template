@@ -120,8 +120,8 @@
             padding-left: 0 !important;
         }
 
-        #qg-primary-content a:not(.qg-btn):not(.btn):not(.qg-btn):not(.button):not(.qg-feature-box .qg-link):not(.qg-index a.qg-index-item):not(.page-item .page-link):not(.dfv-cards--type-top-prompt a.card):not(.search-categories__index-toggle):not(.search-categories__index):not(.qg-aside-button):not(.QSAR-records-search a):visited:not(.qg-private-content a):not([class^=dfv]):not([class*=" dfv"]), h2.qg-card__title a:visited {
-            color: #13578b !important;
+        #qg-primary-content a:not(.qg-btn):not(.btn):not(.qg-btn):not(.button):not(.qg-feature-box .qg-link):not(.qg-index a.qg-index-item):not(.page-item .page-link):not(.dfv-cards--type-top-prompt a.card):not(.search-categories__index-toggle):not(.search-categories__index):not(.qg-aside-button):not(.QSAR-records-search a):visited:not(.qg-private-content a):not([class^=dfv]):not([class*=" dfv"]) {
+            color: #13578b;
             /* color: rgb(85, 26, 139) */;
         }
 
@@ -180,8 +180,20 @@
         }
 
 
+        @media (max-width: 991px) {
+            .qg-index-links, .new-aside,
+            .new-mobile-index h2  {
+                max-width: 75%;
+            }
+        }
+
+
         @media (max-width: 767px) {
             
+            .qg-index-links, .new-aside,
+            .new-mobile-index h2 {
+                max-width: 100%;
+            }
 
             #qg-primary-content .qg-index-links h2 a {
                 padding: 1em 0 !important;
@@ -213,12 +225,8 @@
             footer.qg-site-footer .qg-footer-col-content {
                 max-width: 100%;
             }
-
-            .qg-card {
-                margin-bottom: 1.5rem;
-            }
         }
-
+        
 
     </style>
 
@@ -354,78 +362,16 @@
                     </div>
 
                     <div class="d-xs-block d-md-none new-mobile-index">
-                        <section class="row cards__equal-height">
-                            <article class="qg-card qg-card__light-theme qg-card__clickable col-12 col-sm-6">
-                              <div class="content">
-                                <div class="details">
-                                  <h2 class="qg-card__title"><a href="https://www.qld.gov.au/transport/registration/types" class="stretched-link">Vehicle types that must be registered</a></h2>
-                                </div>
-                              </div>
-                            </article>
-                            <article class="qg-card qg-card__light-theme  qg-card__clickable col-12 col-sm-6">
-                              <div class="content">
-                                <div class="details">
-                                  <h2 class="qg-card__title"><a href="https://www.qld.gov.au/transport/registration/register" class="stretched-link">Register a vehicle, boat, caravan or trailer</a></h2>
-                                </div>
-                              </div>
-                            </article>
-                            <article class="qg-card qg-card__light-theme  qg-card__clickable col-12 col-sm-6">
-                                <div class="content">
-                                  <div class="details">
-                                    <h2 class="qg-card__title"><a href="https://www.qld.gov.au/transport/registration/fees" class="stretched-link">Registration costs and how to pay</a></h2>
-                                  </div>
-                                </div>
-                              </article>
-                              <article class="qg-card qg-card__light-theme  qg-card__clickable col-12 col-sm-6">
-                                <div class="content">
-                                  <div class="details">
-                                    <h2 class="qg-card__title"><a href="https://www.qld.gov.au/transport/registration/transfer" class="stretched-link">Registration transfer</a></h2>
-                                  </div>
-                                </div>
-                              </article>
-                              <article class="qg-card qg-card__light-theme  qg-card__clickable col-12 col-sm-6">
-                                <div class="content">
-                                  <div class="details">
-                                    <h2 class="qg-card__title"><a href="https://www.qld.gov.au/transport/registration/cancel" class="stretched-link">Cancelling your vehicle or boat registration</a></h2>
-                                  </div>
-                                </div>
-                              </article>
-                              <article class="qg-card qg-card__light-theme  qg-card__clickable col-12 col-sm-6">
-                                <div class="content">
-                                  <div class="details">
-                                    <h2 class="qg-card__title"><a href="https://www.qld.gov.au/transport/registration/numberplate" class="stretched-link">Number plate replacement or changes</a></h2>
-                                  </div>
-                                </div>
-                              </article>
-                              <article class="qg-card qg-card__light-theme  qg-card__clickable col-12 col-sm-6">
-                                <div class="content">
-                                  <div class="details">
-                                    <h2 class="qg-card__title"><a href="https://www.qld.gov.au/transport/registration/personalised" class="stretched-link">Personalised plates</a></h2>
-                                  </div>
-                                </div>
-                              </article>
-                              <article class="qg-card qg-card__light-theme  qg-card__clickable col-12 col-sm-6">
-                                <div class="content">
-                                  <div class="details">
-                                    <h2 class="qg-card__title"><a href="https://www.qld.gov.au/transport/registration/roadworthy" class="stretched-link">Safety certificates</a></h2>
-                                  </div>
-                                </div>
-                              </article>
-                              <article class="qg-card qg-card__light-theme  qg-card__clickable col-12 col-sm-6">
-                                <div class="content">
-                                  <div class="details">
-                                    <h2 class="qg-card__title"><a href="https://www.qld.gov.au/transport/registration/release-of-information" class="stretched-link">Release of information</a></h2>
-                                  </div>
-                                </div>
-                              </article>
-                              <article class="qg-card qg-card__light-theme  qg-card__clickable col-12 col-sm-6">
-                                <div class="content">
-                                  <div class="details">
-                                    <h2 class="qg-card__title"> <a href="https://www.qld.gov.au/transport/registration/labelling-requirements-for-electric-vehicles-and-hydrogen-vehicles" class="stretched-link">Labelling requirements for electric, hybrid and hydrogen vehicles</a></h2>
-                                  </div>
-                                </div>
-                              </article>
-                        </section>
+                        <h2><a href="https://www.qld.gov.au/transport/registration/types"><span>Vehicle types that must be registered</span></a></h2>
+                        <h2><a href="https://www.qld.gov.au/transport/registration/register"><span>Register a vehicle, boat, caravan or trailer</span></a></h2>
+                        <h2><a href="https://www.qld.gov.au/transport/registration/fees"><span>Registration costs and how to pay</span></a></h2>
+                        <h2><a href="https://www.qld.gov.au/transport/registration/transfer"><span>Registration transfer</span></a></h2>
+                        <h2><a href="https://www.qld.gov.au/transport/registration/cancel"><span>Cancelling your vehicle or boat registration</span></a></h2>
+                        <h2><a href="https://www.qld.gov.au/transport/registration/numberplate"><span>Number plate replacement or changes</span></a></h2>
+                        <h2><a href="https://www.qld.gov.au/transport/registration/personalised"><span>Personalised plates</span></a></h2>
+                        <h2><a href="https://www.qld.gov.au/transport/registration/roadworthy"><span>Safety certificates</span></a></h2>
+                        <h2><a href="https://www.qld.gov.au/transport/registration/release-of-information"><span>Release of information</span></a></h2>
+                        <h2><a href="https://www.qld.gov.au/transport/registration/labelling-requirements-for-electric-vehicles-and-hydrogen-vehicles"><span>Labelling requirements for electric, hybrid and hydrogen vehicles</span></a></h2>
                     </div>
 
                 </div>
