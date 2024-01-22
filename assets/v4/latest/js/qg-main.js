@@ -284,53 +284,60 @@ var QgAccordion = /*#__PURE__*/function () {
 /*!************************************************************************!*\
   !*** ./src/assets/_project/_blocks/components/carousel/qg-carousel.js ***!
   \************************************************************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 /*aside carousel play and pause feature*/
 
 
+var _toConsumableArray = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "./node_modules/@babel/runtime/helpers/toConsumableArray.js");
 (function ($) {
   var carousels = [];
   var eqHeight = function eqHeight(carousels) {
-    carousels.forEach(function (e) {
-      var items = $('#' + e + '').find('.carousel-item');
-      var heights = [];
-      var tallest;
-      if (items.length) {
-        var normalizeHeights = function normalizeHeights() {
-          items.each(function () {
-            heights.push($(this).height());
-          });
-          tallest = Math.max.apply(null, heights);
-          items.each(function () {
-            $(this).css('min-height', tallest + 'px');
-          });
-        };
-        normalizeHeights();
-        $(window).on('resize orientationchange', function () {
-          tallest = 0;
-          heights.length = 0;
-          items.each(function () {
-            $(this).css('min-height', '0');
-          });
-          normalizeHeights();
-        });
-      }
+    //For each carousel on the page...
+    carousels.forEach(function (carousel) {
+      //Get the height of each carousel slide in the carousel...
+      var slides = $('#' + carousel).find('.carousel-item');
+
+      //Each slides height into an array...
+      var slideHeights = slides.map(function (e, slide) {
+        return $(slide).height();
+      });
+
+      //Assign the tallest value to every slide
+      slideHeights.map(function (e, slide) {
+        $(slide).css('min-height', Math.max.apply(Math, _toConsumableArray(slideHeights)) + 'px');
+      });
     });
   };
-  $('.qg-featured .carousel.slide').each(function (i, e) {
-    var carousel = $(e).attr('id');
-    carousels.push(carousel);
+  $('.qg-featured .carousel.slide').each(function (int, element) {
+    var carouselID = $(element).attr('id');
+    carousels.push(carouselID);
+
+    //Start all slides to cycle by default
     $(this).attr('data-state', 'cycle');
-    $('#' + carousel + '').find('.toggleCarousel').click(function (e) {
+
+    //Bind click/tap event
+    $('#' + carouselID).find('.toggleCarousel').on('click', function (e) {
       e.preventDefault();
-      var $parentCarousel = $(this).parents('div.carousel.slide');
-      $parentCarousel.attr('data-state') === 'cycle' ? $parentCarousel.attr('data-state', 'pause') : $parentCarousel.attr('data-state', 'cycle');
-      $parentCarousel.carousel($parentCarousel.attr('data-state'));
-      $(this).find('i').toggleClass('fa-sync fa-pause');
+      var parentCarousel = $(this).parents('div.carousel.slide');
+      var currentState = parentCarousel.attr('data-state');
+      switch (currentState) {
+        //If paused, switch to cycling state
+        case 'pause':
+          parentCarousel.attr('data-state', 'cycle').carousel('cycle');
+          $(this).find('i, span').not('.button-title').removeClass('fa-sync fa-pause').addClass('fa-pause');
+          break;
+        case 'cycle':
+          //If cycling, switch to a paused state
+          parentCarousel.attr('data-state', 'pause').carousel('pause');
+          $(this).find('i, span').not('.button-title').removeClass('fa-sync fa-pause').addClass('fa-sync');
+          break;
+      }
     });
   });
+
+  //Equal height each carousel slide
   window.onload = function () {
     eqHeight(carousels);
   };
@@ -395,11 +402,19 @@ var QgAddressAutocomplete = /*#__PURE__*/function () {
       this.$form.find(':input:not(:checkbox):not(:radio), select, textarea').each(function () {
         var name = $(this).attr('name');
         var getParameterVal = qg.swe.getParameterByName($(this).attr('name'));
-        getParameterVal !== false ? $('[name="' + name + '"]').val(getParameterVal) : '';
+        if (getParameterVal === false) {
+          getParameterVal = '';
+        } else {
+          getParameterVal = $('[name="' + name + '"]').val(getParameterVal);
+        }
       }).end().find('input[type=checkbox], input[type=radio]').each(function () {
         var name = $(this).attr('name');
         var getParameterVal = qg.swe.getParameterByName(name);
-        getParameterVal !== false ? $('[value="' + getParameterVal + '"]').prop('checked', true) : '';
+        if (getParameterVal === false) {
+          getParameterVal = '';
+        } else {
+          getParameterVal = $('[value="' + getParameterVal + '"]').prop('checked', true);
+        }
       });
     }
 
@@ -464,7 +479,7 @@ var QgAddressAutocomplete = /*#__PURE__*/function () {
                 self.$searchWidget.find(self.$latitude).val(latitude).end().find(self.$longitude).val(longitude);
                 // get address using latitude and longitude from Google maps api
                 geocoder.geocode({
-                  'location': latlng
+                  location: latlng
                 }, function (results, status) {
                   if (status === 'OK') {
                     if (results[1]) {
@@ -556,7 +571,7 @@ var QgAddressAutocomplete = /*#__PURE__*/function () {
               self.$inpuField.val(firstResult);
               var geocoder = new google.maps.Geocoder();
               geocoder.geocode({
-                'address': firstResult
+                address: firstResult
               }, function (results, status) {
                 if (status === 'OK') {
                   reqReady = false;
@@ -613,7 +628,7 @@ var QgAddressAutocomplete = /*#__PURE__*/function () {
   if ($rcTheme.length > 0) {
     var $fr = $('input[type="radio"]');
     var $fc = $('input[type="checkbox"]');
-    $rcTheme.find($fr).change(function () {
+    $rcTheme.find($fr).on('change', function () {
       if ($(this).is(':checked')) {
         $(this).parents('.rc-theme').find('li').removeClass('rc-theme__active');
         $(this).parents('li').addClass('rc-theme__active');
@@ -621,7 +636,7 @@ var QgAddressAutocomplete = /*#__PURE__*/function () {
         $(this).parents('li').removeClass('rc-theme__active');
       }
     });
-    $rcTheme.find($fc).change(function () {
+    $rcTheme.find($fc).on('change', function () {
       if ($(this).is(':checked')) {
         $(this).parents('li').addClass('rc-theme__active');
       } else {
@@ -970,35 +985,34 @@ if ($("script[src*='jquery.fancybox']").length === 0) {
   \**************************************************************************/
 /***/ (() => {
 
-(function ($) {
-  'use strict';
+// This function looks for file summary strings on a page and reformats values for consistency and readability.
+// It is an update a previous SWE function with the same behaviour.
+// It has been converted from jQuery to vanilla JS and it now rounds up filesize values. The previous function stripped all values after the decimal point.
 
-  var linkType = '.PDF$|.DOC$|.DOCX$|.XLS$|.XLSX$|.RTF$';
-  var contentType = 'PDF|DOC|DOCX|XLS|XLSX|RTF';
-  $(document).ready(function () {
-    $('a', '#qg-primary-content, #qg-secondary-content').each(function () {
-      var $this = $(this);
-      var linkRegex = new RegExp(linkType, 'i');
-      // check to see if a link with a selected linkType exist
-      // Example - cue-template-change-log.pdf|rtf...
-      if (linkRegex.test($this.attr('href'))) {
-        var contentRegex = new RegExp(contentType);
-        var currContent = $this.text();
-        if (/\.\d*?/.test(currContent)) {
-          // check to see if decimals exist, if yes then round then off
-          // Example (PDF 106.66) -> (PDF 106)
-          var extractSize = new RegExp('\\((?:' + contentType.toUpperCase() + '),?\\s+[0-9\\.]+\\s*[KM]B\\)', 'i');
-          currContent.match(extractSize) ? $(this).find('.meta').empty().append(currContent.match(extractSize)[0].toUpperCase().replace(/(\.\d*)/gi, '')) : '';
-        } else if (!contentRegex.test(currContent)) {
-          // check to see there is no doc type present in the content section
-          // If yes then insert <span class="meta">PDF</span>
-          var linkText = $this.attr('href').replace(/^.*\.(.+)$/, '$1').toUpperCase();
-          $this.append(' <span class="meta">(' + linkText + ')</span>');
-        }
-      }
-    });
+// 1. looks for this file summary pattern: for example "(PDF, 1.3 MB) or (DOCX 23.5KB)" on all links (A tags) in the DOM
+// 2. checks the HREF of the link ends in .PDF, .RTF etc
+// 3. reformats the file summary for consistency (PDF 517 KB)
+// 4. Rounds UP the file size value to the nearest whole integer
+// 5. Assumes a bias for over inflated sizes. e.g. 1.3 MB will round up to 2 MB
+
+document.addEventListener('DOMContentLoaded', function () {
+  var filePattern = /\.(?:PDF|DOC|DOCX|XLS|XLSX|RTF)$/i;
+  var summaryPattern = /\((PDF|DOC|DOCX|XLS|XLSX|RTF)\s*,?\s*([\d.]+)\s*(KB|MB|GB)\)/i;
+  var elements = document.querySelectorAll('#qg-primary-content a, #qg-secondary-content a');
+  elements.forEach(function (element) {
+    var fileMatch = element.href.match(filePattern);
+    var summaryMatch = element.text.match(summaryPattern);
+    if (fileMatch && summaryMatch) {
+      var originalSummary = summaryMatch[0]; // "(PDF 1.56MB)"
+      var contentType = summaryMatch[1].toUpperCase(); // "PDF"
+      var fileSize = Math.ceil(parseFloat(summaryMatch[2])); // 1.56
+      var fileSizeUnit = summaryMatch[3].toUpperCase(); // "MB"
+
+      var newSummary = "<span class=\"meta\">(".concat(contentType, ", ").concat(fileSize, " ").concat(fileSizeUnit, ")</span>");
+      element.innerHTML = element.textContent.replace(originalSummary, newSummary); //(PDF 1.6 MB)
+    }
   });
-})(jQuery);
+});
 
 /***/ }),
 
@@ -1082,87 +1096,87 @@ A1 This function checks meta tag [name="DCTERMS.license] and then insert markup 
     url: '//creativecommons.org/licenses/',
     imgSrc: '/assets/v4/latest/images/licences/',
     types: {
-      'by': {
-        'name': 'Attribution',
-        'imgName': 'by-80x15.png',
-        'versions': {
+      by: {
+        name: 'Attribution',
+        imgName: 'by-80x15.png',
+        versions: {
           '3.0': {
-            'title': '3.0 Australia (CC BY 3.0 AU)',
-            'urlPath': 'by/3.0/au/'
+            title: '3.0 Australia (CC BY 3.0 AU)',
+            urlPath: 'by/3.0/au/'
           },
           '4.0': {
-            'title': '4.0 International (CC BY 4.0)',
-            'urlPath': 'by/4.0/'
+            title: '4.0 International (CC BY 4.0)',
+            urlPath: 'by/4.0/'
           }
         }
       },
       'by-sa': {
-        'name': 'Attribution-ShareAlike',
-        'imgName': 'by-sa-80x15.png',
-        'versions': {
+        name: 'Attribution-ShareAlike',
+        imgName: 'by-sa-80x15.png',
+        versions: {
           '3.0': {
-            'title': '3.0 Australia (CC BY-SA 3.0 AU)',
-            'urlPath': 'by-sa/3.0/au'
+            title: '3.0 Australia (CC BY-SA 3.0 AU)',
+            urlPath: 'by-sa/3.0/au'
           },
           '4.0': {
-            'title': '4.0 International (CC BY-SA 4.0)',
-            'urlPath': 'by-sa/4.0/'
+            title: '4.0 International (CC BY-SA 4.0)',
+            urlPath: 'by-sa/4.0/'
           }
         }
       },
       'by-nd': {
-        'name': 'Attribution-NoDerivatives',
-        'imgName': 'by-nd-80x15.png',
-        'versions': {
+        name: 'Attribution-NoDerivatives',
+        imgName: 'by-nd-80x15.png',
+        versions: {
           '3.0': {
-            'title': '3.0 Australia (CC BY-ND 3.0 AU))',
-            'urlPath': 'by-nd/3.0/au/'
+            title: '3.0 Australia (CC BY-ND 3.0 AU))',
+            urlPath: 'by-nd/3.0/au/'
           },
           '4.0': {
-            'title': '4.0 International (CC BY-ND 4.0)',
-            'urlPath': 'by-nd/4.0/'
+            title: '4.0 International (CC BY-ND 4.0)',
+            urlPath: 'by-nd/4.0/'
           }
         }
       },
       'by-nc': {
-        'name': 'Attribution-NonCommercial',
-        'imgName': 'by-nc-80x15.png',
-        'versions': {
+        name: 'Attribution-NonCommercial',
+        imgName: 'by-nc-80x15.png',
+        versions: {
           '3.0': {
-            'title': '3.0 Australia (CC BY-NC 3.0 AU)',
-            'urlPath': 'by-nc/3.0/au/'
+            title: '3.0 Australia (CC BY-NC 3.0 AU)',
+            urlPath: 'by-nc/3.0/au/'
           },
           '4.0': {
-            'title': '4.0 International (CC BY-NC 4.0)',
-            'urlPath': 'by-nc/4.0/'
+            title: '4.0 International (CC BY-NC 4.0)',
+            urlPath: 'by-nc/4.0/'
           }
         }
       },
       'by-nc-sa': {
-        'name': 'Attribution-NonCommercial-ShareAlike',
-        'imgName': 'by-nc-sa-80x15.png',
-        'versions': {
+        name: 'Attribution-NonCommercial-ShareAlike',
+        imgName: 'by-nc-sa-80x15.png',
+        versions: {
           '3.0': {
-            'title': '3.0 Australia (CC BY-NC-SA 3.0 AU)',
-            'urlPath': 'by-nc-sa/3.0/au/'
+            title: '3.0 Australia (CC BY-NC-SA 3.0 AU)',
+            urlPath: 'by-nc-sa/3.0/au/'
           },
           '4.0': {
-            'title': '4.0 International (CC BY-NC-SA 4.0)',
-            'urlPath': 'by-nc-sa/4.0/'
+            title: '4.0 International (CC BY-NC-SA 4.0)',
+            urlPath: 'by-nc-sa/4.0/'
           }
         }
       },
       'by-nc-nd': {
-        'name': 'Attribution-NonCommercial-NoDerivatives',
-        'imgName': 'by-nc-nd-80x15.png',
-        'versions': {
+        name: 'Attribution-NonCommercial-NoDerivatives',
+        imgName: 'by-nc-nd-80x15.png',
+        versions: {
           '3.0': {
-            'title': '3.0 Australia (CC BY-NC-ND 3.0 AU)',
-            'urlPath': 'by-nc-nd/3.0/au/'
+            title: '3.0 Australia (CC BY-NC-ND 3.0 AU)',
+            urlPath: 'by-nc-nd/3.0/au/'
           },
           '4.0': {
-            'title': '4.0 International (CC BY-NC-ND 4.0)',
-            'urlPath': 'by-nc-nd/4.0/'
+            title: '4.0 International (CC BY-NC-ND 4.0)',
+            urlPath: 'by-nc-nd/4.0/'
           }
         }
       }
@@ -1730,6 +1744,47 @@ var QgQuickExit = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./src/assets/_project/_blocks/components/site-search/qg-funnelback-v16-refs.js":
+/*!**************************************************************************************!*\
+  !*** ./src/assets/_project/_blocks/components/site-search/qg-funnelback-v16-refs.js ***!
+  \**************************************************************************************/
+/***/ (() => {
+
+(function () {
+  var replacements = [['find.search.qld.gov.au', 'discover.search.qld.gov.au'], ['qld-gov', 'qgov~sp-search'], ['qgov-content', 'qgov~sp-content'], ['services-web', 'qgov~sp-services']];
+  function updateRefs(originalValue) {
+    var newValue = originalValue;
+    replacements.forEach(function (pair) {
+      newValue = newValue.replace(new RegExp(pair[0], 'g'), pair[1]);
+      if (originalValue.includes(pair[0])) {
+        var depReference = pair[1].includes('qgov~') ? "\"".concat(pair[0], "\" collection,") : "\"".concat(pair[0], "\"");
+        console.log("SWE/Funnelback notice:\nThis application contains a reference to ".concat(depReference, " which is deprecated. It must be replaced with \"").concat(pair[1], "\".\n"));
+      }
+    });
+    return newValue;
+  }
+  document.querySelectorAll('form[data-suggestions], form[data-results-url], div[data-centres], input[name=collection]').forEach(function (element) {
+    if (element.hasAttribute('data-suggestions')) {
+      var currentValue = element.getAttribute('data-suggestions');
+      element.setAttribute('data-suggestions', updateRefs(currentValue));
+    }
+    if (element.hasAttribute('data-results-url')) {
+      var _currentValue = element.getAttribute('data-results-url');
+      element.setAttribute('data-results-url', updateRefs(_currentValue));
+    }
+    if (element.hasAttribute('data-centres')) {
+      var _currentValue2 = element.getAttribute('data-centres');
+      element.setAttribute('data-centres', updateRefs(_currentValue2));
+    }
+    if (element.getAttribute('name') === 'collection') {
+      var _currentValue3 = element.getAttribute('value');
+      element.setAttribute('value', updateRefs(_currentValue3));
+    }
+  });
+})();
+
+/***/ }),
+
 /***/ "./src/assets/_project/_blocks/components/site-search/qg-search-minimize.js":
 /*!**********************************************************************************!*\
   !*** ./src/assets/_project/_blocks/components/site-search/qg-search-minimize.js ***!
@@ -1845,8 +1900,8 @@ $(function () {
   // Namespace
   //
   var qgSiteSearch = {
-    'fn': {},
-    'vars': {}
+    fn: {},
+    vars: {}
   };
 
   //
@@ -1898,9 +1953,9 @@ $(function () {
 
   // Handle multiple events
   qgSiteSearch.fn.inputEventHandler = function (event) {
-    var eventType = event['type'];
-    var targetInput = $(event['target']);
-    var keyCode = event['keyCode'];
+    var eventType = event.type;
+    var targetInput = $(event.target);
+    var keyCode = event.keyCode;
     var inputValue = targetInput.val();
     switch (eventType) {
       case 'focus':
@@ -1967,7 +2022,7 @@ $(function () {
   };
   qgSiteSearch.fn.keyboardNavigation = function (event) {
     var self = $(this);
-    var keyCode = event['keyCode'];
+    var keyCode = event.keyCode;
     var focusableList = self.parents('.qg-site-search__form').find($('.qg-search-concierge.show')).find('a, button');
     var currentIndex = self.parents('.qg-site-search__form').attr('data-navindex');
     if (keyCode === 40 && focusableList.length > currentIndex - 1) {
@@ -2001,7 +2056,7 @@ $(function () {
 
   // Handle selecting a suggestion
   qgSiteSearch.fn.searchSuggestionClick = function (event) {
-    var targetElement = $(event['currentTarget']);
+    var targetElement = $(event.currentTarget);
     var suggestionValue = targetElement.text();
     var searchInput = $('.qg-search-site__input');
 
@@ -2013,7 +2068,7 @@ $(function () {
   qgSiteSearch.fn.handleBodyClick = function (event, targetInput) {
     var self = event.target;
     var targetSelector = '#qg-global-search-form';
-    if ($(event['target']).closest(targetSelector).length === 0) {
+    if ($(event.target).closest(targetSelector).length === 0) {
       // Close the concierge panels
       qgSiteSearch.fn.closeConciergePanels(self);
     }
@@ -2035,98 +2090,98 @@ $(function () {
   // Get example suggestions from Funnelback
   qgSiteSearch.fn.getExampleSuggestions = function (inputValue) {
     var exampleResponse = [{
-      'key': 'cancelled',
-      'disp': 'cancelled',
-      'disp_t': 'T',
-      'wt': '77.44',
-      'cat': '',
-      'cat_t': '',
-      'action': '',
-      'action_t': 'S'
+      key: 'cancelled',
+      disp: 'cancelled',
+      disp_t: 'T',
+      wt: '77.44',
+      cat: '',
+      cat_t: '',
+      action: '',
+      action_t: 'S'
     }, {
-      'key': 'cancellation',
-      'disp': 'cancellation',
-      'disp_t': 'T',
-      'wt': '72.139',
-      'cat': '',
-      'cat_t': '',
-      'action': '',
-      'action_t': 'S'
+      key: 'cancellation',
+      disp: 'cancellation',
+      disp_t: 'T',
+      wt: '72.139',
+      cat: '',
+      cat_t: '',
+      action: '',
+      action_t: 'S'
     }, {
-      'key': 'cancel',
-      'disp': 'cancel',
-      'disp_t': 'T',
-      'wt': '69.493',
-      'cat': '',
-      'cat_t': '',
-      'action': '',
-      'action_t': 'S'
+      key: 'cancel',
+      disp: 'cancel',
+      disp_t: 'T',
+      wt: '69.493',
+      cat: '',
+      cat_t: '',
+      action: '',
+      action_t: 'S'
     }, {
-      'key': 'cancelling',
-      'disp': 'cancelling',
-      'disp_t': 'T',
-      'wt': '43.151',
-      'cat': '',
-      'cat_t': '',
-      'action': '',
-      'action_t': 'S'
+      key: 'cancelling',
+      disp: 'cancelling',
+      disp_t: 'T',
+      wt: '43.151',
+      cat: '',
+      cat_t: '',
+      action: '',
+      action_t: 'S'
     }, {
-      'key': 'cancellations',
-      'disp': 'cancellations',
-      'disp_t': 'T',
-      'wt': '32.28',
-      'cat': '',
-      'cat_t': '',
-      'action': '',
-      'action_t': 'S'
+      key: 'cancellations',
+      disp: 'cancellations',
+      disp_t: 'T',
+      wt: '32.28',
+      cat: '',
+      cat_t: '',
+      action: '',
+      action_t: 'S'
     }, {
-      'key': 'cancellation of membership',
-      'disp': 'cancellation of membership',
-      'disp_t': 'T',
-      'wt': '2.2',
-      'cat': '',
-      'cat_t': '',
-      'action': '',
-      'action_t': 'S'
+      key: 'cancellation of membership',
+      disp: 'cancellation of membership',
+      disp_t: 'T',
+      wt: '2.2',
+      cat: '',
+      cat_t: '',
+      action: '',
+      action_t: 'S'
     }, {
-      'key': 'cancellation form',
-      'disp': 'fill out this cancellation form',
-      'disp_t': 'T',
-      'wt': '2',
-      'cat': '',
-      'cat_t': '',
-      'action': '',
-      'action_t': 'S'
+      key: 'cancellation form',
+      disp: 'fill out this cancellation form',
+      disp_t: 'T',
+      wt: '2',
+      cat: '',
+      cat_t: '',
+      action: '',
+      action_t: 'S'
     }, {
-      'key': 'cancel a booking',
-      'disp': 'cancel a booking',
-      'disp_t': 'T',
-      'wt': '1.1',
-      'cat': '',
-      'cat_t': '',
-      'action': '',
-      'action_t': 'S'
+      key: 'cancel a booking',
+      disp: 'cancel a booking',
+      disp_t: 'T',
+      wt: '1.1',
+      cat: '',
+      cat_t: '',
+      action: '',
+      action_t: 'S'
     }, {
-      'key': 'cancel a disability parking permit',
-      'disp': 'cancel a disability parking permit',
-      'disp_t': 'T',
-      'wt': '1',
-      'cat': '',
-      'cat_t': '',
-      'action': '',
-      'action_t': 'S'
+      key: 'cancel a disability parking permit',
+      disp: 'cancel a disability parking permit',
+      disp_t: 'T',
+      wt: '1',
+      cat: '',
+      cat_t: '',
+      action: '',
+      action_t: 'S'
     }, {
-      'key': 'cancelling your registration',
-      'disp': 'cancelling your registration',
-      'disp_t': 'T',
-      'wt': '1',
-      'cat': '',
-      'cat_t': '',
-      'action': '',
-      'action_t': 'S'
+      key: 'cancelling your registration',
+      disp: 'cancelling your registration',
+      disp_t: 'T',
+      wt: '1',
+      cat: '',
+      cat_t: '',
+      action: '',
+      action_t: 'S'
     }];
     var filteredResponse = exampleResponse.filter(function (suggestion) {
-      return suggestion['disp'].indexOf(inputValue.toLowerCase()) !== -1;
+      return suggestion.disp.indexOf(inputValue.toLowerCase()) !== -1;
     });
     return filteredResponse;
   };
@@ -2134,113 +2189,113 @@ $(function () {
   // Get example service results from Funnelback
   qgSiteSearch.fn.getExampleServices = function () {
     var exampleResponse = {
-      'response': {
-        'resultPacket': {
-          'query': 'grants',
-          'results': [{
-            'rank': 1,
-            'title': 'Grants and funding | Environment, land and water | Queensland Government',
-            'collection': 'qgov-web',
-            'metaData': {
-              'license': 'https://creativecommons.org/licenses/by/4.0/',
-              'r': 'all',
-              'c': 'Grants and funding are available to support environmental programs in Queensland. This includes koala and marine life conservation, and nature refuges.',
-              'C': 'Grants and funding are available to support environmental programs in Queensland. This includes koala and marine life conservation, and nature refuges.',
-              's': 'Grant; funding; nature assist; koala; Everyones environment; Indigenous sea rangers; research; NatureAssist; Indigenous Sea Country Management Grants Program; Koala Rescue and Rehabilitation Grants Program; Koala Research Grant Program; koala',
-              'd': '2019-07-31',
-              't': 'Grants and funding | Environment, land and water | Queensland Government;Grants and funding | Environment and pollution management',
-              'e': 'Text',
-              'f': 'guidelines',
-              'j': 'https://www.qld.gov.au/environment/pollution/funding'
+      response: {
+        resultPacket: {
+          query: 'grants',
+          results: [{
+            rank: 1,
+            title: 'Grants and funding | Environment, land and water | Queensland Government',
+            collection: 'qgov-web',
+            metaData: {
+              license: 'https://creativecommons.org/licenses/by/4.0/',
+              r: 'all',
+              c: 'Grants and funding are available to support environmental programs in Queensland. This includes koala and marine life conservation, and nature refuges.',
+              C: 'Grants and funding are available to support environmental programs in Queensland. This includes koala and marine life conservation, and nature refuges.',
+              s: 'Grant; funding; nature assist; koala; Everyones environment; Indigenous sea rangers; research; NatureAssist; Indigenous Sea Country Management Grants Program; Koala Rescue and Rehabilitation Grants Program; Koala Research Grant Program; koala',
+              d: '2019-07-31',
+              t: 'Grants and funding | Environment, land and water | Queensland Government;Grants and funding | Environment and pollution management',
+              e: 'Text',
+              f: 'guidelines',
+              j: 'https://www.qld.gov.au/environment/pollution/funding'
             },
-            'liveUrl': 'https://www.qld.gov.au/environment/pollution/funding',
-            'clickTrackingUrl': '/s/redirect?collection=qld-gov&url=https%3A%2F%2Fwww.qld.gov.au%2Fenvironment%2Fpollution%2Ffunding&index_url=https%3A%2F%2Fwww.qld.gov.au%2Fenvironment%2Fpollution%2Ffunding&auth=qzUXw9sTwPwOdKvslCPbog&profile=qld_preview&rank=1&query=grants',
-            'explain': null,
-            'indexUrl': 'https://www.qld.gov.au/environment/pollution/funding'
+            liveUrl: 'https://www.qld.gov.au/environment/pollution/funding',
+            clickTrackingUrl: '/s/redirect?collection=qld-gov&url=https%3A%2F%2Fwww.qld.gov.au%2Fenvironment%2Fpollution%2Ffunding&index_url=https%3A%2F%2Fwww.qld.gov.au%2Fenvironment%2Fpollution%2Ffunding&auth=qzUXw9sTwPwOdKvslCPbog&profile=qld_preview&rank=1&query=grants',
+            explain: null,
+            indexUrl: 'https://www.qld.gov.au/environment/pollution/funding'
           }, {
-            'rank': 2,
-            'title': 'Funding and grants | Recreation, sport and arts | Queensland Government',
-            'collection': 'qgov-web',
-            'metaData': {
-              'c': 'Find what funding and grants are available for young athletes and for clubs to upgrade sport and recreation facilities or equipment.',
-              'C': 'Find what funding and grants are available for young athletes and for clubs to upgrade sport and recreation facilities or equipment.',
-              'sprequired': 'yes',
-              'd': '2019-07-19',
-              'e': 'Collection',
-              'f': 'index',
-              'stype': 'apply-for-it',
-              'j': 'https://www.qld.gov.au/recreation/sports/funding',
-              'sid': 'P001085',
-              'sfinder': 'yes',
-              'license': 'https://creativecommons.org/licenses/by/4.0/',
-              'scategory': 'recreation-sports-and-arts',
-              'r': 'all',
-              's': 'Funding and grants; funding for young athletes; grants for young athletes; athlete scholarships; funding for kids and young people; funding for clubs and organisations; grants for clubs and organisations; funding to upgrade sport and recreation',
-              't': 'Funding and grants | Recreation, sport and arts | Queensland Government;Funding and grants | Sport',
-              'skioskonly': 'no'
+            rank: 2,
+            title: 'Funding and grants | Recreation, sport and arts | Queensland Government',
+            collection: 'qgov-web',
+            metaData: {
+              c: 'Find what funding and grants are available for young athletes and for clubs to upgrade sport and recreation facilities or equipment.',
+              C: 'Find what funding and grants are available for young athletes and for clubs to upgrade sport and recreation facilities or equipment.',
+              sprequired: 'yes',
+              d: '2019-07-19',
+              e: 'Collection',
+              f: 'index',
+              stype: 'apply-for-it',
+              j: 'https://www.qld.gov.au/recreation/sports/funding',
+              sid: 'P001085',
+              sfinder: 'yes',
+              license: 'https://creativecommons.org/licenses/by/4.0/',
+              scategory: 'recreation-sports-and-arts',
+              r: 'all',
+              s: 'Funding and grants; funding for young athletes; grants for young athletes; athlete scholarships; funding for kids and young people; funding for clubs and organisations; grants for clubs and organisations; funding to upgrade sport and recreation',
+              t: 'Funding and grants | Recreation, sport and arts | Queensland Government;Funding and grants | Sport',
+              skioskonly: 'no'
             },
-            'liveUrl': 'https://www.qld.gov.au/recreation/sports/funding',
-            'clickTrackingUrl': '/s/redirect?collection=qld-gov&url=https%3A%2F%2Fwww.qld.gov.au%2Frecreation%2Fsports%2Ffunding&index_url=https%3A%2F%2Fwww.qld.gov.au%2Frecreation%2Fsports%2Ffunding&auth=cM3gwHE6wlGI5UzFw2iszA&profile=qld_preview&rank=2&query=grants',
-            'explain': null,
-            'indexUrl': 'https://www.qld.gov.au/recreation/sports/funding'
+            liveUrl: 'https://www.qld.gov.au/recreation/sports/funding',
+            clickTrackingUrl: '/s/redirect?collection=qld-gov&url=https%3A%2F%2Fwww.qld.gov.au%2Frecreation%2Fsports%2Ffunding&index_url=https%3A%2F%2Fwww.qld.gov.au%2Frecreation%2Fsports%2Ffunding&auth=cM3gwHE6wlGI5UzFw2iszA&profile=qld_preview&rank=2&query=grants',
+            explain: null,
+            indexUrl: 'https://www.qld.gov.au/recreation/sports/funding'
           }, {
-            'rank': 3,
-            'title': 'Everyones Environment grants program | Environment, land and water | Queensland Government',
-            'collection': 'qgov-web',
-            'metaData': {
-              'c': 'This program provides funding for Queensland community groups with projects aimed at delivering practical actions for local environmental improvements.',
-              'C': 'This program provides funding for Queensland community groups with projects aimed at delivering practical actions for local environmental improvements.',
-              'sprequired': 'no',
-              'd': '2015-03-23',
-              'e': 'Text',
-              'f': 'guidelines',
-              'stype': 'find-it',
-              'j': 'https://www.qld.gov.au/environment/pollution/funding/everyones',
-              'sid': 'P000369',
-              'sfinder': 'yes',
-              'license': 'https://creativecommons.org/licenses/by/4.0/',
-              'scategory': 'environment-land-and-water',
-              'r': 'all',
-              's': 'Grants; everyone; environment; heritage; Queensland; funding',
-              't': 'Everyones Environment grants program | Environment, land and water | Queensland Government;Everyones Environment grants program | Grants and funding',
-              'skioskonly': 'no'
+            rank: 3,
+            title: 'Everyones Environment grants program | Environment, land and water | Queensland Government',
+            collection: 'qgov-web',
+            metaData: {
+              c: 'This program provides funding for Queensland community groups with projects aimed at delivering practical actions for local environmental improvements.',
+              C: 'This program provides funding for Queensland community groups with projects aimed at delivering practical actions for local environmental improvements.',
+              sprequired: 'no',
+              d: '2015-03-23',
+              e: 'Text',
+              f: 'guidelines',
+              stype: 'find-it',
+              j: 'https://www.qld.gov.au/environment/pollution/funding/everyones',
+              sid: 'P000369',
+              sfinder: 'yes',
+              license: 'https://creativecommons.org/licenses/by/4.0/',
+              scategory: 'environment-land-and-water',
+              r: 'all',
+              s: 'Grants; everyone; environment; heritage; Queensland; funding',
+              t: 'Everyones Environment grants program | Environment, land and water | Queensland Government;Everyones Environment grants program | Grants and funding',
+              skioskonly: 'no'
             },
-            'liveUrl': 'https://www.qld.gov.au/environment/pollution/funding/everyones',
-            'clickTrackingUrl': '/s/redirect?collection=qld-gov&url=https%3A%2F%2Fwww.qld.gov.au%2Fenvironment%2Fpollution%2Ffunding%2Feveryones&index_url=https%3A%2F%2Fwww.qld.gov.au%2Fenvironment%2Fpollution%2Ffunding%2Feveryones&auth=QaZNQYwacyhU7xtVcs%2FPbg&profile=qld_preview&rank=3&query=grants',
-            'explain': null,
-            'indexUrl': 'https://www.qld.gov.au/environment/pollution/funding/everyones'
+            liveUrl: 'https://www.qld.gov.au/environment/pollution/funding/everyones',
+            clickTrackingUrl: '/s/redirect?collection=qld-gov&url=https%3A%2F%2Fwww.qld.gov.au%2Fenvironment%2Fpollution%2Ffunding%2Feveryones&index_url=https%3A%2F%2Fwww.qld.gov.au%2Fenvironment%2Fpollution%2Ffunding%2Feveryones&auth=QaZNQYwacyhU7xtVcs%2FPbg&profile=qld_preview&rank=3&query=grants',
+            explain: null,
+            indexUrl: 'https://www.qld.gov.au/environment/pollution/funding/everyones'
           }],
-          'error': null
+          error: null
         },
-        'curator': {
-          'exhibits': [{
-            'titleHtml': 'Queensland Government Grants Finder',
-            'displayUrl': 'https://www.grants.services.qld.gov.au/#/',
-            'linkUrl': '/s/redirect?collection=qld-gov&url=https%3A%2F%2Fwww.grants.services.qld.gov.au%2F%23%2F&index_url=https%3A%2F%2Fwww.grants.services.qld.gov.au%2F%23%2F&auth=wEzza0HDD%2BGN4WIzBUq0%2Fg&profile=qld_preview&type=FP',
-            'descriptionHtml': 'The Queensland Government Grants Finder is a comprehensive list of our grants and funding programs.',
-            'additionalProperties': {
-              'icon': 'fa-car fa-motorcycle fa-address-card',
-              'buttonText': 'Find out more',
-              'service': 'yes'
+        curator: {
+          exhibits: [{
+            titleHtml: 'Queensland Government Grants Finder',
+            displayUrl: 'https://www.grants.services.qld.gov.au/#/',
+            linkUrl: '/s/redirect?collection=qld-gov&url=https%3A%2F%2Fwww.grants.services.qld.gov.au%2F%23%2F&index_url=https%3A%2F%2Fwww.grants.services.qld.gov.au%2F%23%2F&auth=wEzza0HDD%2BGN4WIzBUq0%2Fg&profile=qld_preview&type=FP',
+            descriptionHtml: 'The Queensland Government Grants Finder is a comprehensive list of our grants and funding programs.',
+            additionalProperties: {
+              icon: 'fa-car fa-motorcycle fa-address-card',
+              buttonText: 'Find out more',
+              service: 'yes'
             },
-            'category': ''
+            category: ''
           }, {
-            'titleHtml': 'North Queensland flood assistance',
-            'displayUrl': 'https://www.qld.gov.au/community/disasters-emergencies/queensland-disasters/fnq-monsoonal-trough',
-            'linkUrl': '/s/redirect?collection=qld-gov&url=https%3A%2F%2Fwww.qld.gov.au%2Fcommunity%2Fdisasters-emergencies%2Fqueensland-disasters%2Ffnq-monsoonal-trough&index_url=https%3A%2F%2Fwww.qld.gov.au%2Fcommunity%2Fdisasters-emergencies%2Fqueensland-disasters%2Ffnq-monsoonal-trough&auth=qbavFamsPcqvWK5M3INRmA&profile=qld_preview&type=FP',
-            'descriptionHtml': 'Personal hardship financial assistance has been activated for some communities at this time.',
-            'additionalProperties': {},
-            'category': ''
+            titleHtml: 'North Queensland flood assistance',
+            displayUrl: 'https://www.qld.gov.au/community/disasters-emergencies/queensland-disasters/fnq-monsoonal-trough',
+            linkUrl: '/s/redirect?collection=qld-gov&url=https%3A%2F%2Fwww.qld.gov.au%2Fcommunity%2Fdisasters-emergencies%2Fqueensland-disasters%2Ffnq-monsoonal-trough&index_url=https%3A%2F%2Fwww.qld.gov.au%2Fcommunity%2Fdisasters-emergencies%2Fqueensland-disasters%2Ffnq-monsoonal-trough&auth=qbavFamsPcqvWK5M3INRmA&profile=qld_preview&type=FP',
+            descriptionHtml: 'Personal hardship financial assistance has been activated for some communities at this time.',
+            additionalProperties: {},
+            category: ''
           }, {
-            'titleHtml': 'Change of address',
-            'displayUrl': 'https://www.change-of-address.services.qld.gov.au/',
-            'linkUrl': '/s/redirect?collection=qld-gov&url=https%3A%2F%2Fwww.change-of-address.services.qld.gov.au%2F&index_url=https%3A%2F%2Fwww.change-of-address.services.qld.gov.au%2F&auth=RrjhEMq01%2B%2BZwQhpwXAjPg&profile=qld_preview&type=FP',
-            'descriptionHtml': 'Use this online form to change your home and/or postal address online, rather than contacting multiple Queensland Government departments/services.',
-            'additionalProperties': {
-              'icon': 'fa-car fa-motorcycle fa-address-card',
-              'service': 'yes'
+            titleHtml: 'Change of address',
+            displayUrl: 'https://www.change-of-address.services.qld.gov.au/',
+            linkUrl: '/s/redirect?collection=qld-gov&url=https%3A%2F%2Fwww.change-of-address.services.qld.gov.au%2F&index_url=https%3A%2F%2Fwww.change-of-address.services.qld.gov.au%2F&auth=RrjhEMq01%2B%2BZwQhpwXAjPg&profile=qld_preview&type=FP',
+            descriptionHtml: 'Use this online form to change your home and/or postal address online, rather than contacting multiple Queensland Government departments/services.',
+            additionalProperties: {
+              icon: 'fa-car fa-motorcycle fa-address-card',
+              service: 'yes'
             },
-            'category': ''
+            category: ''
           }]
         }
       }
@@ -2336,7 +2391,7 @@ $(function () {
       suggestions.forEach(function (item) {
         suggestionsHTML += '<li class="list-group-item">';
         suggestionsHTML += '<button tabindex="-1" data-analytics-link-group="qg-global-search-suggestion">';
-        suggestionsHTML += getBoldText(inputValue, item['disp']);
+        suggestionsHTML += getBoldText(inputValue, item.disp);
         suggestionsHTML += '</button>';
         suggestionsHTML += '</li>';
       });
@@ -2371,14 +2426,14 @@ $(function () {
 
   // Process suggested services and filter out bad results
   qgSiteSearch.fn.processServices = function (services) {
-    var allResults = services['response']['resultPacket']['results'];
+    var allResults = services.response.resultPacket.results;
     var serviceResults = [];
     var featuredService = null;
-    var curatorIndex = services['response']['curator'];
+    var curatorIndex = services.response.curator;
 
     // Look for curated results
     if (typeof curatorIndex !== 'undefined') {
-      var allCuratedResults = curatorIndex['exhibits'];
+      var allCuratedResults = curatorIndex.exhibits;
       if (typeof allCuratedResults !== 'undefined') {
         if (allCuratedResults.length > 0) {
           // The first result is always featured
@@ -2387,8 +2442,8 @@ $(function () {
           // Process any additional exhibits
           for (var index = 1; index < allCuratedResults.length; index++) {
             var result = allCuratedResults[index];
-            var additionalProperties = result['additionalProperties'];
-            if (additionalProperties['service'] === 'yes') {
+            var additionalProperties = result.additionalProperties;
+            if (additionalProperties.service === 'yes') {
               serviceResults.push(result);
             }
           }
@@ -2399,7 +2454,11 @@ $(function () {
     // Look for services in standard results
     if (allResults.length > 0) {
       var filteredResults = allResults.filter(function (result) {
-        return result['metaData']['sfinder'] === 'yes';
+        if (result.listMetadata != null && result.listMetadata.sfinder != null) {
+          return result.listMetadata.sfinder[0] === 'yes';
+        } else {
+          return false;
+        }
       });
       serviceResults = serviceResults.concat(filteredResults);
       if (serviceResults.length > 3) {
@@ -2419,17 +2478,17 @@ $(function () {
     var featuredServiceContainer = $('.qg-search-concierge-help .qg-search-concierge-group.highlight');
     var serviceHTML = '';
     if (featuredService) {
-      var title = featuredService['titleHtml'];
-      var linkURL = featuredService['displayUrl'];
-      var description = featuredService['descriptionHtml'];
-      var additionalProperties = featuredService['additionalProperties'];
+      var title = featuredService.titleHtml;
+      var linkURL = featuredService.displayUrl;
+      var description = featuredService.descriptionHtml;
+      var additionalProperties = featuredService.additionalProperties;
       serviceHTML = '<div class="qg-search-concierge-content">';
       serviceHTML += '<div class="d-flex justify-content-between align-content-center flex-wrap">';
       serviceHTML += '<h4>' + title + '</h4>';
 
       // Check for icons
-      if (typeof additionalProperties['icon'] !== 'undefined') {
-        var allIcons = additionalProperties['icon'].split(' ');
+      if (typeof additionalProperties.icon !== 'undefined') {
+        var allIcons = additionalProperties.icon.split(' ');
         var iconHTML = allIcons.map(function (icon) {
           return '<span class="fa ' + icon + '"></span>';
         });
@@ -2438,8 +2497,8 @@ $(function () {
       serviceHTML += '</div>';
       serviceHTML += '<p>' + description + '</p>';
       if (linkURL) {
-        if (additionalProperties['buttonText']) {
-          serviceHTML += '<a href="' + linkURL + '"  tabindex="-1" data-analytics-link-group="qg-global-search-feature" class="btn btn-global-primary-white">' + additionalProperties['buttonText'] + '</a>';
+        if (additionalProperties.buttonText) {
+          serviceHTML += '<a href="' + linkURL + '"  tabindex="-1" data-analytics-link-group="qg-global-search-feature" class="btn btn-global-primary-white">' + additionalProperties.buttonText + '</a>';
         } else {
           serviceHTML += '<a href="' + linkURL + '"  tabindex="-1" data-analytics-link-group="qg-global-search-feature" class="btn btn-global-primary-white">Continue</a>';
         }
@@ -2459,15 +2518,15 @@ $(function () {
       serviceHTML += servicesHeading;
       serviceHTML += '<ul class="list-group">';
       serviceResults.forEach(function (service) {
-        var serviceName = service['title'];
-        var serviceLink = service['liveUrl'];
+        var serviceName = service.title;
+        var serviceLink = service.liveUrl;
         if (typeof serviceName !== 'undefined') {
           serviceName = serviceName.split('|')[0].trim();
         } else {
-          serviceName = service['titleHtml'];
+          serviceName = service.titleHtml;
         }
         if (typeof serviceLink === 'undefined') {
-          serviceLink = service['displayUrl'];
+          serviceLink = service.displayUrl;
         }
         serviceHTML += '<li class="list-group-item">';
         serviceHTML += '<a href="' + serviceLink + '" tabindex="-1" data-analytics-link-group="qg-global-search-related-service">' + serviceName + '</a>';
@@ -2652,7 +2711,7 @@ $(function () {
 
   // decommission qg-cut-in warning
   if ($(figureElement).length) {
-    console.warn("\".qg-cut-in\" and \".qg-cut-in-alt\" is going to be deprecated in SWE library. Please replace \".qg-cut-in\" or \".qg-cut-in-alt\" with \".qg-fig\". Please refer to https://qld-gov-au.github.io/web-template-release/components/images.html for more details.");
+    console.warn('".qg-cut-in" and ".qg-cut-in-alt" is going to be deprecated in SWE library. Please replace ".qg-cut-in" or ".qg-cut-in-alt" with ".qg-fig". Please refer to https://qld-gov-au.github.io/web-template-release/components/images.html for more details.');
   }
 });
 
@@ -2723,13 +2782,13 @@ var feedbackForm = {
      * Add hidden inputs on a page
      **/
     var hiddenInputs = {
-      'franchise': franchise,
+      franchise: franchise,
       'page-title': $(document).find('title').text(),
       'page-url': window.location.href,
       'page-referer': document.referrer,
-      'rspUsrAgent': navigator.userAgent,
-      'browserName': this.predictBrowserName().name + ' ' + this.predictBrowserName().version,
-      'OS': navigator.platform,
+      rspUsrAgent: navigator.userAgent,
+      browserName: this.predictBrowserName().name + ' ' + this.predictBrowserName().version,
+      OS: navigator.platform,
       'g-recaptcha-response': ''
     };
     for (var prop in hiddenInputs) {
@@ -2767,7 +2826,6 @@ var feedbackForm = {
     .replace(/{/g, '&#123;') // strip (
     .replace(/}/g, '&#124;'); // strip )
   },
-
   /**
    * Predict user browser (this function only predicts based on certain browser values and may not work with all the browsers)
    * @return {Object}
@@ -2867,15 +2925,15 @@ $(function () {
   // Namespace
   //
   var qgLocation = {
-    'fn': {},
-    'vars': {
-      'cookie_name': 'qg-location',
-      'event_coordinates_set': 'qgLocationCoordsSet',
-      'event_locality_set': 'qgLocationLocalitySet',
-      'event_location_found': 'qgLocationFound',
-      'event_location_cleared': 'qgLocationCleared',
-      'error_message': '',
-      'suburb_input': ''
+    fn: {},
+    vars: {
+      cookie_name: 'qg-location',
+      event_coordinates_set: 'qgLocationCoordsSet',
+      event_locality_set: 'qgLocationLocalitySet',
+      event_location_found: 'qgLocationFound',
+      event_location_cleared: 'qgLocationCleared',
+      error_message: '',
+      suburb_input: ''
     }
   };
 
@@ -3163,51 +3221,51 @@ $(function () {
   // Get local example of Google Maps API
   qgLocation.fn.getExampleLocation = function () {
     var exampleResponse = [{
-      'address_components': [{
-        'long_name': 'Browning St near Boundary Rd, stop 5',
-        'short_name': 'Browning St near Boundary Rd, stop 5',
-        'types': ['establishment', 'point_of_interest', 'transit_station']
+      address_components: [{
+        long_name: 'Browning St near Boundary Rd, stop 5',
+        short_name: 'Browning St near Boundary Rd, stop 5',
+        types: ['establishment', 'point_of_interest', 'transit_station']
       }, {
-        'long_name': 'South Brisbane',
-        'short_name': 'South Brisbane',
-        'types': ['locality', 'political']
+        long_name: 'South Brisbane',
+        short_name: 'South Brisbane',
+        types: ['locality', 'political']
       }, {
-        'long_name': 'Brisbane City',
-        'short_name': 'Brisbane',
-        'types': ['administrative_area_level_2', 'political']
+        long_name: 'Brisbane City',
+        short_name: 'Brisbane',
+        types: ['administrative_area_level_2', 'political']
       }, {
-        'long_name': 'Queensland',
-        'short_name': 'QLD',
-        'types': ['administrative_area_level_1', 'political']
+        long_name: 'Queensland',
+        short_name: 'QLD',
+        types: ['administrative_area_level_1', 'political']
       }, {
-        'long_name': 'Australia',
-        'short_name': 'AU',
-        'types': ['country', 'political']
+        long_name: 'Australia',
+        short_name: 'AU',
+        types: ['country', 'political']
       }, {
-        'long_name': '4101',
-        'short_name': '4101',
-        'types': ['postal_code']
+        long_name: '4101',
+        short_name: '4101',
+        types: ['postal_code']
       }],
-      'formatted_address': 'Browning St near Boundary Rd, stop 5, South Brisbane QLD 4101, Australia',
-      'geometry': {
-        'location': {
-          'lat': -27.477727,
-          'lng': 153.01314
+      formatted_address: 'Browning St near Boundary Rd, stop 5, South Brisbane QLD 4101, Australia',
+      geometry: {
+        location: {
+          lat: -27.477727,
+          lng: 153.01314
         },
-        'location_type': 'GEOMETRIC_CENTER',
-        'viewport': {
-          'northeast': {
-            'lat': -27.4763780197085,
-            'lng': 153.0144889802915
+        location_type: 'GEOMETRIC_CENTER',
+        viewport: {
+          northeast: {
+            lat: -27.4763780197085,
+            lng: 153.0144889802915
           },
-          'southwest': {
-            'lat': -27.4790759802915,
-            'lng': 153.0117910197085
+          southwest: {
+            lat: -27.4790759802915,
+            lng: 153.0117910197085
           }
         }
       },
-      'place_id': 'ChIJufdIyqBQkWsRlnW4qQxzN94',
-      'types': ['establishment', 'point_of_interest', 'transit_station']
+      place_id: 'ChIJufdIyqBQkWsRlnW4qQxzN94',
+      types: ['establishment', 'point_of_interest', 'transit_station']
     }];
     return exampleResponse;
   };
@@ -3215,53 +3273,53 @@ $(function () {
   // Get local example of service centres
   qgLocation.fn.getExampleServiceCentres = function () {
     var exampleCentres = {
-      'question': {
-        'rawInputParameters': {
-          'origin': ['-27.477413799999997;153.01329099999998']
+      question: {
+        rawInputParameters: {
+          origin: ['-27.477413799999997;153.01329099999998']
         }
       },
-      'response': {
-        'resultPacket': {
-          'results': [{
-            'rank': 1,
-            'title': 'Asif AMin Justices of the Peace Branch',
-            'kmFromOrigin': 0.2,
-            'metaData': {
-              'area': 'Brisbane City',
-              'hours': 'Monday to Friday, 10am-2pm|Mon,Mon,Tues,Tues,Wednes,Wednes,Thurs,Thurs,Fri,Fri,',
-              'agency': 'DJAG',
-              'address2': 'Level 6, 154 Melbourne Street',
-              'address1': 'See reception',
-              'viewpageassetid': '21806',
-              'postcode': '4101',
-              'type': 'Service',
-              's': 'Volunteer Justice of the Peace or Commissioner for Declarations',
-              't': 'Justices of the Peace Branch',
-              'phone': '1300 301 147',
-              'datasource': 'JP',
-              'suburb': 'SOUTH BRISBANE',
-              'location': '-27.4761712;153.0149019',
-              'id': '92'
+      response: {
+        resultPacket: {
+          results: [{
+            rank: 1,
+            title: 'Asif AMin Justices of the Peace Branch',
+            kmFromOrigin: 0.2,
+            metaData: {
+              area: 'Brisbane City',
+              hours: 'Monday to Friday, 10am-2pm|Mon,Mon,Tues,Tues,Wednes,Wednes,Thurs,Thurs,Fri,Fri,',
+              agency: 'DJAG',
+              address2: 'Level 6, 154 Melbourne Street',
+              address1: 'See reception',
+              viewpageassetid: '21806',
+              postcode: '4101',
+              type: 'Service',
+              s: 'Volunteer Justice of the Peace or Commissioner for Declarations',
+              t: 'Justices of the Peace Branch',
+              phone: '1300 301 147',
+              datasource: 'JP',
+              suburb: 'SOUTH BRISBANE',
+              location: '-27.4761712;153.0149019',
+              id: '92'
             }
           }, {
-            'rank': 2,
-            'title': 'Family Court Brisbane',
-            'kmFromOrigin': 1.2,
-            'metaData': {
-              'area': 'Brisbane City',
-              'hours': 'Monday, Thursday and Friday 9am-2pm Note this service is for Family Court matters only. Hours of service may vary daily.|Mon,Mon,Thurs,Thurs,Fri,Fri,',
-              'agency': 'DJAG',
-              'address2': '(Entrance via Tank Street)',
-              'address1': 'Corner North Quay and Tank Streets',
-              'viewpageassetid': '21806',
-              'postcode': '4000',
-              'type': 'Service',
-              's': 'Hours of service vary daily, please phone before attending. Volunteer Justice of the Peace or Commissioner for Declarations',
-              't': 'Family Court Brisbane',
-              'datasource': 'JP',
-              'suburb': 'BRISBANE',
-              'location': '-27.468426;153.019921',
-              'id': '62'
+            rank: 2,
+            title: 'Family Court Brisbane',
+            kmFromOrigin: 1.2,
+            metaData: {
+              area: 'Brisbane City',
+              hours: 'Monday, Thursday and Friday 9am-2pm Note this service is for Family Court matters only. Hours of service may vary daily.|Mon,Mon,Thurs,Thurs,Fri,Fri,',
+              agency: 'DJAG',
+              address2: '(Entrance via Tank Street)',
+              address1: 'Corner North Quay and Tank Streets',
+              viewpageassetid: '21806',
+              postcode: '4000',
+              type: 'Service',
+              s: 'Hours of service vary daily, please phone before attending. Volunteer Justice of the Peace or Commissioner for Declarations',
+              t: 'Family Court Brisbane',
+              datasource: 'JP',
+              suburb: 'BRISBANE',
+              location: '-27.468426;153.019921',
+              id: '62'
             }
           }]
         }
@@ -3292,9 +3350,9 @@ $(function () {
 
     // Get location coordinates from storage
     var geocoderQuery = {
-      'location': {
-        'lat': parseFloat(storedData['latitude']),
-        'lng': parseFloat(storedData['longitude'])
+      location: {
+        lat: parseFloat(storedData['latitude']),
+        lng: parseFloat(storedData['longitude'])
       }
     };
 
@@ -3344,7 +3402,7 @@ $(function () {
       if (address) {
         // Get location coordinates from storage
         var geocoderQuery = {
-          'address': storedData['address']
+          address: storedData['address']
         };
 
         // Query the Google Maps API with location coordinates
@@ -3386,12 +3444,12 @@ $(function () {
   qgLocation.fn.querySuburbsAPI = function () {
     var suburbsURL = 'https://gisservices.information.qld.gov.au/arcgis/rest/services/PlanningCadastre/LandParcelPropertyFramework/MapServer/19/query';
     var suburbsParams = {
-      'f': 'json',
-      'where': 'ADMINAREANAME+%3C%3E+%27Null%27',
-      'returnGeometry': 'false',
-      'spatialRel': 'esriSpatialRelIntersects',
-      'outFields': 'ADMINAREANAME',
-      'orderByFields': 'ADMINAREANAME%20ASC'
+      f: 'json',
+      where: 'ADMINAREANAME+%3C%3E+%27Null%27',
+      returnGeometry: 'false',
+      spatialRel: 'esriSpatialRelIntersects',
+      outFields: 'ADMINAREANAME',
+      orderByFields: 'ADMINAREANAME%20ASC'
     };
 
     // Construct query params from data
@@ -3413,17 +3471,17 @@ $(function () {
   qgLocation.fn.processSuburbsData = function (jsonResponse) {
     var locationList = [];
     var userSuburb = qgLocation['vars']['suburb_input'];
-    if (jsonResponse.hasOwnProperty('features')) {
+    if (Object.prototype.hasOwnProperty.call(jsonResponse, 'features')) {
       // Add each suburb to the location list
       jsonResponse['features'].forEach(function (object) {
         var sourceName = object['attributes']['ADMINAREANAME'] || object['attributes']['adminareaname'];
         sourceName = sourceName.toLowerCase();
         var suburbLGA = titleCase(sourceName);
         var suburbObject = {
-          'name': sourceName,
-          'name_friendly': suburbLGA,
-          'name_formatted': suburbLGA,
-          'suburb': suburbLGA.split(',')[0]
+          name: sourceName,
+          name_friendly: suburbLGA,
+          name_formatted: suburbLGA,
+          suburb: suburbLGA.split(',')[0]
         };
 
         // Filter out the suburb if user input exists
@@ -3521,7 +3579,7 @@ $(function () {
 
   // The user has allowed geolocation
   qgLocation.fn.processPositionData = function (response) {
-    var positionData = response['coords'];
+    var positionData = response.coords;
     qgLocation.fn.setPositionData(positionData);
     closeDropdown();
   };
@@ -3535,9 +3593,9 @@ $(function () {
   // Save the position data to the browser
   qgLocation.fn.setPositionData = function (positionData) {
     var location = {
-      'latitude': positionData['latitude'],
-      'longitude': positionData['longitude'],
-      'locality': 'unknown'
+      latitude: positionData.latitude,
+      longitude: positionData.longitude,
+      locality: 'unknown'
     };
 
     // Save to cookie
@@ -3562,7 +3620,7 @@ $(function () {
     // Handle no cookie present
     if (storedData === null) {
       storedData = {
-        'locality': 'unknown'
+        locality: 'unknown'
       };
     }
 
@@ -3596,7 +3654,7 @@ $(function () {
     qgLocation.fn.saveLocationCookie(storedData);
 
     // Notify the rest of the page
-    $('body').trigger('custom', qgLocation['vars']['event_location_found']);
+    $('body').trigger('custom', qgLocation.vars.event_location_found);
   };
 
   // Populate the suburb suggestion list
@@ -3673,15 +3731,18 @@ $(function () {
     if (results.length > 0) {
       centreData = results[0];
     }
-    if (centreData) {
-      var centreName = centreData['metaData']['t'];
-      var centreID = centreData['metaData']['id'];
+    if (centreData && centreData['listMetadata']) {
+      var centreName = centreData['listMetadata']['t'];
+      var centreID = centreData['listMetadata']['id'];
       var centreDistance = centreData['kmFromOrigin'];
-      var centreAddress1 = centreData['metaData']['address1'];
-      var centreAddress2 = centreData['metaData']['address2'];
+      var centreAddress1 = centreData['listMetadata']['address1'];
+      var centreAddress2 = centreData['listMetadata']['address2'];
 
       // Build URL
-      var centreType = centreData['metaData']['datasource'].toLowerCase();
+      var centreType = centreData['listMetadata']['datasource'];
+      if (centreType !== undefined) {
+        centreType = centreType[0].toLowerCase();
+      }
       var centreURL = centreContainer.attr('data-' + centreType);
 
       // Handle special cases
@@ -3696,10 +3757,12 @@ $(function () {
       // Build HTML
       centreHTML += '<a href="' + centreURL + '" class="qg-service-centre__link" data-analytics-link-group="qg-nearest-service-centre-details">' + centreName + '</a>';
       centreHTML += '<ul class="qg-service-centre-list">';
-      centreHTML += '<li class="qg-service-centre-list-item">';
+      centreHTML += '<li class="qg-service-centre-list-item service-info">';
       centreHTML += '<a href="' + centreURL + '" data-analytics-link-group="qg-nearest-service-centre-services">Services available</a>';
       centreHTML += '</li>';
-      centreHTML += '<li class="qg-service-centre-list-item">' + centreDistance + ' km away</li>';
+      if (centreDistance !== null) {
+        centreHTML += '<li class="qg-service-centre-list-item centre-distance">' + centreDistance + ' km away</li>';
+      }
       centreHTML += '<li class="qg-service-centre-list-item">';
       if (centreAddress1 !== undefined) {
         centreHTML += '<span class="qg-service-centre__address">' + centreAddress1 + '</span>';
@@ -3919,12 +3982,9 @@ var stepNav = {
 /*!***********************************************************!*\
   !*** ./src/assets/_project/_blocks/legacy/forms/forms.js ***!
   \***********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/typeof */ "./node_modules/@babel/runtime/helpers/esm/typeof.js");
-
+var _typeof = __webpack_require__(/*! @babel/runtime/helpers/typeof */ "./node_modules/@babel/runtime/helpers/typeof.js");
 /*! Form validation - v1.1.1 - 2014-04-09
  * https://github.com/bboyle/form-validation
  * Copyright (c) 2014 Ben Boyle; Licensed MIT */
@@ -3932,363 +3992,373 @@ __webpack_require__.r(__webpack_exports__);
   'use strict';
 
   var validationErrorMessage = 'Please check your answers';
-  var SUBMIT_TOLERANCE = 10000,
-    DEFAULT_STATUS_HTML = "<div class=\"alert alert-warning mt-4\" id=\"qg-forms__validation-errors\" role=\"alert\"><div class=\"inner\"><h2><span class=\"fa fa-exclamation-triangle\"></span>".concat(validationErrorMessage, "</h2><ol></ol></div></div>"),
-    // fields that validate
-    candidateForValidation = 'input, select, textarea',
-    // invalidFilter
-    invalidFilter = function invalidFilter() {
-      return !(this.disabled || this.validity.valid);
-    },
-    // follow plugin conventions for storing plugin data
-    // http://docs.jquery.com/Plugins/Authoring#Data
-    pluginDataKey = 'formValidation',
-    pluginData = function pluginData(key, value) {
-      var dataHash = this.data(pluginDataKey) || this.data(pluginDataKey, {}).data(pluginDataKey);
-      if (typeof key !== 'undefined') {
-        if (typeof value !== 'undefined') {
-          dataHash[key] = value;
-          return value;
-        } else if (typeof dataHash[key] !== 'undefined') {
-          return dataHash[key];
-        }
-        return null;
+  var SUBMIT_TOLERANCE = 10000;
+  var DEFAULT_STATUS_HTML = "<div class=\"alert alert-warning mt-4\" id=\"qg-forms__validation-errors\" role=\"alert\"><div class=\"inner\"><h2><span class=\"fa fa-exclamation-triangle\"></span>".concat(validationErrorMessage, "</h2><ol></ol></div></div>");
+  // fields that validate
+  var candidateForValidation = 'input, select, textarea';
+
+  // invalidFilter
+  var invalidFilter = function invalidFilter() {
+    return !(this.disabled || this.validity.valid);
+  };
+
+  // follow plugin conventions for storing plugin data
+  // http://docs.jquery.com/Plugins/Authoring#Data
+  var pluginDataKey = 'formValidation';
+  var pluginData = function pluginData(key, value) {
+    var dataHash = this.data(pluginDataKey) || this.data(pluginDataKey, {}).data(pluginDataKey);
+    if (typeof key !== 'undefined') {
+      if (typeof value !== 'undefined') {
+        dataHash[key] = value;
+        return value;
+      } else if (typeof dataHash[key] !== 'undefined') {
+        return dataHash[key];
       }
-      return dataHash;
-    },
-    // helper for .label, .hint and .alert
-    getLabelComponent = function getLabelComponent(component, options) {
-      return this.map(function (index, domElement) {
-        var $element = $(domElement),
-          labelElement = null,
-          foundElement = null;
-        if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(options) === 'object' && options.level === 'group') {
-          foundElement = $element.formValidation('group').find(component)[0];
-        } else if ($element.is(':radio, :checkbox')) {
-          foundElement = $element.closest('fieldset').find(component)[0];
-        } else {
-          labelElement = $element.closest('form').find('label[for="' + domElement.id + '"]');
-          foundElement = labelElement.children(component)[0];
-          if (!foundElement) {
-            if (component === '.hint') {
-              labelElement.append('<small class="hint"></small>');
-              foundElement = labelElement.children(component)[0];
-            }
-          }
-        }
-        return foundElement;
-      });
-    },
-    changeValidityCheck = function changeValidityCheck() {
-      var $this = $(this),
-        alertElement = $this.formValidation('alert'),
-        alertLevel,
-        invalidContainers;
+      return null;
+    }
+    return dataHash;
+  };
 
-      // is this control valid?
-      if (this.validity.valid) {
-        // is it part of a group that contain other invalid controls?
-        if ($this.formValidation('question').find('.alert').filter(alertElement).length > 0) {
-          alertElement.remove();
-        } else {
-          // update message from first invalid field in group
-          invalidContainers = $this.formValidation('group').find(candidateForValidation).filter(invalidFilter);
-          if (invalidContainers.length > 0) {
-            alertElement.text(invalidContainers.formValidation('getValidationMessage'));
-          } else {
-            // all fields valid
-            alertElement.remove();
-          }
-        }
-
-        // remove invalid class from ancestors that do not contain invalid fields
-        $this.parentsUntil('form', '.invalid').filter(function () {
-          return $(this).find(candidateForValidation).filter(invalidFilter).length === 0;
-        })
-        // remove .invalid class
-        .removeClass('invalid')
-        // remove old alerts (change handler should have already done this)
-        .find($(".alert:contains(".concat(validationErrorMessage, ")"))).remove();
+  // helper for .label, .hint and .alert
+  var getLabelComponent = function getLabelComponent(component, options) {
+    return this.map(function (index, domElement) {
+      var $element = $(domElement);
+      var labelElement = null;
+      var foundElement = null;
+      if (_typeof(options) === 'object' && options.level === 'group') {
+        foundElement = $element.formValidation('group').find(component)[0];
+      } else if ($element.is(':radio, :checkbox')) {
+        foundElement = $element.closest('fieldset').find(component)[0];
       } else {
-        // does alert exist?
-        if (alertElement.length === 0) {
-          alertElement = $('<em class="alert"/>');
+        labelElement = $element.closest('form').find('label[for="' + domElement.id + '"]');
+        foundElement = labelElement.children(component)[0];
+        if (!foundElement) {
+          if (component === '.hint') {
+            labelElement.append('<small class="hint"></small>');
+            foundElement = labelElement.children(component)[0];
+          }
         }
-        // show message
-        alertElement.text($this.formValidation('getValidationMessage'));
-        // append to form
-        if ($this.formValidation('group').hasClass('atomic')) {
-          alertLevel = {
-            'level': 'group'
-          };
+      }
+      return foundElement;
+    });
+  };
+  var changeValidityCheck = function changeValidityCheck() {
+    var $this = $(this);
+    var alertElement = $this.formValidation('alert');
+    var alertLevel;
+    var invalidContainers;
+
+    // is this control valid?
+    if (this.validity.valid) {
+      // is it part of a group that contain other invalid controls?
+      if ($this.formValidation('question').find('.alert').filter(alertElement).length > 0) {
+        alertElement.remove();
+      } else {
+        // update message from first invalid field in group
+        invalidContainers = $this.formValidation('group').find(candidateForValidation).filter(invalidFilter);
+        if (invalidContainers.length > 0) {
+          alertElement.text(invalidContainers.formValidation('getValidationMessage'));
+        } else {
+          // all fields valid
+          alertElement.remove();
         }
-        $this.formValidation('label', alertLevel).parent().find('.label, abbr[title="(required)"]').eq(-1).after(alertElement);
-
-        // NOTE we don't flag the question as .invalid now
-        // .invalid only happens on submit, to soften inline validation errors
       }
-    },
-    // checks for invalid elements
-    // returns number of invalid elements
-    submitValidityCheck = function submitValidityCheck() {
-      // form object
-      var form = $(this).closest('form'),
-        // invalid fields
-        invalid = form.find(candidateForValidation).filter(function invalidFields() {
-          // skip disabled
-          if (this.disabled) {
-            return false;
-          }
 
-          // only check radio button groups once (skip individual radio button)
-          if (this.type === 'radio') {
-            if (!invalidFields.cache) {
-              invalidFields.cache = {};
-            } else if (invalidFields.cache[this.name] === true) {
-              return false;
-            }
-            invalidFields.cache[this.name] = true;
-          }
-          return this.validity && !this.validity.valid;
-        }),
-        // alert container
-        alert = pluginData.call(form, 'summaryElement') || pluginData.call(form, 'summaryElement', $(DEFAULT_STATUS_HTML)),
-        // messages within alert
-        messages = alert.find('ol'),
-        // track groups
-        lastGroupSeen = true;
-      if (invalid.length > 0) {
-        // remove old messages
-        messages.find('li').remove();
-
-        // add new messages
-        invalid.each(function () {
-          // get field
-          var $this = $(this),
-            // get group (if exists)
-            group = $this.formValidation('group'),
-            // get label or group label
-            label = $this.formValidation('label', {
-              level: group.length > 0 ? 'group' : null
-            }),
-            labelId,
-            item;
-
-          // get the label id
-          if (label.length > 0) {
-            labelId = label[0].id || label.generateId('label-' + this.id)[0].id;
-          } else {
-            labelId = this.name;
-          }
-
-          // get alert item
-          item = pluginData.call($this, 'summaryElement') || pluginData.call($this, 'summaryElement', $('<li><a href="#' + labelId + '"></a></li>'));
-          if (group.length === 0 || group[0] !== lastGroupSeen) {
-            // update last group seen
-            lastGroupSeen = group[0];
-
-            // create error message with link to label
-            item.find('a').text(label.text().replace(/\?$/, '') + ': ' + $this.formValidation('getValidationMessage')).end().appendTo(messages);
-          } else {
-            // remove from DOM
-            item.remove();
-          }
-        });
-      }
-      return invalid.length;
-    },
-    submitValidationHandler = function submitValidationHandler(event) {
-      // validate form
-      var count = submitValidityCheck.call(this),
-        form = $(this);
-
-      // remove invalid class from questions that do not contain invalid fields
-      form.find('.invalid').filter(function () {
+      // remove invalid class from ancestors that do not contain invalid fields
+      $this.parentsUntil('form', '.invalid').filter(function () {
         return $(this).find(candidateForValidation).filter(invalidFilter).length === 0;
       })
       // remove .invalid class
       .removeClass('invalid')
       // remove old alerts (change handler should have already done this)
       .find($(".alert:contains(".concat(validationErrorMessage, ")"))).remove();
+    } else {
+      // does alert exist?
+      if (alertElement.length === 0) {
+        alertElement = $('<em class="alert"/>');
+      }
+      // show message
+      alertElement.text($this.formValidation('getValidationMessage'));
+      // append to form
+      if ($this.formValidation('group').hasClass('atomic')) {
+        alertLevel = {
+          level: 'group'
+        };
+      }
+      $this.formValidation('label', alertLevel).parent().find('.label, abbr[title="(required)"]').eq(-1).after(alertElement);
 
-      // anything invalid?
-      if (count > 0) {
-        // cancel submit
-        event.stopImmediatePropagation();
-        event.preventDefault();
+      // NOTE we don't flag the question as .invalid now
+      // .invalid only happens on submit, to soften inline validation errors
+    }
+  };
 
-        // show the error summary
-        (function (form) {
-          var summary = pluginData.call(form, 'summaryElement');
-          // hide any previous status blocks
-          form.prev(".alert:contains(".concat(validationErrorMessage, ")")).not(summary).remove();
-          // show the new summary
-          form.before(summary.fadeIn());
-          // focus/scroll summary element
-          if (window.innerWidth < 992) {
-            $(window).scrollTop(summary.offset().top - $('.qg-site-header').height());
-          } else {
-            $(window).scrollTop(summary.offset().top);
-          }
-        })(form);
+  // checks for invalid elements
+  // returns number of invalid elements
+  var submitValidityCheck = function submitValidityCheck() {
+    // form object
+    var form = $(this).closest('form');
 
-        // find all the invalid fields
-        form.find(candidateForValidation).filter(invalidFilter).each(function () {
-          // update inline alerts
-          changeValidityCheck.call(this);
-        })
-        // set .invalid on ancestor LI elements
-        .parentsUntil('form', '.questions > li')
-        // but not sections
-        .not('.section, .compact').addClass('invalid');
-
-        // trigger x-invalid
-        form.trigger('x-invalid');
-
-        // cancel submit
+    // invalid fields
+    var invalid = form.find(candidateForValidation).filter(function invalidFields() {
+      // skip disabled
+      if (this.disabled) {
         return false;
       }
-    },
-    // bind this AFTER the validation handler
-    // only invoked if validation did not prevent submit
-    // This will softlock submit if form submit passes this function with in SUBMIT_TOLERANCE timerange
-    submitDoneHandler = function submitDoneHandler(event) {
-      // use event.timeStamp when available and $.now() otherwise
-      var timeStamp = event.timeStamp || $.now(),
-        form = $(this),
-        summaryElement = pluginData.call(form, 'summaryElement'),
-        lastSubmitTimeStamp;
 
-      // remove summary element from DOM on successful submit
-      if (summaryElement) {
-        summaryElement.remove();
-      }
-
-      // is this submit event too soon after the last one?
-      lastSubmitTimeStamp = pluginData.call(form, 'lastSubmitTimeStamp');
-      if (lastSubmitTimeStamp && timeStamp - lastSubmitTimeStamp < SUBMIT_TOLERANCE) {
-        // cancel the submit event
-        event.stopImmediatePropagation();
-        event.preventDefault();
-        return false;
-      } else {
-        // store the timestamp
-        pluginData.call(form, 'lastSubmitTimeStamp', timeStamp);
-      }
-    },
-    // plugin methods
-    methods = {
-      // $( x ).formValidation( 'alert' ) -- get
-      // get alert text
-      alert: function alert() {
-        return this.map(function (index, domElement) {
-          var $element = $(domElement),
-            group;
-          if ($element.is(':radio, :checkbox') === true) {
-            return $element.closest('fieldset').find('legend > .alert')[0];
-          } else {
-            // atomic groups
-            group = $element.formValidation('group').filter('.atomic');
-            if (group.length > 0) {
-              return group.find('legend > .alert')[0];
-            } else {
-              return $('label[for="' + domElement.id + '"] > .alert')[0];
-            }
-          }
-        });
-      },
-      // $( x ).formValidation( 'label' )
-      // $( x ).formValidation( 'label', { level : group })
-      // return .label associated with element or containing group
-      label: function label(options) {
-        return getLabelComponent.call(this, '.label', options);
-      },
-      // $( x ).formValidation( 'hint' )
-      // $( x ).formValidation( 'hint', { level : group })
-      // return .hint associated with element or containing group
-      hint: function hint(options) {
-        return getLabelComponent.call(this, '.hint', options);
-      },
-      // $( x ).formValidation( 'question' )
-      // return question element for item
-      question: function question(options) {
-        // looking for group?
-        if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(options) === 'object' && options.level === 'group') {
-          // return the group
-          return this.formValidation('group');
+      // only check radio button groups once (skip individual radio button)
+      if (this.type === 'radio') {
+        if (!invalidFields.cache) {
+          invalidFields.cache = {};
+        } else if (invalidFields.cache[this.name] === true) {
+          return false;
         }
+        invalidFields.cache[this.name] = true;
+      }
+      return this.validity && !this.validity.valid;
+    });
 
-        // not looking for group
-        return this.map(function (index, domElement) {
-          return $(domElement).parentsUntil('form', '.questions > li')[0];
+    // alert container
+    var alert = pluginData.call(form, 'summaryElement') || pluginData.call(form, 'summaryElement', $(DEFAULT_STATUS_HTML));
+
+    // messages within alert
+    var messages = alert.find('ol');
+
+    // track groups
+    var lastGroupSeen = true;
+    if (invalid.length > 0) {
+      // remove old messages
+      messages.find('li').remove();
+
+      // add new messages
+      invalid.each(function () {
+        // get field
+        var $this = $(this);
+        // get group (if exists)
+        var group = $this.formValidation('group');
+        // get label or group label
+        var label = $this.formValidation('label', {
+          level: group.length > 0 ? 'group' : null
         });
-      },
-      // $( x ).formValidation( 'group' )
-      // return group element for item
-      group: function group() {
-        return this.map(function (index, domElement) {
-          return $(domElement).parentsUntil('form', '.group').filter(function () {
-            // ignore groups that do not contain fieldsets
-            return $(this).children('fieldset').length > 0;
-          })[0];
-        });
-      },
-      // $( x ).formValidation( 'validate' )
-      // binds validation handler functions
-      // sets @novalidate on form to disable built-in validation
-      // TODO allow this to be called multiple times without binding additional handlers!
-      validate: function validate() {
-        return this.each(function () {
-          $(this).closest('form')
-          // turn off native validation
-          .attr('novalidate', true)
-          // unbind and rebind handlers
-          .off('submit', submitDoneHandler).off('submit', submitValidationHandler)
-          // validate this form
-          .on('submit', submitValidationHandler)
-          // if validation did not cancel submit…
-          .on('submit', submitDoneHandler)
-          // bind inline validation handlers to form elements
-          .find(candidateForValidation).off('change', changeValidityCheck).on('change', changeValidityCheck);
-        });
-      },
-      // jQuery("div.alert.alert-warning").remove(); //as this function only add's to it. submitDoneHandler did the removal on success.
-      // $( x ).formValidation( 'validate', event )
-      // validates the form it is attached too
-      // return false if invalid
-      // var fakeEvent = jQuery.Event( "click" );
-      // $("form#myForm").formValidation("validateNow", fakeEvent);
-      // The fakeEvent captures the .stopImmediatePropagation() .preventDefault()
-      // and to allow you to check with:
-      //isDefaultPrevented, isImmediatePropagationStopped
-      validateNow: function validateNow(event) {
-        return submitValidationHandler.call(this, event);
-      },
-      // $( x ).formValidation( 'getValidationMessage' )
-      // return String validation message, e.g. "Must be completed"
-      getValidationMessage: function getValidationMessage() {
-        var validityState = this[0].validity;
-        if (typeof validityState === 'undefined' || validityState.valid === true) {
-          return '';
-        } else if (validityState.valueMissing) {
-          return 'Must be completed';
-        } else if (validityState.customError) {
-          return this[0].validationMessage;
-        } else if (validityState.typeMismatch) {
-          return 'Must be an email address';
-        } else if (validityState.patternMismatch) {
-          return 'Must use the format shown';
+        var labelId;
+        var item;
+
+        // get the label id
+        if (label.length > 0) {
+          labelId = label[0].id || label.generateId('label-' + this.id)[0].id;
         } else {
-          return 'Must be a valid answer';
+          labelId = this.name;
         }
+
+        // get alert item
+        item = pluginData.call($this, 'summaryElement') || pluginData.call($this, 'summaryElement', $('<li><a href="#' + labelId + '"></a></li>'));
+        if (group.length === 0 || group[0] !== lastGroupSeen) {
+          // update last group seen
+          lastGroupSeen = group[0];
+
+          // create error message with link to label
+          item.find('a').text(label.text().replace(/\?$/, '') + ': ' + $this.formValidation('getValidationMessage')).end().appendTo(messages);
+        } else {
+          // remove from DOM
+          item.remove();
+        }
+      });
+    }
+    return invalid.length;
+  };
+  var submitValidationHandler = function submitValidationHandler(event) {
+    // validate form
+    var count = submitValidityCheck.call(this);
+    var form = $(this);
+
+    // remove invalid class from questions that do not contain invalid fields
+    form.find('.invalid').filter(function () {
+      return $(this).find(candidateForValidation).filter(invalidFilter).length === 0;
+    })
+    // remove .invalid class
+    .removeClass('invalid')
+    // remove old alerts (change handler should have already done this)
+    .find($(".alert:contains(".concat(validationErrorMessage, ")"))).remove();
+
+    // anything invalid?
+    if (count > 0) {
+      // cancel submit
+      event.stopImmediatePropagation();
+      event.preventDefault();
+
+      // show the error summary
+      (function (form) {
+        var summary = pluginData.call(form, 'summaryElement');
+        // hide any previous status blocks
+        form.prev(".alert:contains(".concat(validationErrorMessage, ")")).not(summary).remove();
+        // show the new summary
+        form.before(summary.fadeIn());
+        // focus/scroll summary element
+        if (window.innerWidth < 992) {
+          $(window).scrollTop(summary.offset().top - $('.qg-site-header').height());
+        } else {
+          $(window).scrollTop(summary.offset().top);
+        }
+      })(form);
+
+      // find all the invalid fields
+      form.find(candidateForValidation).filter(invalidFilter).each(function () {
+        // update inline alerts
+        changeValidityCheck.call(this);
+      })
+      // set .invalid on ancestor LI elements
+      .parentsUntil('form', '.questions > li')
+      // but not sections
+      .not('.section, .compact').addClass('invalid');
+
+      // trigger x-invalid
+      form.trigger('x-invalid');
+
+      // cancel submit
+      return false;
+    }
+  };
+
+  // bind this AFTER the validation handler
+  // only invoked if validation did not prevent submit
+  // This will softlock submit if form submit passes this function with in SUBMIT_TOLERANCE timerange
+  var submitDoneHandler = function submitDoneHandler(event) {
+    // use event.timeStamp when available and $.now() otherwise
+    var timeStamp = event.timeStamp || $.now();
+    var form = $(this);
+    var summaryElement = pluginData.call(form, 'summaryElement');
+    var lastSubmitTimeStamp;
+
+    // remove summary element from DOM on successful submit
+    if (summaryElement) {
+      summaryElement.remove();
+    }
+
+    // is this submit event too soon after the last one?
+    lastSubmitTimeStamp = pluginData.call(form, 'lastSubmitTimeStamp');
+    if (lastSubmitTimeStamp && timeStamp - lastSubmitTimeStamp < SUBMIT_TOLERANCE) {
+      // cancel the submit event
+      event.stopImmediatePropagation();
+      event.preventDefault();
+      return false;
+    } else {
+      // store the timestamp
+      pluginData.call(form, 'lastSubmitTimeStamp', timeStamp);
+    }
+  };
+
+  // plugin methods
+  var methods = {
+    // $( x ).formValidation( 'alert' ) -- get
+    // get alert text
+    alert: function alert() {
+      return this.map(function (index, domElement) {
+        var $element = $(domElement);
+        var group;
+        if ($element.is(':radio, :checkbox') === true) {
+          return $element.closest('fieldset').find('legend > .alert')[0];
+        } else {
+          // atomic groups
+          group = $element.formValidation('group').filter('.atomic');
+          if (group.length > 0) {
+            return group.find('legend > .alert')[0];
+          } else {
+            return $('label[for="' + domElement.id + '"] > .alert')[0];
+          }
+        }
+      });
+    },
+    // $( x ).formValidation( 'label' )
+    // $( x ).formValidation( 'label', { level : group })
+    // return .label associated with element or containing group
+    label: function label(options) {
+      return getLabelComponent.call(this, '.label', options);
+    },
+    // $( x ).formValidation( 'hint' )
+    // $( x ).formValidation( 'hint', { level : group })
+    // return .hint associated with element or containing group
+    hint: function hint(options) {
+      return getLabelComponent.call(this, '.hint', options);
+    },
+    // $( x ).formValidation( 'question' )
+    // return question element for item
+    question: function question(options) {
+      // looking for group?
+      if (_typeof(options) === 'object' && options.level === 'group') {
+        // return the group
+        return this.formValidation('group');
       }
-    };
+
+      // not looking for group
+      return this.map(function (index, domElement) {
+        return $(domElement).parentsUntil('form', '.questions > li')[0];
+      });
+    },
+    // $( x ).formValidation( 'group' )
+    // return group element for item
+    group: function group() {
+      return this.map(function (index, domElement) {
+        return $(domElement).parentsUntil('form', '.group').filter(function () {
+          // ignore groups that do not contain fieldsets
+          return $(this).children('fieldset').length > 0;
+        })[0];
+      });
+    },
+    // $( x ).formValidation( 'validate' )
+    // binds validation handler functions
+    // sets @novalidate on form to disable built-in validation
+    // TODO allow this to be called multiple times without binding additional handlers!
+    validate: function validate() {
+      return this.each(function () {
+        $(this).closest('form')
+        // turn off native validation
+        .attr('novalidate', true)
+        // unbind and rebind handlers
+        .off('submit', submitDoneHandler).off('submit', submitValidationHandler)
+        // validate this form
+        .on('submit', submitValidationHandler)
+        // if validation did not cancel submit…
+        .on('submit', submitDoneHandler)
+        // bind inline validation handlers to form elements
+        .find(candidateForValidation).off('change', changeValidityCheck).on('change', changeValidityCheck);
+      });
+    },
+    // jQuery("div.alert.alert-warning").remove(); //as this function only add's to it. submitDoneHandler did the removal on success.
+    // $( x ).formValidation( 'validate', event )
+    // validates the form it is attached too
+    // return false if invalid
+    // var fakeEvent = jQuery.Event( "click" );
+    // $("form#myForm").formValidation("validateNow", fakeEvent);
+    // The fakeEvent captures the .stopImmediatePropagation() .preventDefault()
+    // and to allow you to check with:
+    //isDefaultPrevented, isImmediatePropagationStopped
+    validateNow: function validateNow(event) {
+      return submitValidationHandler.call(this, event);
+    },
+    // $( x ).formValidation( 'getValidationMessage' )
+    // return String validation message, e.g. "Must be completed"
+    getValidationMessage: function getValidationMessage() {
+      var validityState = this[0].validity;
+      if (typeof validityState === 'undefined' || validityState.valid === true) {
+        return '';
+      } else if (validityState.valueMissing) {
+        return 'Must be completed';
+      } else if (validityState.customError) {
+        return this[0].validationMessage;
+      } else if (validityState.typeMismatch) {
+        return 'Must be an email address';
+      } else if (validityState.patternMismatch) {
+        return 'Must use the format shown';
+      } else {
+        return 'Must be a valid answer';
+      }
+    }
+  };
   $.fn.formValidation = function (method) {
     // Method calling logic
     // http://docs.jquery.com/Plugins/Authoring#Plugin_Methods
     if (methods[method]) {
       return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-    } else if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(method) === 'object' || !method) {
+    } else if (_typeof(method) === 'object' || !method) {
       return methods.init.apply(this, arguments);
     } else {
       $.error('Method ' + method + ' does not exist on jQuery.formValidation');
@@ -4341,252 +4411,259 @@ if (jQuery !== 'undefined') {
 
     // http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#valid-e-mail-address
     // 1*( atext / "." ) "@" ldh-str 1*( "." ldh-str )
-    var REXP_EMAIL = /^[A-Za-z0-9!#$%&'*+\-\/=\?\^_`\{\|\}~\.]+@[A-Za-z0-9\-]+(\.[A-Za-z0-9\-]+)*$/,
-      // fields that validate
-      candidateForValidation = 'input, select, textarea',
-      // for feature detection
-      input = $('<input>').get(0),
-      // polyfill test
-      polyfill = (0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(input.validity) !== 'object',
-      // radio button bug (google earth internal browser)
-      radioButtonBug = !polyfill && $('<input type="radio" required checked>').get(0).validity.valueMissing === true,
-      validateBuggyRadioButtons,
-      // invalid fields filter
-      isInvalid = function isInvalid() {
-        return !(this.disabled || this.validity.valid);
-      },
-      // get all radio buttons
-      getRadioButtonsInGroup = function getRadioButtonsInGroup(radio) {
-        return $(radio.form.elements[radio.name]).filter('[name="' + radio.name + '"]');
-      },
-      // manage validity state object
-      validityState = function validityState(typeMismatch, valueMissing, customError, message, patternMismatch) {
-        if (typeof message === 'string') {
-          customError = !!message;
-        }
-        return {
-          customError: customError,
-          typeMismatch: !!typeMismatch,
-          patternMismatch: !!patternMismatch,
-          valueMissing: !!valueMissing,
-          valid: !valueMissing && !customError && !typeMismatch && !patternMismatch
-        };
-      },
-      validateField = function validateField(message) {
-        var $this = $(this),
-          required = !!$this.attr('required'),
-          radio = this.type === 'radio' && getRadioButtonsInGroup(this),
-          valueMissing,
-          invalidEmail = this.getAttribute('type') === 'email' && !!this.value && !REXP_EMAIL.test(this.value),
-          patternMismatch,
-          pattern,
-          newValidityState;
+    var REXP_EMAIL = /^[A-Za-z0-9!#$%&'*+\-\/=\?\^_`\{\|\}~\.]+@[A-Za-z0-9\-]+(\.[A-Za-z0-9\-]+)*$/;
 
-        // radio buttons are required if any single radio button is flagged as required
-        if (radio && !required) {
-          required = radio.filter('[required]').length > 0;
-        }
-        // if required, check for missing value
-        if (required) {
-          if (/^select$/i.test(this.nodeName)) {
-            valueMissing = this.selectedIndex === 0 && this.options[0].value === '';
-          } else if (radio) {
-            valueMissing = radio.filter(':checked').length === 0;
-          } else if (this.type === 'checkbox') {
-            valueMissing = !this.checked;
-          } else {
-            valueMissing = !this.value;
-          }
-        }
-        if (!!this.getAttribute('pattern')) {
-          if (this.value.length > 0) {
-            // http://www.whatwg.org/specs/web-apps/current-work/multipage/common-input-element-attributes.html#compiled-pattern-regular-expression
-            pattern = new RegExp('^(?:' + this.getAttribute('pattern') + ')$');
-            patternMismatch = !pattern.test(this.value);
-          } else {
-            patternMismatch = false;
-          }
-        }
+    // fields that validate
+    var candidateForValidation = 'input, select, textarea';
 
-        // set .validityState
-        newValidityState = validityState(invalidEmail, valueMissing, this.validity.customError || false, message, patternMismatch);
-        if (radio) {
-          getRadioButtonsInGroup(this).each(function () {
-            this.validity = newValidityState;
-          });
+    // for feature detection
+    var input = $('<input>').get(0);
+
+    // polyfill test
+    var polyfill = _typeof(input.validity) !== 'object';
+
+    // radio button bug (google earth internal browser)
+    var radioButtonBug = !polyfill && $('<input type="radio" required checked>').get(0).validity.valueMissing === true;
+    var validateBuggyRadioButtons;
+
+    // invalid fields filter
+    var isInvalid = function isInvalid() {
+      return !(this.disabled || this.validity.valid);
+    };
+
+    // get all radio buttons
+    var getRadioButtonsInGroup = function getRadioButtonsInGroup(radio) {
+      return $(radio.form.elements[radio.name]).filter('[name="' + radio.name + '"]');
+    };
+
+    // manage validity state object
+    var validityState = function validityState(typeMismatch, valueMissing, customError, message, patternMismatch) {
+      if (typeof message === 'string') {
+        customError = !!message;
+      }
+      return {
+        customError: customError,
+        typeMismatch: !!typeMismatch,
+        patternMismatch: !!patternMismatch,
+        valueMissing: !!valueMissing,
+        valid: !valueMissing && !customError && !typeMismatch && !patternMismatch
+      };
+    };
+    var validateField = function validateField(message) {
+      var $this = $(this);
+      var required = !!$this.attr('required');
+      var radio = this.type === 'radio' && getRadioButtonsInGroup(this);
+      var valueMissing;
+      var invalidEmail = this.getAttribute('type') === 'email' && !!this.value && !REXP_EMAIL.test(this.value);
+      var patternMismatch;
+      var pattern;
+      var newValidityState;
+
+      // radio buttons are required if any single radio button is flagged as required
+      if (radio && !required) {
+        required = radio.filter('[required]').length > 0;
+      }
+      // if required, check for missing value
+      if (required) {
+        if (/^select$/i.test(this.nodeName)) {
+          valueMissing = this.selectedIndex === 0 && this.options[0].value === '';
+        } else if (radio) {
+          valueMissing = radio.filter(':checked').length === 0;
+        } else if (this.type === 'checkbox') {
+          valueMissing = !this.checked;
         } else {
+          valueMissing = !this.value;
+        }
+      }
+      if (this.getAttribute('pattern')) {
+        if (this.value.length > 0) {
+          // http://www.whatwg.org/specs/web-apps/current-work/multipage/common-input-element-attributes.html#compiled-pattern-regular-expression
+          pattern = new RegExp('^(?:' + this.getAttribute('pattern') + ')$');
+          patternMismatch = !pattern.test(this.value);
+        } else {
+          patternMismatch = false;
+        }
+      }
+
+      // set .validityState
+      newValidityState = validityState(invalidEmail, valueMissing, this.validity.customError || false, message, patternMismatch);
+      if (radio) {
+        getRadioButtonsInGroup(this).each(function () {
           this.validity = newValidityState;
-        }
+        });
+      } else {
+        this.validity = newValidityState;
+      }
 
-        // set .validationMessage
-        if (this.validity.valid) {
-          this.validationMessage = '';
-        } else if (this.validity.customError) {
-          if (typeof message === 'string') {
-            this.validationMessage = message;
+      // set .validationMessage
+      if (this.validity.valid) {
+        this.validationMessage = '';
+      } else if (this.validity.customError) {
+        if (typeof message === 'string') {
+          this.validationMessage = message;
+        }
+      } else if (this.validity.valueMissing) {
+        this.validationMessage = 'Please answer this question';
+      } else if (this.validity.typeMismatch) {
+        this.validationMessage = 'Please type an email address';
+      } else if (this.validity.patternMismatch) {
+        this.validationMessage = 'Please use the format shown';
+      } else {
+        this.validationMessage = 'Please answer the question correctly';
+      }
+      return this.disabled || this.validity.valid;
+    };
+    var changeHandler = function changeHandler(event) {
+      var target = event.target;
+      validateField.call(target);
+      if (target.type === 'radio') {
+        getRadioButtonsInGroup(target).each(function () {
+          this.validity = target.validity;
+          this.validationMessage = target.validationMessage;
+        });
+      }
+    };
+    var submitHandler = function submitHandler(event) {
+      var form = $(this);
+      var novalidate = !!form.attr('novalidate');
+      var invalid = false;
+
+      // polyfill validation?
+      if (polyfill) {
+        // check fields
+        form.find(candidateForValidation).each(function () {
+          invalid = !validateField.call(this);
+
+          // unless @novalidate
+          if (!novalidate) {
+            // if invalid
+            if (invalid) {
+              // use triggerHandler because invalid does not bubble
+              $(this).triggerHandler('invalid');
+            }
           }
-        } else if (this.validity.valueMissing) {
-          this.validationMessage = 'Please answer this question';
-        } else if (this.validity.typeMismatch) {
-          this.validationMessage = 'Please type an email address';
-        } else if (this.validity.patternMismatch) {
-          this.validationMessage = 'Please use the format shown';
-        } else {
-          this.validationMessage = 'Please answer the question correctly';
-        }
-        return this.disabled || this.validity.valid;
-      },
-      changeHandler = function changeHandler(event) {
-        var target = event.target;
-        validateField.call(target);
-        if (target.type === 'radio') {
-          getRadioButtonsInGroup(target).each(function () {
-            this.validity = target.validity;
-            this.validationMessage = target.validationMessage;
-          });
-        }
-      },
-      submitHandler = function submitHandler(event) {
-        var form = $(this),
-          novalidate = !!form.attr('novalidate'),
-          invalid = false;
+        });
+      }
 
-        // polyfill validation?
-        if (polyfill) {
-          // check fields
-          form.find(candidateForValidation).each(function () {
-            invalid = !validateField.call(this);
+      // NOTE all the code below runs in all browsers to polyfill implementation bugs
 
-            // unless @novalidate
-            if (!novalidate) {
-              // if invalid
-              if (invalid) {
-                // use triggerHandler because invalid does not bubble
-                $(this).triggerHandler('invalid');
+      // required radio button check
+      if (radioButtonBug) {
+        validateBuggyRadioButtons(this);
+      }
+
+      // Opera 11 on OSX fires submit event even when fields are invalid
+      // correct implementations will not invoke this submit handler until all fields are valid
+
+      // unless @novalidate
+      // if there are invalid fields
+      if (!novalidate && form.find(candidateForValidation).filter(isInvalid).length > 0) {
+        // abort submit
+        event.stopImmediatePropagation();
+        event.preventDefault();
+        return false;
+      }
+    };
+    var initConstraintValidationAPI = function initConstraintValidationAPI() {
+      var candidates = $(candidateForValidation);
+
+      // INPUT validityState
+      if (polyfill) {
+        // set us up the API
+        candidates.filter(function () {
+          return _typeof(this.validity) !== 'object';
+        }).each(function () {
+          this.validity = validityState(false, false, false, '', false);
+          this.validationMessage = '';
+        });
+
+        // check validity on change
+        candidates.off('change.constraintValidationAPI').on('change.constraintValidationAPI', changeHandler);
+      }
+
+      // INPUT validitationMessage
+      if (typeof input.validationMessage !== 'string') {
+        // set us up the API
+        candidates.filter(function () {
+          return typeof this.validationMessage !== 'string';
+        }).each(function () {
+          this.validationMessage = '';
+        });
+      }
+
+      // INPUT checkValidity
+      if (typeof input.checkValidity !== 'function') {
+        // set us up the API
+        candidates.filter(function () {
+          return typeof this.checkValidity !== 'function';
+        }).each(function () {
+          var domElement = this;
+          this.checkValidity = function () {
+            var valid = validateField.call(domElement);
+
+            // if invalid, and unless novalidate
+            if (!valid && !this.form.getAttribute('novalidate')) {
+              // use triggerHandler because invalid does not bubble
+              $(domElement).triggerHandler('invalid');
+            }
+            return valid;
+          };
+        });
+      }
+
+      // INPUT setCustomValidity
+      if (typeof input.setCustomValidity !== 'function') {
+        // set us up the API
+        candidates.filter(function () {
+          return typeof this.setCustomValidity !== 'function';
+        }).each(function () {
+          var that = this;
+          this.setCustomValidity = function (message) {
+            validateField.call(that, message);
+          };
+        });
+      }
+
+      // check for required radio button bug (google earth internal browser)
+      if (radioButtonBug) {
+        validateBuggyRadioButtons = function validateBuggyRadioButtons(form) {
+          var seen = {};
+          var radio, valueMissing;
+
+          // check every required radio button
+          $('input', form).filter(':radio').filter('[required],[aria-required="true"]').each(function () {
+            if (typeof seen[this.name] === 'undefined') {
+              seen[this.name] = true;
+              radio = getRadioButtonsInGroup(this);
+              valueMissing = radio.filter(':checked').length === 0;
+              if (valueMissing) {
+                // make sure @required is set to use validation API
+                radio.attr('required', 'required');
+              } else {
+                // using @aria-required=true so we can track this control
+                // removing @required here to bypass validation bug
+                radio.attr('aria-required', true).removeAttr('required');
               }
             }
           });
-        }
+        };
 
-        // NOTE all the code below runs in all browsers to polyfill implementation bugs
+        // initial validity
+        $('form').each(validateBuggyRadioButtons);
 
-        // required radio button check
-        if (radioButtonBug) {
-          validateBuggyRadioButtons(this);
-        }
-
-        // Opera 11 on OSX fires submit event even when fields are invalid
-        // correct implementations will not invoke this submit handler until all fields are valid
-
-        // unless @novalidate
-        // if there are invalid fields
-        if (!novalidate && form.find(candidateForValidation).filter(isInvalid).length > 0) {
-          // abort submit
-          event.stopImmediatePropagation();
-          event.preventDefault();
-          return false;
-        }
-      },
-      initConstraintValidationAPI = function initConstraintValidationAPI() {
-        var candidates = $(candidateForValidation);
-
-        // INPUT validityState
-        if (polyfill) {
-          // set us up the API
-          candidates.filter(function () {
-            return (0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(this.validity) !== 'object';
-          }).each(function () {
-            this.validity = validityState(false, false, false, '', false);
-            this.validationMessage = '';
-          });
-
-          // check validity on change
-          candidates.off('change.constraintValidationAPI').on('change.constraintValidationAPI', changeHandler);
-        }
-
-        // INPUT validitationMessage
-        if (typeof input.validationMessage !== 'string') {
-          // set us up the API
-          candidates.filter(function () {
-            return typeof this.validationMessage !== 'string';
-          }).each(function () {
-            this.validationMessage = '';
+        // watch changes
+        if (!polyfill) {
+          candidates.filter(':radio').off('change.constraintValidationAPI').on('change.constraintValidationAPI', function () {
+            validateBuggyRadioButtons(this.form);
           });
         }
+      }
 
-        // INPUT checkValidity
-        if (typeof input.checkValidity !== 'function') {
-          // set us up the API
-          candidates.filter(function () {
-            return typeof this.checkValidity !== 'function';
-          }).each(function () {
-            var domElement = this;
-            this.checkValidity = function () {
-              var valid = validateField.call(domElement);
-
-              // if invalid, and unless novalidate
-              if (!valid && !this.form.getAttribute('novalidate')) {
-                // use triggerHandler because invalid does not bubble
-                $(domElement).triggerHandler('invalid');
-              }
-              return valid;
-            };
-          });
-        }
-
-        // INPUT setCustomValidity
-        if (typeof input.setCustomValidity !== 'function') {
-          // set us up the API
-          candidates.filter(function () {
-            return typeof this.setCustomValidity !== 'function';
-          }).each(function () {
-            var that = this;
-            this.setCustomValidity = function (message) {
-              validateField.call(that, message);
-            };
-          });
-        }
-
-        // check for required radio button bug (google earth internal browser)
-        if (radioButtonBug) {
-          validateBuggyRadioButtons = function validateBuggyRadioButtons(form) {
-            var seen = {};
-            var radio, valueMissing;
-
-            // check every required radio button
-            $('input', form).filter(':radio').filter('[required],[aria-required="true"]').each(function () {
-              if (typeof seen[this.name] === 'undefined') {
-                seen[this.name] = true;
-                radio = getRadioButtonsInGroup(this);
-                valueMissing = radio.filter(':checked').length === 0;
-                if (valueMissing) {
-                  // make sure @required is set to use validation API
-                  radio.attr('required', 'required');
-                } else {
-                  // using @aria-required=true so we can track this control
-                  // removing @required here to bypass validation bug
-                  radio.attr('aria-required', true).removeAttr('required');
-                }
-              }
-            });
-          };
-
-          // initial validity
-          $('form').each(validateBuggyRadioButtons);
-
-          // watch changes
-          if (!polyfill) {
-            candidates.filter(':radio').off('change.constraintValidationAPI').on('change.constraintValidationAPI', function () {
-              validateBuggyRadioButtons(this.form);
-            });
-          }
-        }
-
-        // check validity on submit
-        // this should be bound before all other submit handlers bound to the same form
-        // otherwise they will execute before this handler can cancel submit (oninvalid)
-        $('form').off('submit.constraintValidationAPI').on('submit.constraintValidationAPI', submitHandler);
-      };
+      // check validity on submit
+      // this should be bound before all other submit handlers bound to the same form
+      // otherwise they will execute before this handler can cancel submit (oninvalid)
+      $('form').off('submit.constraintValidationAPI').on('submit.constraintValidationAPI', submitHandler);
+    };
 
     // run immediately and ondocumentready
     initConstraintValidationAPI();
@@ -4626,8 +4703,8 @@ if (jQuery !== 'undefined') {
     }, options);
     var navKeys = [33, 34, 35, 36, 37, 38, 39, 40];
     return $(this).each(function () {
-      var countable = $(this),
-        counter = $(options.counter);
+      var countable = $(this);
+      var counter = $(options.counter);
       if (!counter.length) {
         return false;
       }
@@ -4730,244 +4807,246 @@ if (jQuery !== 'undefined') {
   (function ($) {
     'use strict';
 
-    var relevantEvent = 'relevant',
-      irrelevantEvent = 'irrelevant',
-      elementsToDisable = 'button, input, select, textarea',
-      polyfillHidden = function () {
-        var hidden = $('<div hidden></div>');
-        var hiddenSupported = hidden.appendTo('body').is(':hidden');
-        hidden.remove();
-        return !hiddenSupported;
-      }(),
-      formElementsByName = function formElementsByName(form, name) {
-        // filter out the @id matching of HTMLFormElement.elements[]
-        return $(form.elements[name]).filter('[name="' + name + '"]');
-      },
-      filterRelevant = function filterRelevant() {
-        return $(this).closest('[hidden]').length === 0;
-      },
-      filterIrrelevant = function filterIrrelevant() {
-        return $(this).closest('[hidden]').length > 0;
-      },
-      valueMap = function valueMap(element) {
-        return element.value;
-      },
-      valueInArray = function valueInArray(possibleValues, actualValues) {
-        var i;
-        if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(possibleValues) !== 'object') {
-          possibleValues = [possibleValues];
+    var relevantEvent = 'relevant';
+    var irrelevantEvent = 'irrelevant';
+    var elementsToDisable = 'button, input, select, textarea';
+    var polyfillHidden = function () {
+      var hidden = $('<div hidden></div>');
+      var hiddenSupported = hidden.appendTo('body').is(':hidden');
+      hidden.remove();
+      return !hiddenSupported;
+    }();
+    var formElementsByName = function formElementsByName(form, name) {
+      // filter out the @id matching of HTMLFormElement.elements[]
+      return $(form.elements[name]).filter('[name="' + name + '"]');
+    };
+    var filterRelevant = function filterRelevant() {
+      return $(this).closest('[hidden]').length === 0;
+    };
+    var filterIrrelevant = function filterIrrelevant() {
+      return $(this).closest('[hidden]').length > 0;
+    };
+    var valueMap = function valueMap(element) {
+      return element.value;
+    };
+    var valueInArray = function valueInArray(possibleValues, actualValues) {
+      var i;
+      if (_typeof(possibleValues) !== 'object') {
+        possibleValues = [possibleValues];
+      }
+      for (i = 0; i < actualValues.length; i++) {
+        if ($.inArray(actualValues[i], possibleValues) !== -1) {
+          return true;
         }
-        for (i = 0; i < actualValues.length; i++) {
-          if ($.inArray(actualValues[i], possibleValues) !== -1) {
-            return true;
-          }
-        }
-        return false;
-      },
-      // when changing a control that alters relevance of other elements…
-      recalculateRelevance = function recalculateRelevance() {
-        // assume dependency map exists
-        var map = $(this.form).data('relevance').dependencyMap[this.name],
-          values = $.map(formElementsByName(this.form, this.name).filter('select,:checked').filter(':visible'), valueMap);
-        $.each(map, function (index, config) {
-          config.items.relevance('relevant', valueInArray(config.values, values) !== config.negate);
-        });
-      },
-      // when an element changes relevance, check descendent controls that alter relevance in turn…
-      recalculateDependents = function recalculateDependents(isRelevant) {
-        var form, dependencyMap, targets;
+      }
+      return false;
+    };
 
-        // any change to relevant toggles?
-        form = this.closest('form');
-        if (form.length) {
-          dependencyMap = form.data('relevance');
-          if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(dependencyMap) === 'object') {
-            dependencyMap = dependencyMap.dependencyMap;
-            if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(dependencyMap) === 'object') {
-              // get descendent-or-self select, radio and checkbox
-              targets = this.add(this.find('select,input')).filter('select,:radio,:checkbox');
-              // get unique @name for select, radio and checkbox
-              targets = $.unique($.map(targets, function (elementOfArray) {
-                return elementOfArray.name;
-              }));
-              $.each(targets, function (index, name) {
-                var map = dependencyMap[name],
-                  values;
-                if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(map) === 'object') {
-                  $.each(map, function (index, config) {
-                    if (isRelevant === false) {
-                      config.items.relevance('relevant', false);
-                    } else {
-                      values = $.map(formElementsByName(form[0], name).filter('select,:checked').filter(':visible'), valueMap);
-                      config.items.relevance('relevant', valueInArray(config.values, values) !== config.negate);
-                    }
-                  });
-                }
-              });
-            }
-          }
-        }
-      },
-      methods = {
-        // $( x ).relevance( 'relevant', true )
-        // if the element is hidden, fire a 'relevant' event
-        // $( x ).relevance( 'relevant', false )
-        // if the element is visible, fire an "irrelevant" event
-        relevant: function relevant(makeRelevant) {
-          var targets;
-          if (makeRelevant) {
-            targets = this.filter(filterIrrelevant).trigger(relevantEvent);
-          } else {
-            targets = this.filter(filterRelevant).trigger(irrelevantEvent);
-          }
-          if (targets.length) {
-            recalculateDependents.call(targets, makeRelevant);
-          }
-          return this;
-        },
-        // $( x ).relevance( 'show' )
-        // shows the element (does not check if element is already visible)
-        // triggers 'relevant-done' after showing is complete
-        show: function show() {
-          // enable elements before they are shown
-          this.add(this.find(elementsToDisable))
-          // but not any controls that will remain irrelevant
-          .not(this.find('[hidden]').find(elementsToDisable)).each(function () {
-            this.removeAttribute('disabled');
-          });
+    // when changing a control that alters relevance of other elements…
+    var recalculateRelevance = function recalculateRelevance() {
+      // assume dependency map exists
+      var map = $(this.form).data('relevance').dependencyMap[this.name];
+      var values = $.map(formElementsByName(this.form, this.name).filter('select,:checked').filter(':visible'), valueMap);
+      $.each(map, function (index, config) {
+        config.items.relevance('relevant', valueInArray(config.values, values) !== config.negate);
+      });
+    };
 
-          // stop animation, remove @hidden and @aria-hidden, start showing
-          if (polyfillHidden) {
-            this.stop(true, true).slideDown();
-          }
-          return this.removeAttr('hidden').removeAttr('aria-hidden');
-        },
-        // $( x ).relevance( 'hide' )
-        // hides the element (does not check if element is already hidden)
-        hide: function hide() {
-          this.attr({
-            hidden: 'hidden',
-            'aria-hidden': 'true'
-          });
-          if (polyfillHidden) {
-            this.stop(true, true).hide(0, function () {
-              var $this = $(this);
-              // disable elements (including self if appropriate)
-              $this.filter(elementsToDisable).add($this.find(elementsToDisable)).each(function () {
-                this.setAttribute('disabled', 'disabled');
-              });
+    // when an element changes relevance, check descendent controls that alter relevance in turn…
+    var recalculateDependents = function recalculateDependents(isRelevant) {
+      var form, dependencyMap, targets;
+
+      // any change to relevant toggles?
+      form = this.closest('form');
+      if (form.length) {
+        dependencyMap = form.data('relevance');
+        if (_typeof(dependencyMap) === 'object') {
+          dependencyMap = dependencyMap.dependencyMap;
+          if (_typeof(dependencyMap) === 'object') {
+            // get descendent-or-self select, radio and checkbox
+            targets = this.add(this.find('select,input')).filter('select,:radio,:checkbox');
+            // get unique @name for select, radio and checkbox
+            targets = $.unique($.map(targets, function (elementOfArray) {
+              return elementOfArray.name;
+            }));
+            $.each(targets, function (index, name) {
+              var map = dependencyMap[name];
+              var values;
+              if (_typeof(map) === 'object') {
+                $.each(map, function (index, config) {
+                  if (isRelevant === false) {
+                    config.items.relevance('relevant', false);
+                  } else {
+                    values = $.map(formElementsByName(form[0], name).filter('select,:checked').filter(':visible'), valueMap);
+                    config.items.relevance('relevant', valueInArray(config.values, values) !== config.negate);
+                  }
+                });
+              }
             });
-          } else {
-            this.filter(elementsToDisable).add(this.find(elementsToDisable)).each(function () {
+          }
+        }
+      }
+    };
+    var methods = {
+      // $( x ).relevance( 'relevant', true )
+      // if the element is hidden, fire a 'relevant' event
+      // $( x ).relevance( 'relevant', false )
+      // if the element is visible, fire an "irrelevant" event
+      relevant: function relevant(makeRelevant) {
+        var targets;
+        if (makeRelevant) {
+          targets = this.filter(filterIrrelevant).trigger(relevantEvent);
+        } else {
+          targets = this.filter(filterRelevant).trigger(irrelevantEvent);
+        }
+        if (targets.length) {
+          recalculateDependents.call(targets, makeRelevant);
+        }
+        return this;
+      },
+      // $( x ).relevance( 'show' )
+      // shows the element (does not check if element is already visible)
+      // triggers 'relevant-done' after showing is complete
+      show: function show() {
+        // enable elements before they are shown
+        this.add(this.find(elementsToDisable))
+        // but not any controls that will remain irrelevant
+        .not(this.find('[hidden]').find(elementsToDisable)).each(function () {
+          this.removeAttribute('disabled');
+        });
+
+        // stop animation, remove @hidden and @aria-hidden, start showing
+        if (polyfillHidden) {
+          this.stop(true, true).slideDown();
+        }
+        return this.removeAttr('hidden').removeAttr('aria-hidden');
+      },
+      // $( x ).relevance( 'hide' )
+      // hides the element (does not check if element is already hidden)
+      hide: function hide() {
+        this.attr({
+          hidden: 'hidden',
+          'aria-hidden': 'true'
+        });
+        if (polyfillHidden) {
+          this.stop(true, true).hide(0, function () {
+            var $this = $(this);
+            // disable elements (including self if appropriate)
+            $this.filter(elementsToDisable).add($this.find(elementsToDisable)).each(function () {
               this.setAttribute('disabled', 'disabled');
             });
-          }
-          return this;
-        },
-        // $( x ).relevance( 'relevantWhen', { name: radio/checkbox/select, value: requiredValue, negate: false | true })
-        // sets up dependent relevance
-        // example: $( '#red' ).relevance( 'relevantWhen', { name: 'rgb', value: 'red' })
-        // example: $( '#red' ).relevance( 'relevantWhen', { id: 'rgb-red', value: 'red' })
-        // #red will be shown/hidden when '@name=rgb' value changes.
-        relevantWhen: function relevantWhen(config) {
-          var form, data, name, values;
-          values = config.values || [config.value];
-          if (config.name) {
-            name = config.name;
-          } else if (config.id) {
-            name = document.getElementById(config.id).name;
-          } else if (config.container) {
-            name = $(config.container).find('select,:radio,:checkbox').attr('name');
-          }
-          config.negate = config.negate === true;
-
-          // find the form that has this control
-          form = this.closest('form');
-          // get dependency map (create it if needed)
-          data = form.data('relevance');
-          if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(data) !== 'object') {
-            data = {};
-            form.data('relevance', data);
-          }
-          if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(data.dependencyMap) !== 'object') {
-            data.dependencyMap = {};
-          }
-          if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(data.dependencyMap[name]) !== 'object') {
-            data.dependencyMap[name] = [];
-            // setup event handlers for name
-            formElementsByName(form[0], name).filter(':radio,:checkbox').on('click', recalculateRelevance).end().filter('select').on('change', recalculateRelevance);
-          }
-          // add or update relevance rule
-          data.dependencyMap[name].push({
-            items: this,
-            values: values,
-            negate: config.negate
           });
+        } else {
+          this.filter(elementsToDisable).add(this.find(elementsToDisable)).each(function () {
+            this.setAttribute('disabled', 'disabled');
+          });
+        }
+        return this;
+      },
+      // $( x ).relevance( 'relevantWhen', { name: radio/checkbox/select, value: requiredValue, negate: false | true })
+      // sets up dependent relevance
+      // example: $( '#red' ).relevance( 'relevantWhen', { name: 'rgb', value: 'red' })
+      // example: $( '#red' ).relevance( 'relevantWhen', { id: 'rgb-red', value: 'red' })
+      // #red will be shown/hidden when '@name=rgb' value changes.
+      relevantWhen: function relevantWhen(config) {
+        var form, data, name, values;
+        values = config.values || [config.value];
+        if (config.name) {
+          name = config.name;
+        } else if (config.id) {
+          name = document.getElementById(config.id).name;
+        } else if (config.container) {
+          name = $(config.container).find('select,:radio,:checkbox').attr('name');
+        }
+        config.negate = config.negate === true;
 
-          // initial relevance
-          this.relevance('relevant', valueInArray(values, $.map(formElementsByName(form[0], name).filter('select,:checked').filter(':visible'), valueMap)) !== config.negate);
-          return this;
-        },
-        // $( x ).relevance( 'instructions', options )
-        // sets up relevance handling based on text instructions
-        // options ::= { instructions: '.relevance', questions: '.questions > li' }
-        instructions: function instructions(options) {
-          options = $.extend({
-            instructionSelector: '.relevance',
-            questionSelector: '.questions > li'
-          }, options);
-          this.find(options.instructionSelector).each(function () {
-            var $this = $(this),
-              value = $this.text(),
-              question = $this.closest(options.questionSelector),
-              toggle = question.prevAll(options.questionSelector),
-              i,
-              answers,
-              nestedToggles,
-              match = false,
-              negate = false;
+        // find the form that has this control
+        form = this.closest('form');
+        // get dependency map (create it if needed)
+        data = form.data('relevance');
+        if (_typeof(data) !== 'object') {
+          data = {};
+          form.data('relevance', data);
+        }
+        if (_typeof(data.dependencyMap) !== 'object') {
+          data.dependencyMap = {};
+        }
+        if (_typeof(data.dependencyMap[name]) !== 'object') {
+          data.dependencyMap[name] = [];
+          // setup event handlers for name
+          formElementsByName(form[0], name).filter(':radio,:checkbox').on('click', recalculateRelevance).end().filter('select').on('change', recalculateRelevance);
+        }
+        // add or update relevance rule
+        data.dependencyMap[name].push({
+          items: this,
+          values: values,
+          negate: config.negate
+        });
 
-            // pattern: (If different to <PREVIOUS QUESTION>)
-            if (/If different to/.test(value)) {
-              // assume previous 'li' is the toggle
-              match = true;
-              toggle = toggle.eq(0);
-              value = toggle.find(':checkbox').val();
-              negate = true;
-            } else {
-              value = value.replace(/^.*chose\s+\S([^'"’]+)\S\s+above.*$/, '$1');
-              // which of the previous questions is the toggle?
-              i = 0;
-              while (i < toggle.length) {
-                // does this item have the answer we need?
-                answers = $.map(toggle.eq(i).find('option,:radio,:checkbox'), valueMap);
-                if (valueInArray(value, answers)) {
-                  nestedToggles = toggle.eq(i).find(options.questionSelector);
-                  if (nestedToggles.length) {
-                    toggle = $(nestedToggles.get().reverse());
-                    i = 0;
-                  } else {
-                    match = true;
-                    toggle = toggle.eq(i); // toggle.length becomes 1, loop will exit
-                    i = 1; // exit loop
-                  }
+        // initial relevance
+        this.relevance('relevant', valueInArray(values, $.map(formElementsByName(form[0], name).filter('select,:checked').filter(':visible'), valueMap)) !== config.negate);
+        return this;
+      },
+      // $( x ).relevance( 'instructions', options )
+      // sets up relevance handling based on text instructions
+      // options ::= { instructions: '.relevance', questions: '.questions > li' }
+      instructions: function instructions(options) {
+        options = $.extend({
+          instructionSelector: '.relevance',
+          questionSelector: '.questions > li'
+        }, options);
+        this.find(options.instructionSelector).each(function () {
+          var $this = $(this);
+          var value = $this.text();
+          var question = $this.closest(options.questionSelector);
+          var toggle = question.prevAll(options.questionSelector);
+          var i;
+          var answers;
+          var nestedToggles;
+          var match = false;
+          var negate = false;
+
+          // pattern: (If different to <PREVIOUS QUESTION>)
+          if (/If different to/.test(value)) {
+            // assume previous 'li' is the toggle
+            match = true;
+            toggle = toggle.eq(0);
+            value = toggle.find(':checkbox').val();
+            negate = true;
+          } else {
+            value = value.replace(/^.*chose\s+\S([^'"’]+)\S\s+above.*$/, '$1');
+            // which of the previous questions is the toggle?
+            i = 0;
+            while (i < toggle.length) {
+              // does this item have the answer we need?
+              answers = $.map(toggle.eq(i).find('option,:radio,:checkbox'), valueMap);
+              if (valueInArray(value, answers)) {
+                nestedToggles = toggle.eq(i).find(options.questionSelector);
+                if (nestedToggles.length) {
+                  toggle = $(nestedToggles.get().reverse());
+                  i = 0;
                 } else {
-                  i++;
+                  match = true;
+                  toggle = toggle.eq(i); // toggle.length becomes 1, loop will exit
+                  i = 1; // exit loop
                 }
+              } else {
+                i++;
               }
             }
-            if (match) {
-              toggle = toggle.add(toggle.find('select,input')).filter('select,:radio,:checkbox');
-              question.relevance('relevantWhen', {
-                name: toggle.attr('name'),
-                value: value,
-                negate: negate
-              });
-            }
-          });
-          return this;
-        }
-      };
+          }
+          if (match) {
+            toggle = toggle.add(toggle.find('select,input')).filter('select,:radio,:checkbox');
+            question.relevance('relevantWhen', {
+              name: toggle.attr('name'),
+              value: value,
+              negate: negate
+            });
+          }
+        });
+        return this;
+      }
+    };
     // fallback (default) event handling
     $(document).on('relevant irrelevant', function (event) {
       var target = $(event.target);
@@ -4982,7 +5061,7 @@ if (jQuery !== 'undefined') {
       // http://docs.jquery.com/Plugins/Authoring#Plugin_Methods
       if (methods[method]) {
         return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-      } else if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(method) === 'object' || !method) {
+      } else if (_typeof(method) === 'object' || !method) {
         // return methods.init.apply( this, arguments );
         return this;
       } else {
@@ -4998,11 +5077,11 @@ if (jQuery !== 'undefined') {
   var displayFileSize;
 
   // bail out if no file API support
-  if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])($('<input type="file">')[0].files) !== 'object') {
+  if (_typeof($('<input type="file">')[0].files) !== 'object') {
     // duplicate fsize instruction before submit button
     $('.max-fsize').each(function () {
-      var fsize = $(this),
-        form;
+      var fsize = $(this);
+      var form;
       form = fsize.closest('.preamble').nextAll('form').eq(0);
       form.find('.actions').before('<p>' + fsize.parent().html() + '</p>');
     });
@@ -5025,9 +5104,9 @@ if (jQuery !== 'undefined') {
 
   // forms with max file size
   $('.max-fsize').each(function () {
-    var fsize = $(this),
-      form,
-      maxFileSize;
+    var fsize = $(this);
+    var form;
+    var maxFileSize;
 
     // read fsize, assume MB
     maxFileSize = parseInt(fsize.text().replace(/\D+/g, ''), 10) * 1024 * 1024;
@@ -5040,8 +5119,8 @@ if (jQuery !== 'undefined') {
       displayFileSize(input);
 
       // recalculate file sizes
-      var total = 0,
-        valid;
+      var total = 0;
+      var valid;
       $(':file', this.form).each(function (index, element) {
         var size = element.files.length ? element.files[0].size : 0;
         total += size; // total = total + size;
@@ -5072,31 +5151,31 @@ if (jQuery !== 'undefined') {
   'use strict';
 
   var xorConstraintSubmitHandler = function xorConstraintSubmitHandler(event) {
-      // has one of the required fields been answered?
-      var xorFields = event.data[0],
-        validationMessage = event.data[1],
-        xorConstraintMet = xorFields.filter(function () {
-          return this.value.length > 1;
-        }).length > 0;
-      xorFields.each(function () {
-        this.setCustomValidity(xorConstraintMet ? '' : validationMessage);
-      });
-    },
-    xorConstraintChangeHandler = function xorConstraintChangeHandler(event, validationUiRefreshOnly) {
-      if (validationUiRefreshOnly === true) {
-        // pass through to other change handlers
-        return;
-      }
-      var xorFields = event.data[0];
+    // has one of the required fields been answered?
+    var xorFields = event.data[0];
+    var validationMessage = event.data[1];
+    var xorConstraintMet = xorFields.filter(function () {
+      return this.value.length > 1;
+    }).length > 0;
+    xorFields.each(function () {
+      this.setCustomValidity(xorConstraintMet ? '' : validationMessage);
+    });
+  };
+  var xorConstraintChangeHandler = function xorConstraintChangeHandler(event, validationUiRefreshOnly) {
+    if (validationUiRefreshOnly === true) {
+      // pass through to other change handlers
+      return;
+    }
+    var xorFields = event.data[0];
 
-      // constraint validity check
-      xorConstraintSubmitHandler(event);
+    // constraint validity check
+    xorConstraintSubmitHandler(event);
 
-      // trigger validation UI  on other fields?
-      if (event.type === 'change') {
-        xorFields.not(event.target).triggerHandler('change', true);
-      }
-    };
+    // trigger validation UI  on other fields?
+    if (event.type === 'change') {
+      xorFields.not(event.target).triggerHandler('change', true);
+    }
+  };
 
   // plugin
   $.fn.initXorConstraint = function (validationMessage) {
@@ -5152,8 +5231,8 @@ if (jQuery !== 'undefined') {
   // extend jquery to 'toggle required'
   $.fn.toggleRequired = function (required) {
     return this.each(function () {
-      var controls = $(this.form.elements[this.name]),
-        question = $(this).closest('.questions > li');
+      var controls = $(this.form.elements[this.name]);
+      var question = $(this).closest('.questions > li');
       if (required) {
         if (question.find('abbr[title="(required)"]').length === 0) {
           question.find('.label').after(
@@ -5176,125 +5255,126 @@ var qg = {
 qg.date = function () {
   'use strict';
 
-  var datePackage = {},
-    // Public holiday dates for 2010-2014 (viewed 2012-09-28)
-    // http://www.justice.qld.gov.au/fair-and-safe-work/industrial-relations/public-holidays/dates
-    qldHolidays = {
-      // 2010
-      '2010-01-01': 'New Year’s Day',
-      '2010-01-26': 'Australia Day',
-      '2010-04-02': 'Good Friday',
-      '2010-04-03': 'Easter Saturday',
-      '2010-04-05': 'Easter Monday',
-      '2010-04-26': 'Anzac Day',
-      '2010-05-03': 'Labour Day',
-      '2010-06-14': 'Queen’s Birthday',
-      '2010-12-25': 'Christmas Day',
-      '2010-12-27': 'Boxing Day',
-      '2010-12-28': 'Christmas Day holiday',
-      // 2011
-      '2011-01-01': 'New Year’s Day',
-      '2011-01-03': 'New Year’s Day holiday',
-      '2011-02-26': 'Australia Day',
-      '2011-04-22': 'Good Friday',
-      '2011-04-23': 'Easter Saturday',
-      '2011-04-25': 'Anzac Day',
-      '2011-04-26': 'Easter Monday',
-      '2011-05-02': 'Labour Day',
-      '2011-06-13': 'Queen’s Birthday',
-      '2011-12-25': 'Christmas Day',
-      '2011-12-26': 'Boxing Day',
-      '2011-12-27': 'Christmas Day holiday',
-      // 2012
-      '2012-01-01': 'New Year’s Day',
-      '2012-01-02': 'New Year’s Day holiday',
-      '2012-02-26': 'Australia Day',
-      '2012-04-06': 'Good Friday',
-      '2012-04-07': 'Easter Saturday',
-      '2012-04-09': 'Easter Monday',
-      '2012-04-25': 'Anzac Day',
-      '2012-05-07': 'Labour Day',
-      '2012-06-11': 'Queen’s Diamond Jubilee',
-      '2012-10-01': 'Queen’s Birthday',
-      '2012-12-25': 'Christmas Day',
-      '2012-12-26': 'Boxing Day',
-      // 2013
-      '2013-01-01': 'New Year’s Day',
-      '2013-01-28': 'Australia Day holiday',
-      '2013-03-29': 'Good Friday',
-      '2013-03-30': 'Easter Saturday',
-      '2013-04-01': 'Easter Monday',
-      '2013-04-25': 'Anzac Day',
-      '2013-06-10': 'Queen’s Birthday',
-      '2013-10-07': 'Labour Day',
-      '2013-12-25': 'Christmas Day',
-      '2013-12-26': 'Boxing Day',
-      // 2014
-      '2014-01-01': 'New Year’s Day',
-      '2014-01-27': 'Australia Day holiday',
-      '2014-04-18': 'Good Friday',
-      '2014-04-19': 'Easter Saturday',
-      '2014-04-21': 'Easter Monday',
-      '2014-04-25': 'Anzac Day',
-      '2014-06-09': 'Queen’s Birthday',
-      '2014-10-06': 'Labour Day',
-      '2014-12-25': 'Christmas Day',
-      '2014-12-26': 'Boxing Day',
-      // 2015
-      '2015-01-01': 'New Year’s Day',
-      '2015-01-26': 'Australia Day holiday',
-      '2015-04-03': 'Good Friday',
-      '2015-04-04': 'Easter Saturday',
-      '2015-04-06': 'Easter Monday',
-      '2015-04-25': 'Anzac Day',
-      '2015-06-08': 'Queen’s Birthday',
-      '2015-10-05': 'Labour Day',
-      '2015-12-25': 'Christmas Day',
-      '2015-12-26': 'Boxing Day',
-      '2015-12-28': 'Boxing Day holiday',
-      // 2016
-      '2016-01-01': 'New Year’s Day',
-      '2016-01-26': 'Australia Day holiday',
-      '2016-03-25': 'Good Friday',
-      '2016-03-26': 'Easter Saturday',
-      '2016-03-28': 'Easter Monday',
-      '2016-04-25': 'Anzac Day',
-      '2016-06-13': 'Queen’s Birthday',
-      '2016-10-03': 'Labour Day',
-      '2016-12-25': 'Christmas Day',
-      '2016-12-27': 'Christmas Day holiday',
-      '2016-12-26': 'Boxing Day',
-      // 2017
-      '2017-01-01': 'New Year’s Day',
-      '2017-01-02': 'New Year’s Day holiday',
-      '2017-01-26': 'Australia Day holiday',
-      '2017-04-14': 'Good Friday',
-      '2017-04-15': 'Easter Saturday',
-      '2017-04-17': 'Easter Monday',
-      '2017-04-25': 'Anzac Day',
-      '2017-06-12': 'Queen’s Birthday',
-      '2017-10-02': 'Labour Day',
-      '2017-12-25': 'Christmas Day',
-      '2017-12-26': 'Boxing Day',
-      // 2018
-      '2018-01-01': 'New Year’s Day',
-      '2018-01-26': 'Australia Day holiday',
-      '2018-03-30': 'Good Friday',
-      '2018-03-31': 'Easter Saturday',
-      '2018-04-02': 'Easter Monday',
-      '2018-04-25': 'Anzac Day',
-      '2018-05-07': 'Labour Day',
-      '2018-10-01': 'Queen’s Birthday',
-      '2018-12-25': 'Christmas Day',
-      '2018-12-26': 'Boxing Day'
-    };
+  var datePackage = {};
+
+  // Public holiday dates for 2010-2014 (viewed 2012-09-28)
+  // http://www.justice.qld.gov.au/fair-and-safe-work/industrial-relations/public-holidays/dates
+  var qldHolidays = {
+    // 2010
+    '2010-01-01': 'New Year’s Day',
+    '2010-01-26': 'Australia Day',
+    '2010-04-02': 'Good Friday',
+    '2010-04-03': 'Easter Saturday',
+    '2010-04-05': 'Easter Monday',
+    '2010-04-26': 'Anzac Day',
+    '2010-05-03': 'Labour Day',
+    '2010-06-14': 'Queen’s Birthday',
+    '2010-12-25': 'Christmas Day',
+    '2010-12-27': 'Boxing Day',
+    '2010-12-28': 'Christmas Day holiday',
+    // 2011
+    '2011-01-01': 'New Year’s Day',
+    '2011-01-03': 'New Year’s Day holiday',
+    '2011-02-26': 'Australia Day',
+    '2011-04-22': 'Good Friday',
+    '2011-04-23': 'Easter Saturday',
+    '2011-04-25': 'Anzac Day',
+    '2011-04-26': 'Easter Monday',
+    '2011-05-02': 'Labour Day',
+    '2011-06-13': 'Queen’s Birthday',
+    '2011-12-25': 'Christmas Day',
+    '2011-12-26': 'Boxing Day',
+    '2011-12-27': 'Christmas Day holiday',
+    // 2012
+    '2012-01-01': 'New Year’s Day',
+    '2012-01-02': 'New Year’s Day holiday',
+    '2012-02-26': 'Australia Day',
+    '2012-04-06': 'Good Friday',
+    '2012-04-07': 'Easter Saturday',
+    '2012-04-09': 'Easter Monday',
+    '2012-04-25': 'Anzac Day',
+    '2012-05-07': 'Labour Day',
+    '2012-06-11': 'Queen’s Diamond Jubilee',
+    '2012-10-01': 'Queen’s Birthday',
+    '2012-12-25': 'Christmas Day',
+    '2012-12-26': 'Boxing Day',
+    // 2013
+    '2013-01-01': 'New Year’s Day',
+    '2013-01-28': 'Australia Day holiday',
+    '2013-03-29': 'Good Friday',
+    '2013-03-30': 'Easter Saturday',
+    '2013-04-01': 'Easter Monday',
+    '2013-04-25': 'Anzac Day',
+    '2013-06-10': 'Queen’s Birthday',
+    '2013-10-07': 'Labour Day',
+    '2013-12-25': 'Christmas Day',
+    '2013-12-26': 'Boxing Day',
+    // 2014
+    '2014-01-01': 'New Year’s Day',
+    '2014-01-27': 'Australia Day holiday',
+    '2014-04-18': 'Good Friday',
+    '2014-04-19': 'Easter Saturday',
+    '2014-04-21': 'Easter Monday',
+    '2014-04-25': 'Anzac Day',
+    '2014-06-09': 'Queen’s Birthday',
+    '2014-10-06': 'Labour Day',
+    '2014-12-25': 'Christmas Day',
+    '2014-12-26': 'Boxing Day',
+    // 2015
+    '2015-01-01': 'New Year’s Day',
+    '2015-01-26': 'Australia Day holiday',
+    '2015-04-03': 'Good Friday',
+    '2015-04-04': 'Easter Saturday',
+    '2015-04-06': 'Easter Monday',
+    '2015-04-25': 'Anzac Day',
+    '2015-06-08': 'Queen’s Birthday',
+    '2015-10-05': 'Labour Day',
+    '2015-12-25': 'Christmas Day',
+    '2015-12-26': 'Boxing Day',
+    '2015-12-28': 'Boxing Day holiday',
+    // 2016
+    '2016-01-01': 'New Year’s Day',
+    '2016-01-26': 'Australia Day holiday',
+    '2016-03-25': 'Good Friday',
+    '2016-03-26': 'Easter Saturday',
+    '2016-03-28': 'Easter Monday',
+    '2016-04-25': 'Anzac Day',
+    '2016-06-13': 'Queen’s Birthday',
+    '2016-10-03': 'Labour Day',
+    '2016-12-25': 'Christmas Day',
+    '2016-12-27': 'Christmas Day holiday',
+    '2016-12-26': 'Boxing Day',
+    // 2017
+    '2017-01-01': 'New Year’s Day',
+    '2017-01-02': 'New Year’s Day holiday',
+    '2017-01-26': 'Australia Day holiday',
+    '2017-04-14': 'Good Friday',
+    '2017-04-15': 'Easter Saturday',
+    '2017-04-17': 'Easter Monday',
+    '2017-04-25': 'Anzac Day',
+    '2017-06-12': 'Queen’s Birthday',
+    '2017-10-02': 'Labour Day',
+    '2017-12-25': 'Christmas Day',
+    '2017-12-26': 'Boxing Day',
+    // 2018
+    '2018-01-01': 'New Year’s Day',
+    '2018-01-26': 'Australia Day holiday',
+    '2018-03-30': 'Good Friday',
+    '2018-03-31': 'Easter Saturday',
+    '2018-04-02': 'Easter Monday',
+    '2018-04-25': 'Anzac Day',
+    '2018-05-07': 'Labour Day',
+    '2018-10-01': 'Queen’s Birthday',
+    '2018-12-25': 'Christmas Day',
+    '2018-12-26': 'Boxing Day'
+  };
 
   // is a public holiday
   datePackage.isPublicHoliday = function (date) {
-    var d = date.getDate(),
-      m = date.getMonth() + 1,
-      y = String(date.getFullYear()),
-      dateString = y + (m < 10 ? '-0' : '-') + m + (d < 10 ? '-0' : '-') + d;
+    var d = date.getDate();
+    var m = date.getMonth() + 1;
+    var y = String(date.getFullYear());
+    var dateString = y + (m < 10 ? '-0' : '-') + m + (d < 10 ? '-0' : '-') + d;
 
     // return true, date is a public holiday
     // TODO, if not a state-wide public holiday and given a latlong, check if it is a show holiday
@@ -5313,10 +5393,10 @@ qg.date = function () {
   $('.hint').filter(function () {
     return /Maximum:\s+\d+\s+words/.test($(this).text());
   }).each(function () {
-    var hint = $(this),
-      max = parseInt(hint.text().replace(/Maximum:\s+(\d+)\s+words/, '$1'), 10),
-      textField = hint.closest('label').nextAll('textarea'),
-      counter;
+    var hint = $(this);
+    var max = parseInt(hint.text().replace(/Maximum:\s+(\d+)\s+words/, '$1'), 10);
+    var textField = hint.closest('label').nextAll('textarea');
+    var counter;
 
     // add counter
     counter = $('<span></span>').generateId('word-count');
@@ -5414,6 +5494,25 @@ module.exports = parentWidth;
 
 /***/ }),
 
+/***/ "./src/assets/_project/_blocks/utils/qg-datatables.js":
+/*!************************************************************!*\
+  !*** ./src/assets/_project/_blocks/utils/qg-datatables.js ***!
+  \************************************************************/
+/***/ (() => {
+
+var addQGButtonClass = function addQGButtonClass() {
+  $('.dataTables_wrapper a.paginate_button').addClass('qg-btn');
+};
+$('.dataTable').each(function () {
+  if (!$.fn.DataTable.isDataTable(this)) {
+    $(this).DataTable({
+      drawCallback: addQGButtonClass
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./src/assets/_project/_blocks/utils/qg-datepicker.js":
 /*!************************************************************!*\
   !*** ./src/assets/_project/_blocks/utils/qg-datepicker.js ***!
@@ -5432,17 +5531,28 @@ if (!browserSupportsDateInput() && $('input[type=\'date\']').length > 0) {
     console.log('date polyfill loaded');
   });
 }
-// 'qg-date-input' adds a jquery ui datepicker
-if ($('input[class=\'qg-date-input\']').length > 0) {
-  $.getScript('/assets/v4/latest/lib/ext/jquery-ui-bundle/jquery-ui.min.js', function () {
-    $('head').append($("<link rel='stylesheet' href='/assets/v4/latest/lib/ext/jquery-ui-bundle/jquery-ui.min.css' type='text/css' media='screen' />"));
+var handleDatePicker = function handleDatePicker() {
+  if ($("input[class*='qg-date-input']").length > 0) {
+    // hasDatepicker class has to be removed from the input when the page is loaded. jquery-ui.min.js will add the
+    // calendar widget when the class does not exist on the input. Then hasDatepicker will be dynamically added to the input.
+    // This needs to be done when the page is loaded
+    $('.qg-date-input').removeClass('hasDatepicker');
     $('.qg-date-input').datepicker({
       dateFormat: 'dd/mm/yy',
       changeYear: true,
       changeMonth: true
     });
+    $('.qg-date-input').attr('placeholder', 'dd/mm/yyyy');
+  }
+};
+// 'qg-date-input' adds a jquery ui datepicker
+if ($("input[class*='qg-date-input']").length > 0) {
+  $.getScript('https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js', function () {
+    $('head').append($("<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css' type='text/css' crossorigin='anonymous' media='screen' />"));
   });
 }
+handleDatePicker();
+$(window).on('load', handleDatePicker);
 
 /***/ }),
 
@@ -5645,7 +5755,7 @@ var QgLoadGoogleApi = /*#__PURE__*/function () {
     contentDefaultHeight: '90%',
     reuseFragment: true
   });
-  // this function equals the height of the cards in a group, if it finds a class '.cards__equal-height'.
+  // this function equals the height of the cards in a group, if it finds a class '.qg-cards__equal-height'.
   function setHeight() {
     var equalHeightCards = document.querySelectorAll('.qg-cards__equal-height');
     if (equalHeightCards.length > 0) {
@@ -5699,6 +5809,39 @@ var QgLoadGoogleApi = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./src/assets/_project/_blocks/utils/qg-quickexit.js":
+/*!***********************************************************!*\
+  !*** ./src/assets/_project/_blocks/utils/qg-quickexit.js ***!
+  \***********************************************************/
+/***/ (() => {
+
+var handleQuickExit = function handleQuickExit(e) {
+  var $el = $('.qg-quick-exit');
+  if (document.documentElement.clientWidth > 992) {
+    if ($(this).scrollTop() > 200) {
+      $el.css({
+        position: 'fixed',
+        top: '0px'
+      });
+    }
+    if ($(this).scrollTop() < 200) {
+      $el.css({
+        position: 'sticky',
+        top: '0px'
+      });
+    }
+  } else {
+    $el.css({
+      position: 'fixed',
+      top: 'auto'
+    });
+  }
+};
+$(window).on('scroll', handleQuickExit);
+window.addEventListener('resize', handleQuickExit, true);
+
+/***/ }),
+
 /***/ "./src/assets/_project/_blocks/utils/qg-util.js":
 /*!******************************************************!*\
   !*** ./src/assets/_project/_blocks/utils/qg-util.js ***!
@@ -5716,6 +5859,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _parent_width__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_parent_width__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _qg_datepicker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./qg-datepicker */ "./src/assets/_project/_blocks/utils/qg-datepicker.js");
 /* harmony import */ var _qg_datepicker__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_qg_datepicker__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _qg_quickexit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./qg-quickexit */ "./src/assets/_project/_blocks/utils/qg-quickexit.js");
+/* harmony import */ var _qg_quickexit__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_qg_quickexit__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _qg_datatables__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./qg-datatables */ "./src/assets/_project/_blocks/utils/qg-datatables.js");
+/* harmony import */ var _qg_datatables__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_qg_datatables__WEBPACK_IMPORTED_MODULE_6__);
+
+
 
 
 
@@ -6207,6 +6356,116 @@ module.exports = (function(doc, win) {
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime/helpers/arrayLikeToArray.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/arrayLikeToArray.js ***!
+  \*****************************************************************/
+/***/ ((module) => {
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+  return arr2;
+}
+module.exports = _arrayLikeToArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/arrayWithoutHoles.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/arrayWithoutHoles.js ***!
+  \******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var arrayLikeToArray = __webpack_require__(/*! ./arrayLikeToArray.js */ "./node_modules/@babel/runtime/helpers/arrayLikeToArray.js");
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return arrayLikeToArray(arr);
+}
+module.exports = _arrayWithoutHoles, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/iterableToArray.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/iterableToArray.js ***!
+  \****************************************************************/
+/***/ ((module) => {
+
+function _iterableToArray(iter) {
+  if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+module.exports = _iterableToArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/nonIterableSpread.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/nonIterableSpread.js ***!
+  \******************************************************************/
+/***/ ((module) => {
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+module.exports = _nonIterableSpread, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/toConsumableArray.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/toConsumableArray.js ***!
+  \******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var arrayWithoutHoles = __webpack_require__(/*! ./arrayWithoutHoles.js */ "./node_modules/@babel/runtime/helpers/arrayWithoutHoles.js");
+var iterableToArray = __webpack_require__(/*! ./iterableToArray.js */ "./node_modules/@babel/runtime/helpers/iterableToArray.js");
+var unsupportedIterableToArray = __webpack_require__(/*! ./unsupportedIterableToArray.js */ "./node_modules/@babel/runtime/helpers/unsupportedIterableToArray.js");
+var nonIterableSpread = __webpack_require__(/*! ./nonIterableSpread.js */ "./node_modules/@babel/runtime/helpers/nonIterableSpread.js");
+function _toConsumableArray(arr) {
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableSpread();
+}
+module.exports = _toConsumableArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/typeof.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/typeof.js ***!
+  \*******************************************************/
+/***/ ((module) => {
+
+function _typeof(o) {
+  "@babel/helpers - typeof";
+
+  return (module.exports = _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) {
+    return typeof o;
+  } : function (o) {
+    return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+  }, module.exports.__esModule = true, module.exports["default"] = module.exports), _typeof(o);
+}
+module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/unsupportedIterableToArray.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/unsupportedIterableToArray.js ***!
+  \***************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var arrayLikeToArray = __webpack_require__(/*! ./arrayLikeToArray.js */ "./node_modules/@babel/runtime/helpers/arrayLikeToArray.js");
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
+}
+module.exports = _unsupportedIterableToArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js":
 /*!*******************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/esm/classCallCheck.js ***!
@@ -6268,19 +6527,19 @@ function _createClass(Constructor, protoProps, staticProps) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ _toPrimitive)
+/* harmony export */   "default": () => (/* binding */ toPrimitive)
 /* harmony export */ });
 /* harmony import */ var _typeof_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./typeof.js */ "./node_modules/@babel/runtime/helpers/esm/typeof.js");
 
-function _toPrimitive(input, hint) {
-  if ((0,_typeof_js__WEBPACK_IMPORTED_MODULE_0__["default"])(input) !== "object" || input === null) return input;
-  var prim = input[Symbol.toPrimitive];
-  if (prim !== undefined) {
-    var res = prim.call(input, hint || "default");
-    if ((0,_typeof_js__WEBPACK_IMPORTED_MODULE_0__["default"])(res) !== "object") return res;
+function toPrimitive(t, r) {
+  if ("object" != (0,_typeof_js__WEBPACK_IMPORTED_MODULE_0__["default"])(t) || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r || "default");
+    if ("object" != (0,_typeof_js__WEBPACK_IMPORTED_MODULE_0__["default"])(i)) return i;
     throw new TypeError("@@toPrimitive must return a primitive value.");
   }
-  return (hint === "string" ? String : Number)(input);
+  return ("string" === r ? String : Number)(t);
 }
 
 /***/ }),
@@ -6294,15 +6553,15 @@ function _toPrimitive(input, hint) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ _toPropertyKey)
+/* harmony export */   "default": () => (/* binding */ toPropertyKey)
 /* harmony export */ });
 /* harmony import */ var _typeof_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./typeof.js */ "./node_modules/@babel/runtime/helpers/esm/typeof.js");
 /* harmony import */ var _toPrimitive_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./toPrimitive.js */ "./node_modules/@babel/runtime/helpers/esm/toPrimitive.js");
 
 
-function _toPropertyKey(arg) {
-  var key = (0,_toPrimitive_js__WEBPACK_IMPORTED_MODULE_1__["default"])(arg, "string");
-  return (0,_typeof_js__WEBPACK_IMPORTED_MODULE_0__["default"])(key) === "symbol" ? key : String(key);
+function toPropertyKey(t) {
+  var i = (0,_toPrimitive_js__WEBPACK_IMPORTED_MODULE_1__["default"])(t, "string");
+  return "symbol" == (0,_typeof_js__WEBPACK_IMPORTED_MODULE_0__["default"])(i) ? i : String(i);
 }
 
 /***/ }),
@@ -6421,6 +6680,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_qg_env__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_utils_qg_env__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _utils_qg_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils/qg-util */ "./src/assets/_project/_blocks/utils/qg-util.js");
 /* harmony import */ var _legacy_forms_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./legacy/forms/forms */ "./src/assets/_project/_blocks/legacy/forms/forms.js");
+/* harmony import */ var _legacy_forms_forms__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_legacy_forms_forms__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _components_qg_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/qg-components */ "./src/assets/_project/_blocks/components/qg-components.js");
 /* harmony import */ var _layout_footer_footer_legals__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./layout/footer/footer-legals */ "./src/assets/_project/_blocks/layout/footer/footer-legals.js");
 /* harmony import */ var _layout_footer_footer_legals__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_layout_footer_footer_legals__WEBPACK_IMPORTED_MODULE_4__);
@@ -6437,6 +6697,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layout_content_content_types_figure_credits_toggle__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_layout_content_content_types_figure_credits_toggle__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _layout_footer_feedback_form__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./layout/footer/feedback-form */ "./src/assets/_project/_blocks/layout/footer/feedback-form.js");
 /* harmony import */ var _layout_footer_feedback_form__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_layout_footer_feedback_form__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _components_site_search_qg_funnelback_v16_refs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/site-search/qg-funnelback-v16-refs */ "./src/assets/_project/_blocks/components/site-search/qg-funnelback-v16-refs.js");
+/* harmony import */ var _components_site_search_qg_funnelback_v16_refs__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_components_site_search_qg_funnelback_v16_refs__WEBPACK_IMPORTED_MODULE_12__);
 // env initialization
 
 // utils import
@@ -6456,6 +6718,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+//Funnelback refs
 
 (function () {
   'use strict';
