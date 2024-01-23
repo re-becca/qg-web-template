@@ -80,9 +80,7 @@
           <div id="qg-content">
             <div id="qg-one-col" class="row wide">
 
-              <!--#include virtual="/assets/includes-local/content/alert.html"-->
-
-              <div id="qg-banner-blurb" style="background: url('/assets/v4/latest/images/alerts-banner.jpg') repeat center/cover;">
+              <div id="qg-banner-blurb" style="background: url('./assets/v4/latest/images/alerts-banner.jpg') repeat center/cover;">
 
                 <div class="qg-banner-blurb_wrapper">
                   <div class="blurb">
@@ -171,7 +169,7 @@
 
               <div class="qg-site-width container-fluid">
                 <div id="qg-primary-content" role="main">
-                  <div class="">
+                  <div>
                     <h2>Disaster and emergency resources</h2>
 
                     <section class="row qg-cards cards__equal-height">
@@ -241,8 +239,8 @@
             <div id="qg-one-col" class="row wide">
 
               <div class="qg-site-width container-fluid">
-                <div id="qg-primary-content" role="main">
-                  <div class="">
+                <div id="qg-primary-content" class="mt-2" role="main">
+                  <div class="mb-5">
                     <h2>Watch for the warnings</h2>
                     <p class="mb-4" style="max-width: 900px;">The new <a href="https://www.qfes.qld.gov.au/aws">Australian Warning System (AWS)</a> means every warning has an icon and colour that tells you what the hazard is and what the danger level is. Each level has a <a href="https://www.australianwarningsystem.com.au/#action">set of action statements</a> to give you clear advice about what to do.</p>
 
@@ -284,11 +282,87 @@
               </div>
               
             </div>
-          
-            <!--#include virtual="/assets/includes-local/content/options.html"-->
           </div>
         </div>
-      <!--#include virtual="/assets/includes-local/footer/footer.html"-->
+        <footer class="qg-site-footer">
+          <div class="container qg-site-width">
+            <h2 class="collapse">Support links</h2>
+            <div class="row">
+  
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="qg-footer-col-content sm-border-bottom">
+
+                  <h3>Contact us</h3>
+                
+                  <ul>
+                    <li>For general enquiries, feedback, complaints and compliments: <p class="phone"><span>13 QGOV (<a href="tel:137468" class="d-inline" data-analytics-link-group="qg-contact-phone">13 74 68</a>)</span></p></li>
+                    <li class="facebook"><a href="https://www.facebook.com/QueenslandGovernment/" aria-label="Facebook /QueenslandGovernment" data-analytics-link-group="qg-contact-facebook">/QueenslandGovernment</a></li>
+                    <li class="twitter">
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="17" height="17" rx="4" fill="white"/>
+                        <path d="M11.3021 4H12.9194L9.38693 8.0365L13.5426 13.53H10.2895L7.7398 10.1991L4.82582 13.53H3.20618L6.98382 9.21172L3 4H6.3355L8.63782 7.04456L11.3021 4ZM10.734 12.5633H11.6297L5.84755 4.91635H4.88538L10.734 12.5633Z" fill="#005E85"/>
+                      </svg>
+                      <a href="https://twitter.com/qldgov" aria-label="Twitter @QldGov" data-analytics-link-group="qg-contact-twitter">@QldGov</a></li>
+                  </ul>
+                
+                  <a class="btn btn-global-secondary  mt-4" href="https://www.qld.gov.au/contact-us">Other contact options</a>
+                
+                </div>
+                
+              </div>
+            
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="qg-footer-col-content qg-feedback sm-border-bottom">
+    
+                  <h3>Website feedback</h3>
+                  
+                  <p>Help us improve the content on our website or tell us what is working really well.</p>
+                  
+                  <a class="btn btn-global-secondary mt-4" href="#">Leave your feedback</a>
+                
+                </div>
+              </div>
+            
+            </div>
+            
+            <div class="row">
+              <div class="col-12 col-md-8">
+                  <div class="qg-cultural-notice qg-footer-col-content sm-border-bottom">
+                      
+                      <h3>Cultural acknowledgement</h3>
+                      
+                      <p>We pay our respects to the Aboriginal and Torres Strait Islander ancestors of this land, their spirits and their legacy. The foundations laid by these ancestors—our First Nations peoples—give strength, inspiration and courage to current and future generations towards creating a better Queensland.
+                      </p>
+                      
+                  </div>        
+              </div>
+            </div>
+
+            <div class="qg-legal d-flex flex-wrap align-items-end justify-content-between">
+
+              <!-- Left column, wraps below col-md -->
+              <div class="col-12 col-md-6 pl-0">
+                <ul class="list-inline">
+                  <li><a href="https://www.qld.gov.au/help/" class="d-print-none">Help</a></li>
+                  <li><a href="https://www.qld.gov.au/legal/copyright/">Copyright</a></li>
+                  <li><a href="https://www.qld.gov.au/legal/disclaimer/">Disclaimer</a></li>
+                  <li><a href="https://www.qld.gov.au/legal/privacy/">Privacy</a></li>
+                  <li><a href="https://www.qld.gov.au/right-to-information/">Right to information</a></li>
+                  <li><a href="https://www.qld.gov.au/help/accessibility/" class="d-print-none">Accessibility</a></li>
+                  <li><a href="http://www.smartjobs.qld.gov.au/" class="d-print-none">Jobs in Queensland Government</a></li>
+                  <li id="link-languages"><a href="https://www.qld.gov.au/languages/" class="d-print-none">Other languages</a></li>
+                </ul>
+              </div>
+            
+              <!-- Right column, wraps below col-md -->
+              <div class="qg-copyright col-12 col-md-4 offset-md-2 pl-0 ml-0">
+                &copy; The State of Queensland 1995-2024
+              </div>
+              
+            </div>
+
+          </div>
+        </footer>
 
     <script>
       var qg = qg || {};
