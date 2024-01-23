@@ -4,6 +4,7 @@ import { getCanvasMobileProps, getStoryMobileParameters, getStoryMobileHeight } 
 
 import Default from "../../../template-pages/aggregation-page.html";
 import Mobile from "../../../template-pages/aggregation-page.html";
+import Alerts from "../../../template-pages/alerts.html";
 
 <Meta title="Templates/AggregationPage" />
 
@@ -19,4 +20,10 @@ import Mobile from "../../../template-pages/aggregation-page.html";
 
 <Canvas withSource="none" {...getCanvasMobileProps()}>
   <Story name="Mobile" parameters={getStoryMobileParameters()} height={getStoryMobileHeight()}>{() => Mobile}</Story>
+</Canvas>
+
+## Alerts
+
+<Canvas sourceState="close">
+  <Story name="Alerts">{() => Alerts}</Story>
 </Canvas>
