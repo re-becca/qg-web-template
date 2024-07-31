@@ -1,11 +1,16 @@
 import { Canvas, Meta, Story } from "@storybook/addon-docs";
 
-import { getCanvasMobileProps, getStoryMobileParameters, getStoryMobileHeight } from "../../helpers";
+import {
+  getCanvasMobileProps,
+  getStoryMobileParameters,
+  getStoryMobileHeight,
+} from "../../helpers";
 
 import Default from "../../../template-pages/content-page.html";
 import NoAside from "../../../template-pages/content-page-no-asides.html";
 import WithoutLocation from "../../../template-pages/content-page-without-location.html";
 import Mobile from "../../../template-pages/content-page.html";
+import QGDS from "../../../template-pages/content-page-qgds.html";
 
 <Meta title="Templates/ContentPage" />
 
@@ -32,5 +37,13 @@ import Mobile from "../../../template-pages/content-page.html";
 ## Mobile
 
 <Canvas withSource="none" {...getCanvasMobileProps()}>
-  <Story name="Mobile" parameters={getStoryMobileParameters()} height={getStoryMobileHeight()}>{() => Mobile}</Story>
+  <Story name="Mobile" parameters={getStoryMobileParameters()} height={getStoryMobileHeight()}>
+    {() => Mobile}
+  </Story>
+</Canvas>
+
+## QGDS
+
+<Canvas sourceState="close">
+  <Story name="QGDS">{() => QGDS}</Story>
 </Canvas>
