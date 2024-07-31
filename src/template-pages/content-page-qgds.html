@@ -188,6 +188,18 @@
 			font-weight: 400;
 		}
 
+		.qg-show-search .qg-global-icons svg g g,
+		.qg-show-menu .qg-global-icons svg rect,
+		.qg-show-search[aria-expanded=true] svg g g,
+		.qg-show-search[aria-expanded=true] svg g rect {
+			fill: #EFD700;
+		}
+
+		.qg-show-menu[aria-expanded=true] .qg-global-icons,
+		.qg-show-search[aria-expanded=true] .qg-global-icons {
+			background-color: transparent;
+		}
+
 		footer.qg-site-footer {
 			border-top: 4px solid #6BBE27;
 		}
@@ -233,6 +245,10 @@
 					order: 2;
 					border-left: 6px solid #6BBE27;
 					border-bottom: 0;
+				}
+
+				.qg-site-header-top {
+					border-bottom: 4px solid #6BBE27;
 				}
 
 				.qg-portal-links {

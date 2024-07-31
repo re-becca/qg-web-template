@@ -192,6 +192,18 @@
 			border-top: 4px solid #6BBE27;
 		}
 
+		.qg-show-search .qg-global-icons svg g g,
+		.qg-show-menu .qg-global-icons svg rect,
+		.qg-show-search[aria-expanded=true] svg g g,
+		.qg-show-search[aria-expanded=true] svg g rect {
+			fill: #EFD700;
+		}
+
+		.qg-show-menu[aria-expanded=true] .qg-global-icons,
+		.qg-show-search[aria-expanded=true] .qg-global-icons {
+			background-color: transparent;
+		}
+
 		@media (max-width: 991px) {
 				#qg-site-nav .nav-item:before {
 						height: 0px;
@@ -235,6 +247,10 @@
 					border-bottom: 0;
 				}
 
+				.qg-site-header-top {
+					border-bottom: 4px solid #6BBE27;
+				}
+
 				.qg-portal-links {
 						order: 3;
 				}
@@ -265,7 +281,7 @@
 					<div class="qg-global-icons ">
 						<div class="qg-icon--menu-default">
 							<svg width="512px" height="512px" viewBox="0 0 512 512">
-								<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+								<g stroke="none" stroke-width="1" fill="#EFD700" fill-rule="evenodd">
 									<rect x="72" y="95" width="368" height="60" rx="15"></rect>
 									<rect x="72" y="226" width="368" height="59" rx="15"></rect>
 									<rect x="72" y="356" width="368" height="60" rx="15"></rect>
@@ -274,7 +290,7 @@
 						</div>
 						<div class="qg-icon--menu-close">
 							<svg width="512px" height="512px" viewBox="0 0 512 512">
-								<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+								<g stroke="none" stroke-width="1" fill="#EFD700" fill-rule="evenodd">
 									<rect
 										transform="translate(256.500000, 256.000000) scale(1, -1) rotate(45.000000) translate(-256.500000, -256.000000) "
 										x="32" y="220" width="449" height="72" rx="15"></rect>
@@ -305,7 +321,7 @@
 					<div class="qg-global-icons ">
 						<div class="qg-icon--mobile-search-default">
 							<svg width="512px" height="512px" viewBox="0 0 512 512">
-								<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+								<g stroke="none" stroke-width="1" fill="#EFD700" fill-rule="evenodd">
 									<g transform="translate(67.298684, 71.201316)">
 										<path
 											d="M108.7791,227.405285 L11.3079182,324.876467 C5.45005384,330.734332 5.45005384,340.231806 11.3079182,346.089671 L27.4103294,362.192082 C33.2681938,368.049946 42.7656685,368.049946 48.6235328,362.192082 L146.094715,264.7209 C151.952579,258.863035 151.952579,249.365561 146.094715,243.507696 L129.992304,227.405285 C124.134439,221.547421 114.636965,221.547421 108.7791,227.405285 Z">
@@ -321,7 +337,7 @@
 						</div>
 						<div class="qg-icon--menu-close">
 							<svg width="512px" height="512px" viewBox="0 0 512 512">
-								<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+								<g stroke="none" stroke-width="1" fill="#EFD700" fill-rule="evenodd">
 									<rect
 										transform="translate(256.500000, 256.000000) scale(1, -1) rotate(45.000000) translate(-256.500000, -256.000000) "
 										x="32" y="220" width="449" height="72" rx="15"></rect>
@@ -359,7 +375,7 @@
 						</svg>
 						<button class="qg-search-close-concierge hide" type="button" aria-label="Close Search Concierge">
 							<svg width="512px" height="512px" viewBox="0 0 512 512">
-								<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+								<g stroke="none" stroke-width="1" fill="#EFD700" fill-rule="evenodd">
 									<rect
 										transform="translate(256.500000, 256.000000) scale(1, -1) rotate(45.000000) translate(-256.500000, -256.000000) "
 										x="32" y="220" width="449" height="72" rx="15"></rect>
