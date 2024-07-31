@@ -188,7 +188,7 @@
 			font-weight: 400;
 		}
 
-		@media (max-width: 992px) {
+		@media (max-width: 991px) {
 				#qg-site-nav .nav-item:before {
 						height: 0px;
 				}
@@ -204,7 +204,8 @@
     		}
 
 				.qg-portal-links .qg-portal-links__list {
-					margin: 0 25px 16px 25px;
+					margin: 12px 25px;
+					border-left: 6px solid #09549F;
 				}
 
 				.qg-portal-links .nav-item {
@@ -222,6 +223,16 @@
 				#qg-site-nav .nav-link:not([aria-expanded=true]):not(.qg-feature-box .qg-link):not(.qg-index a.qg-index-item):not(.page-item .page-link):not(.dfv-cards--type-top-prompt a.card):not(.search-categories__index-toggle):not(.search-categories__index):not(.QSAR-records-search a):hover {
 					background-color: #f5f5f5;
 					border-bottom: 0;
+				}
+
+				.qg-site-header-bottom-container {
+					order: 2;
+					border-left: 6px solid #6BBE27;
+					border-bottom: 0;
+				}
+
+				.qg-portal-links {
+						order: 3;
 				}
 
 		}
