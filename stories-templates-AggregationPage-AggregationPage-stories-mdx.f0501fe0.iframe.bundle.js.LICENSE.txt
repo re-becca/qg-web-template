@@ -1,0 +1,61 @@
+/*! ../../../template-pages/aggregation-page.html */
+
+/*! ../../../template-pages/alerts.html */
+
+/*! ../../helpers */
+
+/*! ../../node_modules/html-loader/dist/runtime/getUrl.js */
+
+/*! ./../../build/assets/v4/latest/css/qg-main.css */
+
+/*! ./../../build/assets/v4/latest/images/advice.jpg */
+
+/*! ./../../build/assets/v4/latest/images/coat-of-arms/coa-thumbnail.png */
+
+/*! ./../../build/assets/v4/latest/images/coat-of-arms/qg-coa-stacked-white.svg */
+
+/*! ./../../build/assets/v4/latest/images/coat-of-arms/qg-coa-stacked.svg */
+
+/*! ./../../build/assets/v4/latest/images/coat-of-arms/qg-coa-white.svg */
+
+/*! ./../../build/assets/v4/latest/images/emergencywarning.jpg */
+
+/*! ./../../build/assets/v4/latest/images/favicon.ico */
+
+/*! ./../../build/assets/v4/latest/images/watchact.jpg */
+
+/*! ./../../build/assets/v4/latest/js/qg-main.js */
+
+/*! ./../../build/assets/v4/latest/lib/all-ext-min.js */
+
+/*! ./node_modules/@storybook/addon-docs/dist/shims/mdx-react-shim */
+
+/*! @storybook/addon-docs */
+
+/*! react */
+
+/*! react/jsx-runtime */
+
+/*!****************************************!*\
+  !*** ./src/template-pages/alerts.html ***!
+  \****************************************/
+
+/*!**************************************************!*\
+  !*** ./build/assets/v4/latest/images/advice.jpg ***!
+  \**************************************************/
+
+/*!**************************************************!*\
+  !*** ./src/template-pages/aggregation-page.html ***!
+  \**************************************************/
+
+/*!****************************************************!*\
+  !*** ./build/assets/v4/latest/images/watchact.jpg ***!
+  \****************************************************/
+
+/*!************************************************************!*\
+  !*** ./build/assets/v4/latest/images/emergencywarning.jpg ***!
+  \************************************************************/
+
+/*!***************************************************************************!*\
+  !*** ./src/stories/templates/AggregationPage/AggregationPage.stories.mdx ***!
+  \***************************************************************************/

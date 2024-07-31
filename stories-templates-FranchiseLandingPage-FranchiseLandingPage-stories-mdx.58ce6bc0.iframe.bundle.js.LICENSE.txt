@@ -1,0 +1,127 @@
+/*! ../../../template-pages/franchise-landing-page-qgds.html */
+
+/*! ../../../template-pages/franchise-landing-page.html */
+
+/*! ../../helpers */
+
+/*! ../../node_modules/html-loader/dist/runtime/getUrl.js */
+
+/*! ./../../build/assets/v4/latest/css/qg-main.css */
+
+/*! ./../../build/assets/v4/latest/images/coat-of-arms/coa-thumbnail.png */
+
+/*! ./../../build/assets/v4/latest/images/coat-of-arms/qg-coa-darkalt.svg */
+
+/*! ./../../build/assets/v4/latest/images/coat-of-arms/qg-coa-stacked-white.svg */
+
+/*! ./../../build/assets/v4/latest/images/coat-of-arms/qg-coa-stacked.svg */
+
+/*! ./../../build/assets/v4/latest/images/coat-of-arms/qg-coa-white.svg */
+
+/*! ./../../build/assets/v4/latest/images/favicon.ico */
+
+/*! ./../../build/assets/v4/latest/images/transport/DLA-home-banner-284.jpg */
+
+/*! ./../../build/assets/v4/latest/images/transport/Personal-mobility-device-283x113.jpg */
+
+/*! ./../../build/assets/v4/latest/images/transport/alllicences.jpg */
+
+/*! ./../../build/assets/v4/latest/images/transport/boating-marine.jpg */
+
+/*! ./../../build/assets/v4/latest/images/transport/buying-selling.jpg */
+
+/*! ./../../build/assets/v4/latest/images/transport/contacts.jpg */
+
+/*! ./../../build/assets/v4/latest/images/transport/payrego.jpg */
+
+/*! ./../../build/assets/v4/latest/images/transport/registration.jpg */
+
+/*! ./../../build/assets/v4/latest/images/transport/ride-as-tourist-75px.jpg */
+
+/*! ./../../build/assets/v4/latest/images/transport/road-safety-rules.jpg */
+
+/*! ./../../build/assets/v4/latest/images/transport/road-works.jpg */
+
+/*! ./../../build/assets/v4/latest/images/transport/roadworthy.jpg */
+
+/*! ./../../build/assets/v4/latest/images/transport/yellow-car-on-left-side-of-road-displaying-l-plates.jpg */
+
+/*! ./../../build/assets/v4/latest/js/qg-main.js */
+
+/*! ./../../build/assets/v4/latest/lib/all-ext-min.js */
+
+/*! ./node_modules/@storybook/addon-docs/dist/shims/mdx-react-shim */
+
+/*! @storybook/addon-docs */
+
+/*! react */
+
+/*! react/jsx-runtime */
+
+/*!********************************************************!*\
+  !*** ./src/template-pages/franchise-landing-page.html ***!
+  \********************************************************/
+
+/*!*************************************************************!*\
+  !*** ./build/assets/v4/latest/images/transport/payrego.jpg ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./src/template-pages/franchise-landing-page-qgds.html ***!
+  \*************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./build/assets/v4/latest/images/transport/contacts.jpg ***!
+  \**************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./build/assets/v4/latest/images/transport/road-works.jpg ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./build/assets/v4/latest/images/transport/roadworthy.jpg ***!
+  \****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./build/assets/v4/latest/images/transport/alllicences.jpg ***!
+  \*****************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./build/assets/v4/latest/images/transport/registration.jpg ***!
+  \******************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./build/assets/v4/latest/images/transport/boating-marine.jpg ***!
+  \********************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./build/assets/v4/latest/images/transport/buying-selling.jpg ***!
+  \********************************************************************/
+
+/*!***********************************************************************!*\
+  !*** ./build/assets/v4/latest/images/coat-of-arms/qg-coa-darkalt.svg ***!
+  \***********************************************************************/
+
+/*!***********************************************************************!*\
+  !*** ./build/assets/v4/latest/images/transport/road-safety-rules.jpg ***!
+  \***********************************************************************/
+
+/*!*************************************************************************!*\
+  !*** ./build/assets/v4/latest/images/transport/DLA-home-banner-284.jpg ***!
+  \*************************************************************************/
+
+/*!**************************************************************************!*\
+  !*** ./build/assets/v4/latest/images/transport/ride-as-tourist-75px.jpg ***!
+  \**************************************************************************/
+
+/*!*************************************************************************************!*\
+  !*** ./src/stories/templates/FranchiseLandingPage/FranchiseLandingPage.stories.mdx ***!
+  \*************************************************************************************/
+
+/*!**************************************************************************************!*\
+  !*** ./build/assets/v4/latest/images/transport/Personal-mobility-device-283x113.jpg ***!
+  \**************************************************************************************/
+
+/*!*********************************************************************************************************!*\
+  !*** ./build/assets/v4/latest/images/transport/yellow-car-on-left-side-of-road-displaying-l-plates.jpg ***!
+  \*********************************************************************************************************/

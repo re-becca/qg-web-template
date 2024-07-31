@@ -5895,7 +5895,7 @@ module.exports = (function(doc, win) {
     if (!win) {
         win = window;
     }
-    
+
     var watchArray = [],
         scroll,
         initialized = false,
@@ -5964,7 +5964,7 @@ module.exports = (function(doc, win) {
             rebuild();
             return;
         }
-        
+
         if (win.pageYOffset != scroll.top) {
             updateScrollPos();
             recalcAllPos();
@@ -6163,7 +6163,7 @@ module.exports = (function(doc, win) {
             },
             nodeOffset = getElementOffset(node),
             parentOffset = getElementOffset(parentNode),
-            
+
             parent = {
                 node: parentNode,
                 css: {
@@ -6279,11 +6279,11 @@ module.exports = (function(doc, win) {
         if (!initialized) return;
 
         deinitAll();
-        
+
         for (var i = watchArray.length - 1; i >= 0; i--) {
             watchArray[i] = getElementParams(watchArray[i].node);
         }
-        
+
         initAll();
     }
 
@@ -6301,7 +6301,7 @@ module.exports = (function(doc, win) {
 
     function stop() {
         pause();
-        deinitAll(); 
+        deinitAll();
     }
 
     function kill() {
@@ -6604,7 +6604,7 @@ module.exports = JSON.parse('{"defGoogle":{"test":"AIzaSyCKuaFIFo7YYZXHZ5zaiEZdJ
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -6618,14 +6618,14 @@ module.exports = JSON.parse('{"defGoogle":{"test":"AIzaSyCKuaFIFo7YYZXHZ5zaiEZdJ
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -6638,7 +6638,7 @@ module.exports = JSON.parse('{"defGoogle":{"test":"AIzaSyCKuaFIFo7YYZXHZ5zaiEZdJ
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -6650,12 +6650,12 @@ module.exports = JSON.parse('{"defGoogle":{"test":"AIzaSyCKuaFIFo7YYZXHZ5zaiEZdJ
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -6666,7 +6666,7 @@ module.exports = JSON.parse('{"defGoogle":{"test":"AIzaSyCKuaFIFo7YYZXHZ5zaiEZdJ
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
